@@ -9,18 +9,61 @@ android {
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
+        manifestPlaceholders = [appLabel: "APP (default)"]
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+
     }
+
+    signingConfigs {
+        signingMockserver {
+            keyAlias 'DeveloperAndroidKey'
+            keyPassword 'developer'
+            storeFile file('D:/developerAndroidStudio/localKeyStore/developerkey.jks')
+            storePassword 'developer'
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        mockserver {
+            debuggable true
+            jniDebuggable false
+            renderscriptDebuggable false
+            minifyEnabled false
+            zipAlignEnabled true
+            applicationIdSuffix ".mockserver"
+            versionNameSuffix "-mockserver"
+            buildConfigField "String", "API_URL", "\"http://mockserver.com/api\""
+            manifestPlaceholders = [appLabel: "APP MockServer"]
+            signingConfig signingConfigs.signingMockserver
+        }
+    }
+    productFlavors {
+        demo {
+            minSdkVersion 14
+            applicationId 'com.possoajudar.app.demo'
+            targetSdkVersion 25
+            testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
+            versionCode 1
+            versionName '1.0'
+        }
+        main {
+            minSdkVersion 14
+            applicationId 'com.possoajudar.app'
+            targetSdkVersion 25
+            testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
+            versionCode 1
+            versionName '1.0'
+        }
     }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
@@ -28,4 +71,5 @@ dependencies {
     compile 'com.android.support:design:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-beta5'
     testCompile 'junit:junit:4.12'
+    compile 'com.android.support:multidex:1.0.0'
 }
