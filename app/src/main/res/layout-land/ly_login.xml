@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:orientation="horizontal" android:layout_width="match_parent"
+android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/layoutDefaultLandLayoutHeight"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/layoutDefaultLandTitleMarginTop"
+        android:fontFamily="@string/font_family_light"
+        android:text="@string/app_title_login"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/layoutDefaultTitleTextSize" />
+
+</LinearLayout>
+
