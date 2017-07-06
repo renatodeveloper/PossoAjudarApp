@@ -4,4 +4,20 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_settings">Settings</string>
     <string name="app_title_login">Bem vindo ao conversa com bla!</string>
+
+    <!-- layout screen default login -->
+    <string name="strLyLoginHintInputEmail">Email</string>
+    <string name="strLyLoginHintInputPassword">Password</string>
+    <string name="strLyLoginButtonLogin">Login</string>
+    <string name="strLyLoginTextViewAccount">No account yet? Create one</string>
+
+    <string name="strLyLoginUserNameError">Entre com o nome do usuário</string>
+    <string name="strLyLoginPassWordError">Entre com a senha do usuário</string>
+    <string name="strLyLoginloginfailed">Falha no login</string>
+    <string name="strLyLoginUsername_error">Falha no nome</string>
+    <string name="strLyLoginPassword_error">Falha na senha</string>
+    <string name="strLyLoginStatusloginok">Sucesso no Login</string>
+
+
+
 </resources>

@@ -12,4 +12,12 @@
     <dimen name="layoutDefaultLandTitleMarginTop">15dp</dimen>
     <dimen name="layoutDefaultLandLayoutHeight">54dp</dimen>
 
+    <!-- layout screen default login -->
+    <dimen name="dimen56dp">56dp</dimen>
+    <dimen name="dimen24dp">24dp</dimen>
+    <dimen name="dimen72dp">72dp</dimen>
+    <dimen name="dimen8dp">8dp</dimen>
+    <dimen name="dimen12dp">12dp</dimen>
+    <dimen name="dimen16dip">16dip</dimen>
+
 </resources>
