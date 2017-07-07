@@ -12,6 +12,7 @@ public class LoginPresenter {
     private LoginService service;
 
     public LoginPresenter(ILoginView view, LoginService service){
+        service = new LoginService();
         this.view = view;
         this.service = service;
     }
