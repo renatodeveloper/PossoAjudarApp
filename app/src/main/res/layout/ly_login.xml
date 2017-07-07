@@ -49,7 +49,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/dimen24dp"
-            android:layout_marginTop="@dimen/dimen24dp"
+            android:layout_marginTop="@dimen/dimen40dp"
             android:onClick="onLoginClick"
             android:padding="@dimen/dimen12dp"
             android:text="@string/strLyLoginButtonLogin"
