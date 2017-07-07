@@ -6,7 +6,6 @@ package com.possoajudar.app.application.service.login;
 
 public class LoginService {
 
-
     public boolean login(String name, String password){
         try{
             if(name.equals("developer") && password.equals("developer")){
