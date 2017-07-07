@@ -1,7 +1,9 @@
 package com.possoajudar.app.application.ui.activities;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatButton;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -14,7 +16,6 @@ import com.possoajudar.app.infrastructure.helper.ActivityUtil;
 
 import static android.widget.Toast.LENGTH_LONG;
 import static android.widget.Toast.LENGTH_SHORT;
-
 
 /**
  * Created by Renato on 02/07/2017.
@@ -46,10 +47,10 @@ public class Login extends Activity implements ILoginView {
         passwordView = (EditText) findViewById(R.id.input_password);
 
         loginPresenter = new LoginPresenter(this, loginService);
+
     }
 
-
-    public void onLoginClicked(View view) {
+    public void onLoginClick(View view) {
         loginPresenter.onLoginClicked();
     }
 
@@ -65,8 +66,8 @@ public class Login extends Activity implements ILoginView {
 
     @Override
     public void showUsernameError(int resId) {
+
         usernameView.setError(getString(resId));
-        Toast.makeText(this, getString(resId), LENGTH_LONG).show();
     }
 
     @Override
