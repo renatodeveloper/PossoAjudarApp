@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.possoajudar.app.BuildConfig;
 import com.possoajudar.app.R;
 import com.possoajudar.app.application.service.ILoginView;
 import com.possoajudar.app.application.service.login.LoginPresenter;
@@ -43,6 +44,10 @@ public class Login extends Activity implements ILoginView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ly_login);
 
+
+        final String URL = BuildConfig.API_URL;
+
+
         usernameView = (EditText) findViewById(R.id.input_email);
         passwordView = (EditText) findViewById(R.id.input_password);
 
@@ -72,6 +77,7 @@ public class Login extends Activity implements ILoginView {
 
     @Override
     public void showPasswordError(int resId) {
+
         passwordView.setError(getString(resId));
     }
 
