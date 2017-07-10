@@ -10,13 +10,21 @@
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/dimen56dp"
         android:paddingLeft="@dimen/dimen24dp"
-        android:paddingRight="@dimen/dimen24dp">
+        android:paddingRight="@dimen/dimen24dp"
+        >
 
-        <ImageView android:src="@drawable/logo"
+
+        <TextView
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/dimen72dp"
-            android:layout_marginBottom="@dimen/dimen24dp"
-            android:layout_gravity="center_horizontal" />
+            android:layout_height="match_parent"
+            android:text="@string/titlelogo"
+            android:fontFamily="@string/font_family_light"
+            android:layout_gravity="center"
+            android:textSize="@dimen/dimen16dip"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_marginTop="@dimen/dimen72dp"
+            />
+
 
         <!--  Email Label -->
         <android.support.design.widget.TextInputLayout
@@ -53,7 +61,8 @@
             android:onClick="onLoginClick"
             android:padding="@dimen/dimen12dp"
             android:text="@string/strLyLoginButtonLogin"
-            android:visibility="visible" />
+            android:background="@drawable/button_customizado"
+           />
 
         <TextView android:id="@+id/link_signup"
             android:layout_width="fill_parent"
@@ -63,6 +72,7 @@
             android:gravity="center"
             android:textSize="@dimen/dimen16dip"
             />
+
 
     </LinearLayout>
 </ScrollView>
