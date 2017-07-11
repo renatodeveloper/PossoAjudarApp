@@ -6,4 +6,11 @@
         android:orderInCategory="100"
         android:title="@string/action_settings"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_cleanpreferences"
+        android:orderInCategory="100"
+        android:title="@string/action_cleanPreferences"
+        app:showAsAction="never"
+        android:icon="@drawable/clean16x16"/>
 </menu>
