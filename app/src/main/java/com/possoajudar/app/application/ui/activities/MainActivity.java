@@ -1,5 +1,6 @@
 package com.possoajudar.app.application.ui.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -14,9 +15,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.possoajudar.app.R;
+import com.possoajudar.app.infrastructure.helper.ActivityUtil;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    public ActivityUtil activityUtil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +45,7 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
     }
 
     @Override
@@ -70,8 +74,20 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+
             return true;
         }
+        if (id == R.id.action_cleanpreferences) {
+            try{
+                activityUtil = new ActivityUtil(getApplicationContext());
+                activityUtil.cleanPrefLogado();
+                startActivity(new Intent(this, Splash.class));
+            }catch (Exception e){
+                e.getMessage().toString();
+            }
+            return true;
+        }
+
 
         return super.onOptionsItemSelected(item);
     }
