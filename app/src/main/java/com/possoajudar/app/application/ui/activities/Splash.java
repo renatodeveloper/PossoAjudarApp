@@ -1,35 +1,78 @@
 package com.possoajudar.app.application.ui.activities;
-
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.widget.Toast;
-
+import android.support.v4.app.ActivityCompat;
 import com.possoajudar.app.R;
 import com.possoajudar.app.infrastructure.helper.ActivityUtil;
+
+
 
 /**
  * Created by renato on 11/07/2017.
  */
 
 public class Splash extends Activity {
+
     public ActivityUtil activityUtil;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        checkUserLogado();
+        try {
+            activityUtil = new ActivityUtil();
+            if(activityUtil.checkVersaoSDK(Splash.this)){
+                checkUserLogado();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case ActivityUtil.REQUEST_CODE_PERMISSION: {
+                if(grantResults != null && grantResults.length>0){
+                    for(int i=0; i< grantResults.length; i++){
+                        if (grantResults[i] == PackageManager.PERMISSION_DENIED){
+                            // user rejected the permission - PERMISSION_DENIED is '-1'
+                            boolean checkNaoPetube = ActivityCompat.shouldShowRequestPermissionRationale(this, permissions[i].toString());//devolve false quando selecionado
+                            if(!checkNaoPetube){
+                                activityUtil.showDialogPermissionsSystem(Splash.this);
+                            }else {
+                                if (ActivityCompat.shouldShowRequestPermissionRationale(this, permissions[i].toString())) {
+                                    activityUtil.showDialogPermissions(Splash.this, permissions[i].toString());
+                                }
+                            }
+                        }else{
+                            checkUserLogado();
+                        }
+
+                    }
+                }
+            return;
+        }
+        }
+    }
+
 
     public void checkUserLogado(){
         try{
-            activityUtil = new ActivityUtil(getApplicationContext());
-            SharedPreferences facePref = getApplicationContext().getSharedPreferences(getString(R.string.prefArq_userLogado), MODE_PRIVATE);
+
+            SharedPreferences facePref = getApplicationContext().getSharedPreferences(getApplicationContext().getString(R.string.prefArq_userLogado), Context.MODE_PRIVATE);
             if (facePref != null) {
-                if(facePref.getBoolean(getApplicationContext().getString(R.string.prefStatus_userLogado), false)){
-                    startActivity(new Intent(this, MainActivity.class));
-                    return;
+                if (facePref.getString(getApplicationContext().getString(R.string.prefStatus_userLogado), null) != null) {
+                    String sjonPerfil = (facePref.getString(getApplicationContext().getString(R.string.prefStatus_userLogado), null));
+                    if (sjonPerfil.equals("true")) {
+                        startActivity(new Intent(this, MainActivity.class));
+                        return;
+
+                    }
                 }
             }
             startActivity(new Intent(this, Login.class));
