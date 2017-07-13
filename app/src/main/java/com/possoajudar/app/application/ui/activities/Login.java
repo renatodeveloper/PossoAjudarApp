@@ -1,11 +1,21 @@
 package com.possoajudar.app.application.ui.activities;
 
+import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.Preference;
+import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.AppCompatButton;
 import android.view.View;
 import android.widget.EditText;
@@ -14,9 +24,11 @@ import android.widget.Toast;
 import com.possoajudar.app.BuildConfig;
 import com.possoajudar.app.R;
 import com.possoajudar.app.application.service.ILoginView;
+import com.possoajudar.app.application.service.gps.GpsService;
 import com.possoajudar.app.application.service.login.LoginPresenter;
 import com.possoajudar.app.application.service.login.LoginService;
 import com.possoajudar.app.infrastructure.helper.ActivityUtil;
+
 
 import org.json.JSONObject;
 
@@ -34,7 +46,7 @@ public class Login extends Activity implements ILoginView {
     private LoginPresenter loginPresenter;
     private LoginService loginService;
     public ActivityUtil activityUtil;
-
+    GpsService gps;
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
@@ -51,12 +63,10 @@ public class Login extends Activity implements ILoginView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ly_login);
 
-
         final String URL = BuildConfig.API_URL;
 
         try{
-            activityUtil = new ActivityUtil(getApplicationContext());
-
+            activityUtil = new ActivityUtil();
         }catch (Exception e){
             e.getMessage().toString();
         }
@@ -66,6 +76,7 @@ public class Login extends Activity implements ILoginView {
         passwordView = (EditText) findViewById(R.id.input_password);
 
         loginPresenter = new LoginPresenter(this, loginService);
+
 
     }
 
@@ -102,9 +113,18 @@ public class Login extends Activity implements ILoginView {
 
     @Override
     public void startMainActivity() {
-        Toast.makeText(this, getString(R.string.strLyLoginStatusloginok), LENGTH_SHORT).show();
-        activityUtil.definePrefLogado();
-        startActivity(new Intent(this, MainActivity.class));
-        //new ActivityUtil(this).startMainActivity();
+
+        gps = new GpsService(getApplicationContext());
+        if(gps.canGetLocation()){
+            activityUtil.definePrefLogado(getApplicationContext(), gps);
+            startActivity(new Intent(this, MainActivity.class));
+            //new ActivityUtil(this).startMainActivity();
+        }else{
+            gps.showSettingsAlert(this);
+        }
     }
+
+
+
+
 }
