@@ -25,9 +25,16 @@
     <string name="prefJSON_userLogado">json</string>
     <string name="prefStatus_userLogado">status</string>
     <string name="prefDataTime_userLogado">dataTime</string>
+    <string name="prefLatitude_userLogado">latitude</string>
+    <string name="prefLongitude_userLogado">longitude</string>
+    <string name="prefAltitude_userLogado">altitude</string>
+    <string name="prefSpeed_userLogado">speed</string>
 
-
-
-
+    <!-- mensagens -->
+    <string name="str_SimpleDateFormat">MMM dd,yyyy HH:mm</string>
+    <string name="str_atencao">Atenção</string>
+    <string name="str_infoPermissao">É necessária para o funcionamento do sistema!  Favor ir em configurações, selecionar o app e adicionar as permissões negada!</string>
+    <string name="str_finalizar">Finalizar</string>
+    <string name="str_infoPermissaoNeverAgain">Você só poderá usar o sistema habilitando a permissão em configurações, selecionar o app e adicionar as permissão negada!</string>
 
 </resources>
