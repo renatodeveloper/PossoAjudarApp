@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity
         }
         if (id == R.id.action_cleanpreferences) {
             try{
-                activityUtil = new ActivityUtil(getApplicationContext());
+                activityUtil = new ActivityUtil();
                 activityUtil.cleanPrefLogado();
                 startActivity(new Intent(this, Splash.class));
             }catch (Exception e){
