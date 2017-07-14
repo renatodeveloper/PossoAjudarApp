@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
@@ -36,17 +37,35 @@ public class ActivityUtil {
     public static String mPermission = Manifest.permission.ACCESS_FINE_LOCATION;
     //localização...
 
-    public ActivityUtil() {
-    }
+
+    public static String[] PERMISSIONS_STORAGE = {
+            Manifest.permission.CAMERA,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.BLUETOOTH,
+            Manifest.permission.BLUETOOTH_ADMIN,
+            Manifest.permission.GET_ACCOUNTS,
+            Manifest.permission.READ_CONTACTS,
+            Manifest.permission.WRITE_CONTACTS,
+            Manifest.permission.READ_PHONE_STATE,
+            Manifest.permission.INTERNET,
+            Manifest.permission.ACCESS_NETWORK_STATE,
+            Manifest.permission.ACCESS_WIFI_STATE
+        };
+
+        public ActivityUtil() {
+        }
 
 
-    public void startMainActivity(){
+        public void startMainActivity(){
         this.context.startActivity(new Intent(context, MainActivity.class));
-    }
+        }
 
-    /*
-    Guarda status do usuário logado
-     */
+/*
+Guarda status do usuário logado
+*/
     public void definePrefLogado(Context context, GpsService gps) {
         try{
             if(gps.canGetLocation()){
@@ -105,21 +124,24 @@ public class ActivityUtil {
         return null;
     }
 
-    public static boolean checkVersaoSDK(Context context){
+    public static boolean verifyStoragePermissions(Context context){
         try{
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                if (ActivityCompat.checkSelfPermission(context, mPermission) != MockPackageManager.PERMISSION_GRANTED) {
-                        ActivityCompat.requestPermissions((Activity) context, new String[]{mPermission}, REQUEST_CODE_PERMISSION);
-                    }else{
-                       return  true;
-                    }
-                }else{
-                  return  true;
-                }
+            if (ActivityCompat.checkSelfPermission(context, mPermission) != MockPackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions((Activity) context, new String[]{mPermission}, REQUEST_CODE_PERMISSION);
+                return true;
+            }
         }catch (Exception e){
             e.getMessage().toString();
         }
         return  false;
+    }
+
+    public void verifyStoragePermissionsAll(Activity activity) {
+        ActivityCompat.requestPermissions(
+                activity,
+                PERMISSIONS_STORAGE,
+                REQUEST_CODE_PERMISSION
+        );
     }
 
     public static void showDialogPermissions(final Context context, String valeu){
