@@ -10,6 +10,8 @@ import android.support.v4.app.ActivityCompat;
 import com.possoajudar.app.R;
 import com.possoajudar.app.infrastructure.helper.ActivityUtil;
 
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -24,9 +26,15 @@ public class Splash extends Activity {
         super.onCreate(savedInstanceState);
         try {
             activityUtil = new ActivityUtil();
+
+            activityUtil.verifyStoragePermissionsAll(Splash.this);
+            //activityUtil.verifyStoragePermissions(Splash.this);
+            /*
             if(activityUtil.checkVersaoSDK(Splash.this)){
                 checkUserLogado();
             }
+             */
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -37,24 +45,33 @@ public class Splash extends Activity {
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
             case ActivityUtil.REQUEST_CODE_PERMISSION: {
-                if(grantResults != null && grantResults.length>0){
-                    for(int i=0; i< grantResults.length; i++){
-                        if (grantResults[i] == PackageManager.PERMISSION_DENIED){
-                            // user rejected the permission - PERMISSION_DENIED is '-1'
-                            boolean checkNaoPetube = ActivityCompat.shouldShowRequestPermissionRationale(this, permissions[i].toString());//devolve false quando selecionado
-                            if(!checkNaoPetube){
-                                activityUtil.showDialogPermissionsSystem(Splash.this);
-                            }else {
-                                if (ActivityCompat.shouldShowRequestPermissionRationale(this, permissions[i].toString())) {
-                                    activityUtil.showDialogPermissions(Splash.this, permissions[i].toString());
-                                }
-                            }
-                        }else{
-                            checkUserLogado();
-                        }
-
+                boolean flagDenied = false;
+                for(int x : grantResults){
+                    if(x == -1){
+                        flagDenied = true;
+                        break;
                     }
                 }
+                if(flagDenied){
+                    if(grantResults != null && grantResults.length>0){
+                            for(int i=0; i< grantResults.length; i++){
+                                if (grantResults[i] == PackageManager.PERMISSION_DENIED){
+                                    // user rejected the permission - PERMISSION_DENIED is '-1' | ACCEPT is 0
+                                    boolean checkNaoPetube = ActivityCompat.shouldShowRequestPermissionRationale(this, permissions[i].toString());//devolve false quando selecionado
+                                    if(!checkNaoPetube){
+                                        activityUtil.showDialogPermissionsSystem(Splash.this);
+                                    }else {
+                                        if (ActivityCompat.shouldShowRequestPermissionRationale(this, permissions[i].toString())) {
+                                            activityUtil.showDialogPermissions(Splash.this, permissions[i].toString());
+                                        }
+                                    }
+                                }
+                            }
+                    }
+                }else {
+                    checkUserLogado();
+                }
+
             return;
         }
         }
