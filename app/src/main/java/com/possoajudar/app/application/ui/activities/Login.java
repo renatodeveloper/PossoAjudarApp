@@ -19,6 +19,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.AppCompatButton;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.possoajudar.app.BuildConfig;
@@ -47,6 +48,7 @@ public class Login extends Activity implements ILoginView {
     private LoginService loginService;
     public ActivityUtil activityUtil;
     GpsService gps;
+    TextView sucessologin;
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
@@ -74,6 +76,7 @@ public class Login extends Activity implements ILoginView {
 
         usernameView = (EditText) findViewById(R.id.input_email);
         passwordView = (EditText) findViewById(R.id.input_password);
+        sucessologin = (TextView) findViewById(R.id.sucessologin);
 
         loginPresenter = new LoginPresenter(this, loginService);
 
@@ -108,6 +111,7 @@ public class Login extends Activity implements ILoginView {
 
     @Override
     public void showLoginError(int resId) {
+        sucessologin.setText("ERRO LOGIN");
         Toast.makeText(this, getString(resId), LENGTH_SHORT).show();
     }
 
@@ -117,7 +121,8 @@ public class Login extends Activity implements ILoginView {
         gps = new GpsService(getApplicationContext());
         if(gps.canGetLocation()){
             activityUtil.definePrefLogado(getApplicationContext(), gps);
-            startActivity(new Intent(this, MainActivity.class));
+            sucessologin.setText("SUCESSO");
+            //startActivity(new Intent(this, MainActivity.class));
             //new ActivityUtil(this).startMainActivity();
         }else{
             gps.showSettingsAlert(this);
