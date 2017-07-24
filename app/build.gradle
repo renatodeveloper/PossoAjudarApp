@@ -19,7 +19,7 @@ android {
         signingMockserver {
             keyAlias 'DeveloperAndroidKey'
             keyPassword 'developer'
-            storeFile file('D:/developerAndroidStudio/localKeyStore/developerkey.jks')
+            storeFile file('C:/developerAndroidStudio/localKeyStore/developerkey.jks')
             storePassword 'developer'
         }
     }
@@ -80,4 +80,5 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:multidex:1.0.0'
     testCompile 'org.mockito:mockito-core:1.+'
+    testCompile "org.robolectric:robolectric:3.3.2"
 }
