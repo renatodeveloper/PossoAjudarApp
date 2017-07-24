@@ -38,6 +38,14 @@ public class LoginRobolectricTest {
         TextView results = (TextView) activity.findViewById(R.id.sucessologin);
 
         button.performClick();
-        assertThat(results.getText().toString()).isEqualTo("Sucesso!");
+        assertThat(results.getText().toString()).isEqualTo("STATUS");
     }
+
+    /*
+    String buildVariant = (BuildConfig.FLAVOR.isEmpty() ? "" : BuildConfig.FLAVOR + "/") + BuildConfig.BUILD_TYPE;
+        System.setProperty("android.package", BuildConfig.APPLICATION_ID);
+        System.setProperty("android.manifest", "build/intermediates/manifests/full/" + buildVariant + "/AndroidManifest.xml");
+        System.setProperty("android.resources", "build/intermediates/res/" + buildVariant);
+        System.setProperty("android.assets", "build/intermediates/assets/" + buildVariant);
+     */
 }
