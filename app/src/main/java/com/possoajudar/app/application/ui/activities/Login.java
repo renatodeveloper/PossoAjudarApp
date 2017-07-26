@@ -32,6 +32,10 @@ import com.possoajudar.app.infrastructure.helper.ActivityUtil;
 
 
 import org.json.JSONObject;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import roboguice.activity.RoboActivity;
+import roboguice.inject.InjectView;
 
 import static android.widget.Toast.LENGTH_LONG;
 import static android.widget.Toast.LENGTH_SHORT;
@@ -40,15 +44,32 @@ import static android.widget.Toast.LENGTH_SHORT;
  * Created by Renato on 02/07/2017.
  */
 
+
 public class Login extends Activity implements ILoginView {
+    /* Butter Knife
+               @BindView(R.id.input_email) EditText usernameView;
+               @BindView(R.id.input_password) EditText passwordView;
+               @BindView(R.id.sucessologin) TextView sucessologin;
+        */
+
+    /* RoboGuice
+    public class Login extends RoboActivity implements ILoginView {...
+                @InjectView(R.id.input_email)    EditText    usernameView;
+                @InjectView(R.id.input_password) EditText    passwordView;
+                @InjectView(R.id.sucessologin)   TextView    sucessologin;
+                @InjectView(R.id.btn_login)      AppCompatButton      onLoginClick;
+     */
 
     private EditText usernameView;
     private EditText passwordView;
+    TextView sucessologin;
+
+
     private LoginPresenter loginPresenter;
     private LoginService loginService;
     public ActivityUtil activityUtil;
     GpsService gps;
-    TextView sucessologin;
+
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
@@ -64,6 +85,7 @@ public class Login extends Activity implements ILoginView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ly_login);
+        //ButterKnife.bind(this);
 
         final String URL = BuildConfig.API_URL;
 
@@ -80,6 +102,14 @@ public class Login extends Activity implements ILoginView {
 
         loginPresenter = new LoginPresenter(this, loginService);
 
+        /* Test: Butter Knife | RoboGuice
+           onLoginClick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "RoboGuice", Toast.LENGTH_LONG).show();
+            }
+        });
+         */
 
     }
 
@@ -128,6 +158,7 @@ public class Login extends Activity implements ILoginView {
             gps.showSettingsAlert(this);
         }
     }
+
 
 
 
