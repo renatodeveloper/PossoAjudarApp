@@ -34,6 +34,7 @@ import com.possoajudar.app.infrastructure.helper.ActivityUtil;
 import org.json.JSONObject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import roboguice.activity.RoboActivity;
 import roboguice.inject.InjectView;
 
@@ -102,7 +103,7 @@ public class Login extends Activity implements ILoginView {
 
         loginPresenter = new LoginPresenter(this, loginService);
 
-        /* Test: Butter Knife | RoboGuice
+        /* Test: RoboGuice
            onLoginClick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -112,6 +113,16 @@ public class Login extends Activity implements ILoginView {
          */
 
     }
+
+    /* butterknife.OnClick
+
+         @OnClick(R.id.btn_login)
+        public void submit() {
+            // TODO submit data to server...
+            Toast.makeText(getApplicationContext(), "Butter Knife", Toast.LENGTH_LONG).show();
+        }
+     */
+
 
     public void onLoginClick(View view) {
         loginPresenter.onLoginClicked();
