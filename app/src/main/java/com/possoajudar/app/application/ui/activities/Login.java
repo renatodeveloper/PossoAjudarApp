@@ -24,19 +24,24 @@ import android.widget.Toast;
 
 import com.possoajudar.app.BuildConfig;
 import com.possoajudar.app.R;
+import com.possoajudar.app.application.module.app.LoginApplication;
 import com.possoajudar.app.application.service.ILoginView;
 import com.possoajudar.app.application.service.gps.GpsService;
 import com.possoajudar.app.application.service.login.LoginPresenter;
 import com.possoajudar.app.application.service.login.LoginService;
+import com.possoajudar.app.domain.model.Apontamento;
 import com.possoajudar.app.infrastructure.helper.ActivityUtil;
 
-
 import org.json.JSONObject;
+
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import roboguice.activity.RoboActivity;
 import roboguice.inject.InjectView;
+
 
 import static android.widget.Toast.LENGTH_LONG;
 import static android.widget.Toast.LENGTH_SHORT;
@@ -82,11 +87,15 @@ public class Login extends Activity implements ILoginView {
         super.onSaveInstanceState(outState);
     }
 
+    @Inject
+    Apontamento apontamento;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ly_login);
         //ButterKnife.bind(this);
+
+        ((LoginApplication) getApplication()).getAppComponent().inject(this);
 
         final String URL = BuildConfig.API_URL;
 
@@ -125,7 +134,8 @@ public class Login extends Activity implements ILoginView {
 
 
     public void onLoginClick(View view) {
-        loginPresenter.onLoginClicked();
+        Toast.makeText(getApplicationContext(), "Dagger 2: " + apontamento.toString() , Toast.LENGTH_LONG).show();
+        //loginPresenter.onLoginClicked();
     }
 
     @Override
