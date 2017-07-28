@@ -134,8 +134,8 @@ public class Login extends Activity implements ILoginView {
 
 
     public void onLoginClick(View view) {
-        Toast.makeText(getApplicationContext(), "Dagger 2: " + apontamento.toString() , Toast.LENGTH_LONG).show();
-        //loginPresenter.onLoginClicked();
+        //Toast.makeText(getApplicationContext(), "Dagger 2: " + apontamento.toString() , Toast.LENGTH_LONG).show();
+        loginPresenter.onLoginClicked();
     }
 
     @Override
@@ -173,7 +173,7 @@ public class Login extends Activity implements ILoginView {
         if(gps.canGetLocation()){
             activityUtil.definePrefLogado(getApplicationContext(), gps);
             sucessologin.setText("SUCESSO");
-            //startActivity(new Intent(this, MainActivity.class));
+            startActivity(new Intent(this, MainActivity.class));
             //new ActivityUtil(this).startMainActivity();
         }else{
             gps.showSettingsAlert(this);
