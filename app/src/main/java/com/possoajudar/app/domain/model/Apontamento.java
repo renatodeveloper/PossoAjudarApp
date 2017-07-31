@@ -12,6 +12,41 @@ public class Apontamento {
     public int id;
     public int image;
 
+    //**************************************************************************************
+    String name;
+    String type;
+    String version_number;
+    String feature;
+
+    public Apontamento(String name, String type, String version_number, String feature ) {
+        this.name=name;
+        this.type=type;
+        this.version_number=version_number;
+        this.feature=feature;
+
+    }
+
+    public String getName() {
+        return name;
+    }
+
+
+    public String getType() {
+        return type;
+    }
+
+
+    public String getVersion_number() {
+        return version_number;
+    }
+
+
+    public String getFeature() {
+        return feature;
+    }
+
+    //**************************************************************************************
+
 
     public Apontamento(String ds, String subDs, int id, int image) {
         this.ds = ds;
@@ -20,11 +55,14 @@ public class Apontamento {
         this.image=image;
     }
 
+    public Apontamento(String ds, String subDs){
+        this.ds = ds;
+        this.subDs = subDs;
+    }
 
     public String getDs() {
         return ds;
     }
-
 
     public String getSubDs() {
         return subDs;
@@ -39,16 +77,10 @@ public class Apontamento {
     }
 
 
-    public Apontamento(String ds, String subDs){
-        this.ds = ds;
-        this.subDs = subDs;
-    }
-
     @Override
     public String toString() {
         return  ds + " - " + subDs;
     }
-
 
 
     /*
