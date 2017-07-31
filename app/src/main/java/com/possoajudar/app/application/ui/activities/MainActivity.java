@@ -17,9 +17,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.possoajudar.app.R;
+import com.possoajudar.app.application.ui.adapter.CustomAdapter;
 import com.possoajudar.app.application.ui.recyclerview.MyRecyclerViewAdapter;
 import com.possoajudar.app.domain.model.Apontamento;
 import com.possoajudar.app.infrastructure.helper.ActivityUtil;
@@ -32,13 +35,21 @@ public class MainActivity extends AppCompatActivity
 
     public ActivityUtil activityUtil;
     //*** - Implementação RecyclerView
-    private static RecyclerView.Adapter adapter;
+    //private static RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private static RecyclerView recyclerView;
     private static ArrayList<Apontamento> data;
     public static View.OnClickListener myOnClickListener;
     private static ArrayList<Integer> removedItems;
     //*** - Implementação RecyclerView
+
+    ArrayList<Apontamento> dataModels;
+    ListView listView;
+    private static CustomAdapter adapter;
+
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +95,10 @@ public class MainActivity extends AppCompatActivity
 
 
         //*** - Implementação RecyclerView
+
+        /**
+         *
+
         myOnClickListener = new MyOnClickListener(this);
         recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         recyclerView.setHasFixedSize(true);
@@ -107,7 +122,45 @@ public class MainActivity extends AppCompatActivity
 
         adapter = new MyRecyclerViewAdapter(data);
         recyclerView.setAdapter(adapter);
+            */
+
+
+
+        listView=(ListView)findViewById(R.id.myList);
+
+        dataModels= new ArrayList<>();
+
+        dataModels.add(new Apontamento("Apple Pie", "Android 1.0", "1","September 23, 2008"));
+        dataModels.add(new Apontamento("Banana Bread", "Android 1.1", "2","February 9, 2009"));
+        dataModels.add(new Apontamento("Cupcake", "Android 1.5", "3","April 27, 2009"));
+        dataModels.add(new Apontamento("Donut","Android 1.6","4","September 15, 2009"));
+        dataModels.add(new Apontamento("Eclair", "Android 2.0", "5","October 26, 2009"));
+        dataModels.add(new Apontamento("Froyo", "Android 2.2", "8","May 20, 2010"));
+        dataModels.add(new Apontamento("Gingerbread", "Android 2.3", "9","December 6, 2010"));
+        dataModels.add(new Apontamento("Honeycomb","Android 3.0","11","February 22, 2011"));
+        dataModels.add(new Apontamento("Ice Cream Sandwich", "Android 4.0", "14","October 18, 2011"));
+        dataModels.add(new Apontamento("Jelly Bean", "Android 4.2", "16","July 9, 2012"));
+        dataModels.add(new Apontamento("Kitkat", "Android 4.4", "19","October 31, 2013"));
+        dataModels.add(new Apontamento("Lollipop","Android 5.0","21","November 12, 2014"));
+        dataModels.add(new Apontamento("Marshmallow", "Android 6.0", "23","October 5, 2015"));
+
+        adapter= new CustomAdapter(dataModels,getApplicationContext());
+
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Apontamento dataModel= dataModels.get(position);
+
+                Snackbar.make(view, dataModel.getName()+"\n"+dataModel.getType()+" API: "+dataModel.getVersion_number(), Snackbar.LENGTH_LONG)
+                        .setAction("No action", null).show();
+            }
+        });
+
     }
+
+
 
     @Override
     public void onBackPressed() {
@@ -177,7 +230,11 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-    //*** - Implementação RecyclerView
+
+/**
+ *
+
+//*** - Implementação RecyclerView
     private static class MyOnClickListener implements View.OnClickListener {
 
         private final Context context;
@@ -209,4 +266,5 @@ public class MainActivity extends AppCompatActivity
             adapter.notifyItemRemoved(selectedItemPosition);
         }
     }
+ */
 }
