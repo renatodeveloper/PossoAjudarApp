@@ -39,11 +39,12 @@
 
     </android.support.design.widget.AppBarLayout>
 
+    <!--
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/item_detail_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" >
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" > -->
 
         <!--************** antigo layout - >
         <!- A CardView that contains a TextView  (android:layout_gravity="center")-->
@@ -88,14 +89,15 @@
 
        </android.support.v7.widget.CardView>-->
 
+    <!--</android.support.v4.widget.NestedScrollView> -->
 
-
-        <ListView
-            android:id="@+id/myList"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"></ListView>
-
-    </android.support.v4.widget.NestedScrollView>
+    <ListView
+        android:id="@+id/myList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="25dp"
+        android:layout_marginTop="200dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"></ListView>
 
 
 </android.support.design.widget.CoordinatorLayout>
