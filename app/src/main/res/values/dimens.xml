@@ -21,4 +21,10 @@
     <dimen name="dimen12dp">12dp</dimen>
     <dimen name="dimen16dip">16dip</dimen>
 
+    <!-- layout screen default cadastro de usuário -->
+    <dimen name="dimen5dp">5dp</dimen>
+    <dimen name="dimen10dip">10dp</dimen>
+    <dimen name="dimen15dip">15dp</dimen>
+    <dimen name="dimen35dip">35dp</dimen>
+
 </resources>
