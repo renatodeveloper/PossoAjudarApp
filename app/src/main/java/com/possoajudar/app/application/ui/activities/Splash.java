@@ -4,10 +4,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.widget.Toast;
+
 import com.possoajudar.app.R;
+import com.possoajudar.app.application.service.IDaoModel;
+import com.possoajudar.app.application.service.dao.DaoModelPresenter;
+import com.possoajudar.app.domain.dao.MySQLiteOpenHelper;
 import com.possoajudar.app.infrastructure.helper.ActivityUtil;
 
 import java.util.ArrayList;
@@ -18,9 +24,11 @@ import java.util.List;
  * Created by renato on 11/07/2017.
  */
 
-public class Splash extends Activity {
+public class Splash extends Activity implements IDaoModel {
 
     public ActivityUtil activityUtil;
+    private DaoModelPresenter daoModelPresenter;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,11 +43,13 @@ public class Splash extends Activity {
             }
              */
 
+            daoModelPresenter = new DaoModelPresenter(this, getApplicationContext());
+            daoModelPresenter.createDbInterno();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
@@ -93,6 +103,46 @@ public class Splash extends Activity {
                 }
             }
             startActivity(new Intent(this, Login.class));
+        }catch (Exception e){
+            e.getMessage().toString();
+        }
+    }
+
+    @Override
+    public SQLiteDatabase getdbInterno(SQLiteDatabase sqLiteDatabase) {
+        return null;
+    }
+
+    @Override
+    public SQLiteDatabase getdbExterno() {
+        return null;
+    }
+
+    @Override
+    public void showdbInternoError(int resId) {
+        Toast.makeText(this, getString(resId), Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void showdbExternoError(int resId) {
+        Toast.makeText(this, getString(resId), Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void startdbSucess() {
+        try{
+            //if(activityUtil.ifExistDatabase()){
+            //  activityUtil.deleteDatabase();
+            //}
+
+            //valida folder
+            if(activityUtil.checkIfExistFolder(getApplicationContext())){
+                activityUtil.exportDatabse();
+            }else{
+                activityUtil.exportDatabse();
+            }
+
+            Toast.makeText(this, R.string.sucessDbInterno, Toast.LENGTH_LONG).show();
         }catch (Exception e){
             e.getMessage().toString();
         }
