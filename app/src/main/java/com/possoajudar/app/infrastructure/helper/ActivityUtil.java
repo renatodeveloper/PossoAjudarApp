@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.os.Environment;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.test.mock.MockPackageManager;
@@ -22,8 +23,14 @@ import com.possoajudar.app.application.ui.activities.Splash;
 
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.channels.FileChannel;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by renato on 06/07/2017.
@@ -36,6 +43,7 @@ public class ActivityUtil {
     public static final int REQUEST_CODE_PERMISSION = 1;
     public static String mPermission = Manifest.permission.ACCESS_FINE_LOCATION;
     //localização...
+
 
 
     public static String[] PERMISSIONS_STORAGE = {
@@ -209,4 +217,91 @@ Guarda status do usuário logado
         // Showing Alert Message
         alertDialog.show();
     }
+
+    /*
+    Cria o folder caso não exista
+     */
+    public boolean checkIfExistFolder(Context context){
+        File f;
+        String path = "";
+        try{
+            path = Environment.getExternalStorageDirectory().toString() + context.getResources().getString(R.string.folder);
+            f = new File(path);
+            if (!f.exists()) {
+                if (!f.mkdirs()) {
+                    return false;
+                }
+            }
+            return true;
+        }catch (Exception e){
+            e.getMessage().toString();
+        }
+        return  false;
+    }
+
+
+    public boolean ifExistDatabase() {
+        File data = Environment.getDataDirectory();
+        String dbPath = "/user/0/com.possoajudar.app.debug/databases/AJUDAR.db";
+        File current_db = new File(data, dbPath);
+        try {
+            if(current_db.exists()){
+                return true;
+            }
+        } catch (Exception e) {
+            e.getMessage().toString();
+        }
+        return false;
+    }
+
+    public void deleteDatabase() {
+        File data = Environment.getDataDirectory();
+        String dbPath = "/user/0/com.possoajudar.app.debug/databases/AJUDAR.db";
+        File current_db = new File(data, dbPath);
+        try {
+            if(current_db.exists()){
+                current_db.delete();
+            }
+        } catch (Exception e) {
+            e.getMessage().toString();
+        }
+    }
+    /*
+    Exporte da memoria interna para a externa
+     */
+    public void exportDatabse()  throws Exception{
+
+        String path = Environment.getExternalStorageDirectory().toString() + "/POSSO/";
+        File direct = new File(path);
+        if (!direct.exists()) {
+            if (!direct.mkdirs()) {
+                throw new Exception("Error ao criar o diretorio...");
+            }
+        }
+        if(direct.isDirectory()){
+            File sd = new File(Environment.getExternalStorageDirectory(), "/POSSO/");
+            File data = Environment.getDataDirectory();
+
+            FileChannel origem = null;
+            FileChannel destino = null;
+
+            String dbPath = "/user/0/com.possoajudar.app.debug/databases/AJUDAR.db";
+            String dbPath_backup = "posso_temp.db";
+
+            File current_db = new File(data, dbPath);
+            File backupDB = new File(sd, dbPath_backup);
+            try {
+                sd.mkdirs();
+                origem = new FileInputStream(current_db).getChannel();
+                destino = new FileOutputStream(backupDB).getChannel();
+                destino.transferFrom(origem, 0, origem.size());
+                origem.close();
+                destino.close();
+            } catch (IOException e) {
+                e.getMessage().toString();
+            }
+            //* após a copia ele só aparece no fileExplore, não aparece no sdCard, acesse via app fileExplore
+        }
+    }
+
 }
