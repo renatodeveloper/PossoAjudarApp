@@ -69,6 +69,7 @@ public class Login extends Activity implements ILoginView {
     private EditText usernameView;
     private EditText passwordView;
     TextView sucessologin;
+    TextView newcountView;
 
 
     private LoginPresenter loginPresenter;
@@ -109,8 +110,16 @@ public class Login extends Activity implements ILoginView {
         usernameView = (EditText) findViewById(R.id.input_email);
         passwordView = (EditText) findViewById(R.id.input_password);
         sucessologin = (TextView) findViewById(R.id.sucessologin);
+        newcountView = (TextView) findViewById(R.id.newcount);
 
         loginPresenter = new LoginPresenter(this, loginService);
+
+        newcountView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Login.this, CadUsuario.class));
+            }
+        });
 
         /* Test: RoboGuice
            onLoginClick.setOnClickListener(new View.OnClickListener() {
