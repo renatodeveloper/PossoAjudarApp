@@ -48,6 +48,7 @@
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".application.ui.activities.ListApontamento"/>
         <activity android:name=".application.ui.activities.ListHistorico"/>
+        <activity android:name=".application.ui.activities.CadUsuario"/>
     </application>
 
 </manifest>
