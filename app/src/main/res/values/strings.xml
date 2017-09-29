@@ -37,4 +37,30 @@
     <string name="str_finalizar">Finalizar</string>
     <string name="str_infoPermissaoNeverAgain">Você só poderá usar o sistema habilitando a permissão em configurações, selecionar o app e adicionar as permissão negada!</string>
 
+    <!-- layout screen cadastrar novo usuário -->
+    <string name="strLyCadastroDeUsuarioTitle">Cadastro de Usuário</string>
+    <string name="strLyCadastroDeUsuarioTextViewEmail">Email:</string>
+    <string name="strLyCadastroDeUsuarioEditTextHintEmail">Entre com o email</string>
+    <string name="strLyCadastroDeUsuarioTextViewSenha">Senha:</string>
+    <string name="strLyCadastroDeUsuarioEditTextHintSenha">Entre com a senha</string>
+    <string name="strLyCadastrofailed">Falha no cadastro do novo usuário!</string>
+
+    <!-- parametros DAO -->
+    <string name="folder">"/POSSO/"</string>
+    <string name="folderError">Folder POSSO indisponível</string>
+
+    <!-- banco de dados -->
+    <string name="sqlCreateTableUsuario">CREATE TABLE Usuario (idUsuario INTEGER PRIMARY KEY AUTOINCREMENT, dsLogin TEXT, dsSenha TEXT, idRedeSocial INTEGER, FOREIGN KEY (idRedeSocial) REFERENCES RedeSocial(idRedeSocial));
+</string>
+    <string name="sqlAlterTblUsuario">ALTER TABLE Usuarios ADD COLUMN nrObs TEXT</string>
+
+    <string name="errorDbCreateMemoriaInterna">NÃO FOI POSSÍVEL CRIAR O BANCO NA MEMÓRIA INTERNA. Error em: MySQLiteOpenHelper</string>
+    <string name="errorDbWriteMemoriaInterna">NÃO FOI POSSÍVEL ESCREVER O BANCO NA MEMÓRIA INTERNA. Error em: getWritableDatabase</string>
+
+    <string name="contatos">Contatos</string>
+    <string name="lblNome">Email:</string>
+    <string name="lblTelefone">Senha:</string>
+    <string name="lblEndereco">Apelido:</string>
+    <string name="btnSalvar">Salvar</string>
+    <string name="btnCancelar">Cancelar</string>
 </resources>
