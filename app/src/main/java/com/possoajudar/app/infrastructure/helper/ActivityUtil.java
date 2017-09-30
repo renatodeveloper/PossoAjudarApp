@@ -221,7 +221,7 @@ Guarda status do usuário logado
     /*
     Cria o folder caso não exista
      */
-    public boolean checkIfExistFolder(Context context){
+    public static boolean checkIfExistFolder(Context context){
         File f;
         String path = "";
         try{
@@ -286,7 +286,7 @@ Guarda status do usuário logado
             FileChannel destino = null;
 
             String dbPath = "/user/0/com.possoajudar.app.debug/databases/AJUDAR.db";
-            String dbPath_backup = "posso_temp.db";
+            String dbPath_backup = "AJUDAR_dbInterno.db";
 
             File current_db = new File(data, dbPath);
             File backupDB = new File(sd, dbPath_backup);
