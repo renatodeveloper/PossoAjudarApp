@@ -58,6 +58,11 @@
     <string name="errorDbWriteMemoriaInterna">NÃO FOI POSSÍVEL ESCREVER O BANCO NA MEMÓRIA INTERNA. Error em: getWritableDatabase</string>
     <string name="sucessDbInterno">Banco interno criado com sucesso!</string>
 
+    <string name="errorCreateFolderExterna">Error ao criar o FOLDER</string>
+    <string name="errorDbCreateMemoriaExterna">NÃO FOI POSSÍVEL CRIAR O BANCO NO SDCARD. Error em: MySQLiteOpenHelper</string>
+    <string name="errorDbWriteMemoriaExterna">NÃO FOI POSSÍVEL ESCREVER O BANCO NO SDCARD. Error em: getWritableDatabase</string>
+    <string name="sucessDbExterno">Banco externo criado com sucesso!</string>
+
     <string name="contatos">Contatos</string>
     <string name="lblNome">Email:</string>
     <string name="lblTelefone">Senha:</string>
