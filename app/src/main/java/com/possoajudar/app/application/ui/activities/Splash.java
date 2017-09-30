@@ -45,6 +45,10 @@ public class Splash extends Activity implements IDaoModel {
 
             daoModelPresenter = new DaoModelPresenter(this, getApplicationContext());
             daoModelPresenter.createDbInterno();
+            //daoModelPresenter.getDbInterno();//testar
+
+            daoModelPresenter.createDbExterno();
+            //daoModelPresenter.getDbExterno();//testar
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -114,8 +118,7 @@ public class Splash extends Activity implements IDaoModel {
     }
 
     @Override
-    public SQLiteDatabase getdbExterno() {
-        return null;
+    public SQLiteDatabase getdbExterno(SQLiteDatabase sqLiteDatabase) {return null;
     }
 
     @Override
@@ -146,5 +149,10 @@ public class Splash extends Activity implements IDaoModel {
         }catch (Exception e){
             e.getMessage().toString();
         }
+    }
+
+    @Override
+    public void startdbSucessSDCARD() {
+        Toast.makeText(this, R.string.sucessDbExterno, Toast.LENGTH_LONG).show();
     }
 }
