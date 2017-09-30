@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.possoajudar.app.R;
 
+import java.io.File;
 import java.io.IOException;
 
 /**
@@ -25,11 +26,20 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
     public int oldVersion;
     public int newVersion;
 
+    /** Construtor default */
     public void MySQLiteOpenHelper() {
     }
 
+    /** Construtor para banco na memória interna */
     public MySQLiteOpenHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
+        this.contexto = context;
+    }
+    /** Construtor para banco no SDCARD */
+    public MySQLiteOpenHelper(Context context, String FILE_DIR) {
+        super(context, Environment.getExternalStorageDirectory()
+                + File.separator + FILE_DIR
+                + File.separator + DB_NAME, null, DB_VERSION);
         this.contexto = context;
     }
 
