@@ -8,8 +8,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.view.View;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.possoajudar.app.R;
 import com.possoajudar.app.application.service.IDaoModel;
 import com.possoajudar.app.application.service.dao.DaoModelPresenter;
@@ -18,6 +20,8 @@ import com.possoajudar.app.infrastructure.helper.ActivityUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.fabric.sdk.android.Fabric;
 
 
 /**
@@ -32,6 +36,7 @@ public class Splash extends Activity implements IDaoModel {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
         try {
             activityUtil = new ActivityUtil();
 
@@ -50,10 +55,12 @@ public class Splash extends Activity implements IDaoModel {
             daoModelPresenter.createDbExterno();
             //daoModelPresenter.getDbExterno();//testar
 
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
