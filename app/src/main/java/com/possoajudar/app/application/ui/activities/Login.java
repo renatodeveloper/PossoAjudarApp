@@ -145,7 +145,10 @@ public class Login extends Activity implements ILoginView {
     public void onLoginClick(View view) {
         //Toast.makeText(getApplicationContext(), "Dagger 2: " + apontamento.toString() , Toast.LENGTH_LONG).show();
         loginPresenter.onLoginClicked();
+        //throw new RuntimeException("This is a crash");
     }
+
+
 
     @Override
     public String getUsername() {
