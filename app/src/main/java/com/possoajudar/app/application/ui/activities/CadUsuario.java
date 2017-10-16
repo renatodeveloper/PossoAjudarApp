@@ -6,11 +6,16 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.possoajudar.app.R;
+import com.possoajudar.app.application.module.app.GoogleAnalyticsApplication;
 import com.possoajudar.app.application.service.ICadUserView;
 import com.possoajudar.app.application.service.cadastro.CadUserPresenter;
 import com.possoajudar.app.application.service.cadastro.CadUserService;
@@ -39,6 +44,19 @@ public class CadUsuario extends RoboActivity implements ICadUserView {
     private CadUserService cadUserService;
 
     GpsService gps;
+
+    private static final String TAG = CadUsuario.class.getSimpleName();
+    private Tracker mTracker;
+    private String name = "CadUsuario";
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.i(TAG, "Setting screen name: " + name);
+        mTracker.setScreenName(name);
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +90,11 @@ public class CadUsuario extends RoboActivity implements ICadUserView {
                 userSenha.setText("");
             }
         });
+
+        //Analytics Integration
+        // Obtain the shared Tracker instance.
+        GoogleAnalyticsApplication application = (GoogleAnalyticsApplication) getApplication();
+        mTracker = application.getDefaultTracker();
     }
 
     @Override
