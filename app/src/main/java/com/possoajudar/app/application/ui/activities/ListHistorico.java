@@ -9,6 +9,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -22,7 +23,10 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.possoajudar.app.R;
+import com.possoajudar.app.application.module.app.GoogleAnalyticsApplication;
 import com.possoajudar.app.application.ui.adapter.CustomAdapter;
 import com.possoajudar.app.application.ui.recyclerview.MyRecyclerViewAdapter;
 import com.possoajudar.app.domain.model.Apontamento;
@@ -42,6 +46,19 @@ public class ListHistorico extends Activity {
     public static View.OnClickListener myOnClickListener;
     private static ArrayList<Integer> removedItems;
     private static MyRecyclerViewAdapter adapter;
+
+
+    private static final String TAG = CadUsuario.class.getSimpleName();
+    private Tracker mTracker;
+    private String name = "ListHistorico";
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.i(TAG, "Setting screen name: " + name);
+        mTracker.setScreenName(name);
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +89,12 @@ public class ListHistorico extends Activity {
 
          adapter = new MyRecyclerViewAdapter(data);
          recyclerView.setAdapter(adapter);
+
+
+        //Analytics Integration
+        // Obtain the shared Tracker instance.
+        GoogleAnalyticsApplication application = (GoogleAnalyticsApplication) getApplication();
+        mTracker = application.getDefaultTracker();
 
     }
 
