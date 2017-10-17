@@ -21,9 +21,21 @@ import com.possoajudar.app.application.ui.fragments.PossoAjudarAppFrag;
  */
 
 public class ContainerFragmentActivity extends Activity {
-    private static final String TAG = MainActivity.class.getSimpleName();
+    private static final String TAG = ContainerFragmentActivity.class.getSimpleName();
     private Tracker mTracker;
     String name = new String("ContainerFragmentActivity Screen");
+
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.i(TAG, "Setting screen name: " + name);
+        mTracker.setScreenName(name);
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,13 +67,5 @@ public class ContainerFragmentActivity extends Activity {
         }
 
     }
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.i(TAG, "Setting screen name: " + name);
-        //using tracker variable to set Screen Name
-        mTracker.setScreenName(name);
-        //sending the screen to analytics using ScreenViewBuilder() method
-        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
-    }
+
 }
