@@ -12,12 +12,14 @@ import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.possoajudar.app.R;
 import com.possoajudar.app.application.module.app.GoogleAnalyticsApplication;
+import com.possoajudar.app.application.ui.activities.ContainerFragmentActivity;
 
 /**
  * Created by renato on 16/10/2017.
  */
 
 public class PossoAjudarAppFrag extends Fragment {
+
     private static final String TAG = PossoAjudarAppFrag.class.getSimpleName();
     private Tracker mTracker;
     String name = new String("Fragment PossoAjudarApp");
@@ -40,6 +42,7 @@ public class PossoAjudarAppFrag extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.posso_ajudar_app_fragment, container, false);
     }
+
 
     @Override
     public void onResume() {
