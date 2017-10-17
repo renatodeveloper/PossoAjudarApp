@@ -228,6 +228,15 @@ public class MainActivity extends AppCompatActivity
         }
 
         if (id == R.id.action_event) {
+            // Get tracker.
+            Tracker t = ((GoogleAnalyticsApplication) getApplication()).getDefaultTracker();
+
+            // Build and send an Event.
+            t.send(new HitBuilders.EventBuilder()
+                    .setCategory(getString(R.string.categoryId))
+                    .setAction(getString(R.string.actionId))
+                    .setLabel(getString(R.string.labelId))
+                    .build());
 
             return true;
         }
