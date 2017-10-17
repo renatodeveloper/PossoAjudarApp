@@ -22,6 +22,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.StandardExceptionParser;
 import com.google.android.gms.analytics.Tracker;
 import com.possoajudar.app.R;
 import com.possoajudar.app.application.module.app.GoogleAnalyticsApplication;
@@ -31,6 +32,7 @@ import com.possoajudar.app.application.ui.recyclerview.MyRecyclerViewAdapter;
 import com.possoajudar.app.domain.model.Apontamento;
 import com.possoajudar.app.infrastructure.helper.ActivityUtil;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
@@ -240,8 +242,24 @@ public class MainActivity extends AppCompatActivity
 
             return true;
         }
+        if (id == R.id.action_exception) {
+            Exception e = null;
+            try{
+                int num[]={1,2,3,4};
+                System.out.println(num[5]);
+            }catch (Exception f){
+                e = f;
+            }
+            if( e != null){
+                Tracker t = ((GoogleAnalyticsApplication) getApplication()).getDefaultTracker();
+                t.send(new HitBuilders.ExceptionBuilder()
+                        .setDescription(new StandardExceptionParser(MainActivity.this, null).getDescription(Thread.currentThread().getName(), e))
+                        .setFatal(false)
+                        .build());
 
-
+            }
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }
