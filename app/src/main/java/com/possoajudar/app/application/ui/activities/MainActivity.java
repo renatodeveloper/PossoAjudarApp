@@ -21,8 +21,12 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.possoajudar.app.R;
+import com.possoajudar.app.application.module.app.GoogleAnalyticsApplication;
 import com.possoajudar.app.application.ui.adapter.CustomAdapter;
+import com.possoajudar.app.application.ui.fragments.PossoAjudarAppFrag;
 import com.possoajudar.app.application.ui.recyclerview.MyRecyclerViewAdapter;
 import com.possoajudar.app.domain.model.Apontamento;
 import com.possoajudar.app.infrastructure.helper.ActivityUtil;
@@ -31,7 +35,6 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
 
     public ActivityUtil activityUtil;
     //*** - Implementação RecyclerView
@@ -48,8 +51,14 @@ public class MainActivity extends AppCompatActivity
     private static CustomAdapter adapter;
 
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mTracker.setScreenName("Main Screen");
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+    }
 
-
+    private Tracker mTracker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -158,6 +167,12 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+
+        //Analytics Integration
+        // Obtain the shared Tracker instance.
+        GoogleAnalyticsApplication application = (GoogleAnalyticsApplication) getApplication();
+        mTracker = application.getDefaultTracker();
+
     }
 
 
@@ -202,6 +217,21 @@ public class MainActivity extends AppCompatActivity
             }
             return true;
         }
+
+        if (id == R.id.action_fragment) {
+            try{
+                startActivity(new Intent(MainActivity.this, ContainerFragmentActivity.class));
+            }catch (Exception e){
+                e.getMessage().toString();
+            }
+            return true;
+        }
+
+        if (id == R.id.action_event) {
+
+            return true;
+        }
+
 
 
         return super.onOptionsItemSelected(item);
