@@ -24,7 +24,7 @@ import android.widget.Toast;
 
 import com.possoajudar.app.BuildConfig;
 import com.possoajudar.app.R;
-import com.possoajudar.app.application.module.app.LoginApplication;
+//import com.possoajudar.app.application.module.app.LoginApplication;
 import com.possoajudar.app.application.service.ILoginView;
 import com.possoajudar.app.application.service.gps.GpsService;
 import com.possoajudar.app.application.service.login.LoginPresenter;
@@ -96,7 +96,7 @@ public class Login extends Activity implements ILoginView {
         setContentView(R.layout.ly_login);
         //ButterKnife.bind(this);
 
-        ((LoginApplication) getApplication()).getAppComponent().inject(this);
+      //  ((LoginApplication) getApplication()).getAppComponent().inject(this);
 
         final String URL = BuildConfig.API_URL;
 
