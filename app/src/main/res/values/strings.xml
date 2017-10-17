@@ -8,6 +8,8 @@
     <string name="app_title_login">Bem vindo ao conversa com bla!</string>
     <string name="action_fragment">Fragment</string>
     <string name="action_event">Evento</string>
+    <string name="action_exception">Rastreamento de Exception</string>
+
 
     <!-- layout screen default login -->
     <string name="strLyLoginHintInputEmail">Email</string>
