@@ -76,7 +76,9 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
      * @param db A base de dados onde os comandos serão executados
      */
     public void startdb(SQLiteDatabase db) throws IOException {
-        String[] sql = contexto.getString(R.string.sqlCreateTableUsuario).split("\n");
+        String[] sql = new String[]{contexto.getString(R.string.sqlCreateTableRedeSocial),  contexto.getString(R.string.sqlCreateTableUsuario)};
+
+        //String[] sql = contexto.getString(R.string.sqlCreateTableUsuario).split("\n");
         db.beginTransaction();
         try{
             // Cria a tabela e testa os dados
