@@ -63,7 +63,7 @@ public class CadUsuario extends RoboActivity implements ICadUserView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ly_cad_usuario);
 
-        cadUserPresenter = new CadUserPresenter(this, cadUserService);
+        cadUserPresenter = new CadUserPresenter(this, cadUserService, getApplicationContext());
 
         progressDialog = new ProgressDialog(this);
 
