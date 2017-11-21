@@ -54,8 +54,11 @@
     <string name="folderError">Folder POSSO indisponível</string>
 
     <!-- banco de dados -->
+    <string name="sqlCreateTableRedeSocial">CREATE TABLE RedeSocial (idRedeSocial INTEGER PRIMARY KEY AUTOINCREMENT, dsRedeSocial TEXT);
+</string>
     <string name="sqlCreateTableUsuario">CREATE TABLE Usuario (idUsuario INTEGER PRIMARY KEY AUTOINCREMENT, dsLogin TEXT, dsSenha TEXT, idRedeSocial INTEGER, FOREIGN KEY (idRedeSocial) REFERENCES RedeSocial(idRedeSocial));
 </string>
+
     <string name="sqlAlterTblUsuario">ALTER TABLE Usuarios ADD COLUMN nrObs TEXT</string>
 
     <string name="errorDbCreateMemoriaInterna">NÃO FOI POSSÍVEL CRIAR O BANCO NA MEMÓRIA INTERNA. Error em: MySQLiteOpenHelper</string>
