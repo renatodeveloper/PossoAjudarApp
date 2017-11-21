@@ -1,5 +1,7 @@
 package com.possoajudar.app.application.service.cadastro;
 
+import android.content.Context;
+
 import com.possoajudar.app.R;
 import com.possoajudar.app.application.service.ICadUserView;
 
@@ -8,10 +10,12 @@ import com.possoajudar.app.application.service.ICadUserView;
  */
 
 public class CadUserPresenter {
+    Context context;
     private ICadUserView view;
     private CadUserService service;
 
-    public CadUserPresenter(ICadUserView view, CadUserService service){
+    public CadUserPresenter(ICadUserView view, CadUserService service, Context context){
+        this.context = context;
         service = new CadUserService();
         this.view = view;
         this.service = service;
@@ -29,7 +33,7 @@ public class CadUserPresenter {
                 view.showCadUserPasswordError(R.string.strLyCadastroDeUsuarioEditTextHintSenha);
                 return;
             }
-            boolean registerSucceeded = service.registerNewUser(cadEmailUser, cadSenhaUser);
+            boolean registerSucceeded = service.registerNewUser(cadEmailUser, cadSenhaUser, this.context);
             if(registerSucceeded){
                 view.startMainActivity();
             }else{
