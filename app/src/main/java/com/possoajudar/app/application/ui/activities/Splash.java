@@ -49,11 +49,9 @@ public class Splash extends Activity implements IDaoModel {
              */
 
             daoModelPresenter = new DaoModelPresenter(this, getApplicationContext());
-            daoModelPresenter.createDbInterno();
-            //daoModelPresenter.getDbInterno();//testar
+            daoModelPresenter.createdbInterno();
 
-            daoModelPresenter.createDbExterno();
-            //daoModelPresenter.getDbExterno();//testar
+            daoModelPresenter.createdbExterno();
 
 
         } catch (Exception e) {
@@ -119,39 +117,20 @@ public class Splash extends Activity implements IDaoModel {
         }
     }
 
-    @Override
-    public SQLiteDatabase getdbInterno(SQLiteDatabase sqLiteDatabase) {
-        return null;
-    }
 
     @Override
-    public SQLiteDatabase getdbExterno(SQLiteDatabase sqLiteDatabase) {return null;
-    }
-
-    @Override
-    public void showdbInternoError(int resId) {
+    public void showErrorInternoDB(int resId) {
         Toast.makeText(this, getString(resId), Toast.LENGTH_LONG).show();
     }
 
     @Override
-    public void showdbExternoError(int resId) {
+    public void showErrorExternoDB(int resId) {
         Toast.makeText(this, getString(resId), Toast.LENGTH_LONG).show();
     }
 
     @Override
-    public void startdbSucess() {
+    public void showSucessInternoDB() {
         try{
-            //if(activityUtil.ifExistDatabase()){
-            //  activityUtil.deleteDatabase();
-            //}
-
-            //valida folder
-            if(activityUtil.checkIfExistFolder(getApplicationContext())){
-                activityUtil.exportDatabse();
-            }else{
-                activityUtil.exportDatabse();
-            }
-
             Toast.makeText(this, R.string.sucessDbInterno, Toast.LENGTH_LONG).show();
         }catch (Exception e){
             e.getMessage().toString();
@@ -159,7 +138,7 @@ public class Splash extends Activity implements IDaoModel {
     }
 
     @Override
-    public void startdbSucessSDCARD() {
+    public void showSucessExternoDB() {
         Toast.makeText(this, R.string.sucessDbExterno, Toast.LENGTH_LONG).show();
     }
 }
