@@ -148,8 +148,6 @@ public class Login extends Activity implements ILoginView {
         //throw new RuntimeException("This is a crash");
     }
 
-
-
     @Override
     public String getUsername() {
         return usernameView.getText().toString();
@@ -191,9 +189,4 @@ public class Login extends Activity implements ILoginView {
             gps.showSettingsAlert(this);
         }
     }
-
-
-
-
-
 }
