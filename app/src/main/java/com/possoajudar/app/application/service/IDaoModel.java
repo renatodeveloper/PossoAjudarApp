@@ -7,11 +7,9 @@ import android.database.sqlite.SQLiteDatabase;
  */
 
 public interface IDaoModel {
-    SQLiteDatabase getdbInterno(SQLiteDatabase sqLiteDatabase);
-    SQLiteDatabase getdbExterno(SQLiteDatabase sqLiteDatabase);
+    void showSucessInternoDB();
+    void showErrorInternoDB(int resId);
 
-    void showdbInternoError(int resId);
-    void showdbExternoError(int resId);
-    void startdbSucess();
-    void startdbSucessSDCARD();
+    void showSucessExternoDB();
+    void showErrorExternoDB(int resId);
 }
