@@ -69,6 +69,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/dimen24dp"
             android:text="@string/strLyLoginTextViewAccount"
+            android:textColor="@color/color_red"
             android:gravity="center"
             android:textSize="@dimen/dimen16dip"
             />
