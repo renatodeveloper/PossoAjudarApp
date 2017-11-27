@@ -112,7 +112,7 @@ public class Login extends Activity implements ILoginView {
         sucessologin = (TextView) findViewById(R.id.sucessologin);
         newcountView = (TextView) findViewById(R.id.newcount);
 
-        loginPresenter = new LoginPresenter(this, loginService);
+        loginPresenter = new LoginPresenter(this, loginService, getApplicationContext());
 
         newcountView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -181,7 +181,7 @@ public class Login extends Activity implements ILoginView {
 
         gps = new GpsService(getApplicationContext());
         if(gps.canGetLocation()){
-            activityUtil.definePrefLogado(getApplicationContext(), gps);
+            activityUtil.definePrefLogado(getApplicationContext(), gps, activityUtil.getValeuJson(this, usernameView.getText().toString(), passwordView.getText().toString()));
             sucessologin.setText("SUCESSO");
             startActivity(new Intent(this, MainActivity.class));
             //new ActivityUtil(this).startMainActivity();
