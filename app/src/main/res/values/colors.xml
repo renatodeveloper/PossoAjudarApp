@@ -5,4 +5,8 @@
     <color name="colorAccent">#FF4081</color>
     <color name="grey_300">#E0E0E0</color>
     <color name="color_red">#FF0000</color>
+
+    <color name="button_normal">#929392</color>
+    <color name="button_pressed">#c0c1c0</color>
+    <color name="dialog_divider">@android:color/black</color>
 </resources>
