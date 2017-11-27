@@ -74,11 +74,13 @@ public class ActivityUtil {
 /*
 Guarda status do usuário logado
 */
-    public void definePrefLogado(Context context, GpsService gps) {
+    public void definePrefLogado(Context context, GpsService gps, JSONObject jsonObject) {
         try{
             if(gps.canGetLocation()){
 
                 JSONObject json = new JSONObject();
+                json.put(context.getString(R.string.dsLoginTblUser), jsonObject.getString(context.getString(R.string.dsGeneric_A)));
+                json.put(context.getString(R.string.dsSenhaTblUser), jsonObject.getString(context.getString(R.string.dsGeneric_B)));
                 json.put(context.getString(R.string.prefStatus_userLogado),true);
                 json.put(context.getString(R.string.prefDataTime_userLogado), getDateTime(context));
                 json.put(context.getString(R.string.prefLatitude_userLogado), gps.getLatitude());
@@ -89,7 +91,11 @@ Guarda status do usuário logado
 
                 SharedPreferences mPrefs = context.getSharedPreferences(context.getString(R.string.prefArq_userLogado), Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = mPrefs.edit();
+
+
                 editor.putString(context.getString(R.string.prefJSON_userLogado), json.toString());
+                editor.putString(context.getString(R.string.dsLoginTblUser), json.getString(context.getString(R.string.dsLoginTblUser)));
+                editor.putString(context.getString(R.string.dsSenhaTblUser), json.getString(context.getString(R.string.dsSenhaTblUser)));
                 editor.putString(context.getString(R.string.prefStatus_userLogado),json.getString(context.getString(R.string.prefStatus_userLogado)));
                 editor.putString(context.getString(R.string.prefDataTime_userLogado), json.getString(context.getString(R.string.prefDataTime_userLogado)));
                 editor.putString(context.getString(R.string.prefLatitude_userLogado),json.getString(context.getString(R.string.prefLatitude_userLogado)));
@@ -108,7 +114,7 @@ Guarda status do usuário logado
         /*
     Limpa status do usuário logado
     */
-    public void cleanPrefLogado() {
+    public void cleanPrefLogado(Context context) {
         try{
             SharedPreferences mPrefs = context.getSharedPreferences(context.getString(R.string.prefArq_userLogado), context.MODE_PRIVATE);
             SharedPreferences.Editor editor = mPrefs.edit();
@@ -120,6 +126,49 @@ Guarda status do usuário logado
             e.getMessage().toString();
         }
     }
+
+
+
+    /*
+Guarda status do apontamento do usuário
+*/
+    public void definePrefLogadoApontamento(Context context, GpsService gps, JSONObject jsonObject) {
+        try{
+            if(gps.canGetLocation()){
+
+                JSONObject json = new JSONObject();
+                json.put(context.getString(R.string.dsAlturaTblUserAptmento), jsonObject.getString(context.getString(R.string.dsGeneric_A)));
+                json.put(context.getString(R.string.dsPesoTblUserAptmento), jsonObject.getString(context.getString(R.string.dsGeneric_B)));
+                json.put(context.getString(R.string.prefStatus_userLogadoApontamento),true);
+                json.put(context.getString(R.string.prefDataTime_userLogado), getDateTime(context));
+                json.put(context.getString(R.string.prefLatitude_userLogado), gps.getLatitude());
+                json.put(context.getString(R.string.prefLongitude_userLogado), gps.getLongitude());
+                json.put(context.getString(R.string.prefAltitude_userLogado), gps.getAltitude());
+                json.put(context.getString(R.string.prefSpeed_userLogado), gps.getSpeed());
+
+
+                SharedPreferences mPrefs = context.getSharedPreferences(context.getString(R.string.prefArq_userLogadoApontamento), Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = mPrefs.edit();
+
+
+                editor.putString(context.getString(R.string.prefJSON_userLogado), json.toString());
+                editor.putString(context.getString(R.string.dsAlturaTblUserAptmento), json.getString(context.getString(R.string.dsAlturaTblUserAptmento)));
+                editor.putString(context.getString(R.string.dsPesoTblUserAptmento), json.getString(context.getString(R.string.dsPesoTblUserAptmento)));
+                editor.putString(context.getString(R.string.prefStatus_userLogadoApontamento),json.getString(context.getString(R.string.prefStatus_userLogadoApontamento)));
+                editor.putString(context.getString(R.string.prefDataTime_userLogado), json.getString(context.getString(R.string.prefDataTime_userLogado)));
+                editor.putString(context.getString(R.string.prefLatitude_userLogado),json.getString(context.getString(R.string.prefLatitude_userLogado)));
+                editor.putString(context.getString(R.string.prefLongitude_userLogado),json.getString(context.getString(R.string.prefLongitude_userLogado)));
+                editor.putString(context.getString(R.string.prefAltitude_userLogado),json.getString(context.getString(R.string.prefAltitude_userLogado)));
+                editor.putString(context.getString(R.string.prefSpeed_userLogado),json.getString(context.getString(R.string.prefSpeed_userLogado)));
+                editor.commit();
+            }else{
+                gps.showSettingsAlert();
+            }
+        }catch (Exception e) {
+            e.getMessage().toString();
+        }
+    }
+
 
     public String getDateTime(Context context){
         try{
@@ -302,6 +351,17 @@ Guarda status do usuário logado
             }
             //* após a copia ele só aparece no fileExplore, não aparece no sdCard, acesse via app fileExplore
         }
+    }
+
+    public JSONObject getValeuJson(Context context, String... params){
+        JSONObject result = new JSONObject();
+        try{
+            result.put(context.getString(R.string.dsGeneric_A), params[0]);
+            result.put(context.getString(R.string.dsGeneric_B), params[1]);
+        }catch (Exception e){
+            e.getMessage().toString();
+        }
+        return result;
     }
 
 }
