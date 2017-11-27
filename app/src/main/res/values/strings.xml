@@ -34,6 +34,9 @@
     <string name="prefAltitude_userLogado">altitude</string>
     <string name="prefSpeed_userLogado">speed</string>
 
+    <string name="prefArq_userLogadoApontamento">prefArq_userLogadoApontamento</string>
+    <string name="prefStatus_userLogadoApontamento">status</string>
+
     <!-- mensagens -->
     <string name="str_SimpleDateFormat">MMM dd,yyyy HH:mm</string>
     <string name="str_atencao">Atenção</string>
@@ -59,7 +62,22 @@
     <string name="sqlCreateTableUsuario">CREATE TABLE Usuario (idUsuario INTEGER PRIMARY KEY AUTOINCREMENT, dsLogin TEXT, dsSenha TEXT, idRedeSocial INTEGER, FOREIGN KEY (idRedeSocial) REFERENCES RedeSocial(idRedeSocial));
 </string>
 
+    <!-- tabelas -->
+    <string name="dsNameTblUser">Usuario</string>
     <string name="sqlAlterTblUsuario">ALTER TABLE Usuarios ADD COLUMN nrObs TEXT</string>
+    <string name="dsLoginTblUser">dsLogin</string>
+    <string name="dsSenhaTblUser">dsSenha</string>
+
+    <!-- ... generic keys ... -->
+    <string name="dsGeneric_A">dsGeneric_A</string>
+    <string name="dsGeneric_B">dsGeneric_B</string>
+
+    <!-- tabelas -->
+    <string name="dsNameTblUserAptmento">Apontamento</string>
+    <string name="dsAlturaTblUserAptmento">dsAltura</string>
+    <string name="dsPesoTblUserAptmento">dsPeso</string>
+
+
 
     <string name="errorDbCreateMemoriaInterna">NÃO FOI POSSÍVEL CRIAR O BANCO NA MEMÓRIA INTERNA. Error em: MySQLiteOpenHelper</string>
     <string name="errorDbWriteMemoriaInterna">NÃO FOI POSSÍVEL ESCREVER O BANCO NA MEMÓRIA INTERNA. Error em: getWritableDatabase</string>
@@ -71,11 +89,12 @@
     <string name="sucessDbExterno">Banco externo criado com sucesso!</string>
 
     <string name="contatos">Contatos</string>
-    <string name="lblNome">Email:</string>
-    <string name="lblTelefone">Senha:</string>
-    <string name="lblEndereco">Apelido:</string>
+    <string name="lblNome">Nome:</string>
+    <string name="lblTelefone">Telefone:</string>
+    <string name="lblEndereco">Endereco:</string>
     <string name="btnSalvar">Salvar</string>
     <string name="btnCancelar">Cancelar</string>
+
 
 
 
@@ -83,4 +102,13 @@
     <string name="categoryId">Apontamento</string>
     <string name="actionId">Informar PESO X ALTURA</string>
     <string name="labelId">PESO X ALTURA Button pressionado!</string>
+
+    <string name="mostrar">mostrar</string>
+    <string name="start">Iniciar</string>
+    <string name="clean">Limpar</string>
+    <string name="dsAltura">Altura</string>
+    <string name="dsPeso">Peso</string>
+    <string name="alertApontamento">Você deve informar sua Altura e Peso!</string>
+
+
 </resources>
