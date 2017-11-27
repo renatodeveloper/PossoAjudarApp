@@ -23,7 +23,7 @@ android {
         signingMockserver {
             keyAlias 'DeveloperAndroidKey'
             keyPassword 'developer'
-            storeFile file('C:/developerAndroidStudio/localKeyStore/developerkey.jks')
+            storeFile file('C:/developer/localKeyStore/developerkey.jks')
             storePassword 'developer'
         }
     }
