@@ -126,7 +126,7 @@ public class CadUsuario extends RoboActivity implements ICadUserView {
     public void startMainActivity() {
         gps = new GpsService(getApplicationContext());
         if(gps.canGetLocation()){
-            activityUtil.definePrefLogado(getApplicationContext(), gps, activityUtil.getValeuJson(getApplicationContext(),userEmail.getText().toString(), userSenha.getText().toString()));
+            activityUtil.definePrefUserLogado(getApplicationContext(), gps, activityUtil.getValeuJson(getApplicationContext(),userEmail.getText().toString(), userSenha.getText().toString()));
             startActivity(new Intent(this, MainActivity.class));
             //new ActivityUtil(this).startMainActivity();
         }else{
