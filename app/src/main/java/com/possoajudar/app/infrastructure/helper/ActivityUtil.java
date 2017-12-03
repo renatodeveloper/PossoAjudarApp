@@ -71,10 +71,13 @@ public class ActivityUtil {
         this.context.startActivity(new Intent(context, MainActivity.class));
         }
 
-/*
+
+        /* DEFINE  ** LIMPA  ** VERIFICA  ** RECUPERA */
+
+/* DEFINE
 Guarda status do usuário logado
 */
-    public void definePrefLogado(Context context, GpsService gps, JSONObject jsonObject) {
+    public void definePrefUserLogado(Context context, GpsService gps, JSONObject jsonObject) {
         try{
             if(gps.canGetLocation()){
 
@@ -111,28 +114,10 @@ Guarda status do usuário logado
         }
     }
 
-        /*
-    Limpa status do usuário logado
-    */
-    public void cleanPrefLogado(Context context) {
-        try{
-            SharedPreferences mPrefs = context.getSharedPreferences(context.getString(R.string.prefArq_userLogado), context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = mPrefs.edit();
-            editor.clear();
-
-            editor.commit();
-
-        }catch (Exception e) {
-            e.getMessage().toString();
-        }
-    }
-
-
-
-    /*
+    /* DEFINE
 Guarda status do apontamento do usuário
 */
-    public void definePrefLogadoApontamento(Context context, GpsService gps, JSONObject jsonObject) {
+    public void definePrefUserLogadoApontamento(Context context, GpsService gps, JSONObject jsonObject) {
         try{
             if(gps.canGetLocation()){
 
@@ -170,6 +155,102 @@ Guarda status do apontamento do usuário
     }
 
 
+    //LIMPA Usuário logado
+    public void limpaPrefUserLogado(Context context) {
+        try{
+            SharedPreferences mPrefs = context.getSharedPreferences(context.getString(R.string.prefArq_userLogado), context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = mPrefs.edit();
+            editor.clear();
+
+            editor.commit();
+
+        }catch (Exception e) {
+            e.getMessage().toString();
+        }
+    }
+
+    //LIMPA Apontamento
+    public void limpaPrefUserLogadoApontamento(Context context) {
+        try{
+            SharedPreferences mPrefs = context.getSharedPreferences(context.getString(R.string.prefArq_userLogadoApontamento), context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = mPrefs.edit();
+            editor.clear();
+
+            editor.commit();
+
+        }catch (Exception e) {
+            e.getMessage().toString();
+        }
+    }
+
+  //VERIFICA Usuário
+  public boolean verificaPrefUserLogado(Context context){
+      try{
+
+          SharedPreferences mPrefs = context.getSharedPreferences(context.getString(R.string.prefArq_userLogado), Context.MODE_PRIVATE);
+          String status = mPrefs.getString(context.getString(R.string.prefStatus_userLogado), "");
+          if(status.equals("true")){
+              return true;
+          }
+      }catch (Exception e){
+          e.getMessage().toString();
+      }
+      return false;
+  }
+
+    //VERIFICA Apontamento
+    public boolean verificaPrefUserLogadoApontamento(Context context){
+        try{
+            SharedPreferences mPrefs = context.getSharedPreferences(context.getString(R.string.prefArq_userLogadoApontamento), Context.MODE_PRIVATE);
+            String status = mPrefs.getString(context.getString(R.string.prefStatus_userLogadoApontamento), "");
+            if(status.equals("true")){
+                return true;
+            }
+        }catch (Exception e){
+            e.getMessage().toString();
+        }
+        return false;
+    }
+
+
+      // RECUPERA  Usuário
+      public JSONObject recuperaPrefUserLogado(Context context){
+          JSONObject result = new JSONObject();
+          try{
+
+              SharedPreferences mPrefs = context.getSharedPreferences(context.getString(R.string.prefArq_userLogado), Context.MODE_PRIVATE);
+              String status = mPrefs.getString(context.getString(R.string.prefStatus_userLogado), "");
+              if(status.equals("true")){
+                  result.put(context.getString(R.string.dsLoginTblUser), mPrefs.getString(context.getString(R.string.dsLoginTblUser), ""));
+                  result.put(context.getString(R.string.dsLoginTblUser), mPrefs.getString(context.getString(R.string.dsLoginTblUser), ""));
+                  result.put(context.getString(R.string.dsSenhaTblUser), mPrefs.getString(context.getString(R.string.dsSenhaTblUser), ""));
+                  return result;
+              }
+          }catch (Exception e){
+              e.getMessage().toString();
+          }
+          return result;
+      }
+
+    //RECUPERA Apontamento
+    public JSONObject recuperaPrefUserLogadoApontamento(Context context){
+        JSONObject result = new JSONObject();
+        try{
+
+            SharedPreferences mPrefs = context.getSharedPreferences(context.getString(R.string.prefArq_userLogadoApontamento), Context.MODE_PRIVATE);
+            String status = mPrefs.getString(context.getString(R.string.prefStatus_userLogadoApontamento), "");
+            if(status.equals("true")){
+                result.put(context.getString(R.string.dsAlturaTblUserAptmento), mPrefs.getString(context.getString(R.string.dsAlturaTblUserAptmento), ""));
+                result.put(context.getString(R.string.dsPesoTblUserAptmento), mPrefs.getString(context.getString(R.string.dsPesoTblUserAptmento), ""));
+                return result;
+            }
+        }catch (Exception e){
+            e.getMessage().toString();
+        }
+        return result;
+    }
+
+
     public String getDateTime(Context context){
         try{
             SimpleDateFormat sdf = new SimpleDateFormat(context.getString(R.string.str_SimpleDateFormat));
@@ -181,7 +262,7 @@ Guarda status do apontamento do usuário
         return null;
     }
 
-    public static boolean verifyStoragePermissions(Context context){
+    public boolean verifyStoragePermissions(Context context){
         try{
             if (ActivityCompat.checkSelfPermission(context, mPermission) != MockPackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions((Activity) context, new String[]{mPermission}, REQUEST_CODE_PERMISSION);
