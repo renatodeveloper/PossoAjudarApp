@@ -39,6 +39,8 @@ import com.possoajudar.app.application.ui.recyclerview.MyRecyclerViewAdapter;
 import com.possoajudar.app.domain.model.Apontamento;
 import com.possoajudar.app.infrastructure.helper.ActivityUtil;
 
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -63,6 +65,10 @@ public class MainActivity extends AppCompatActivity
 
     TextView textViewNavNome;
     TextView textViewNavEmail;
+
+    String altura = "";
+    String peso = "";
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -94,18 +100,6 @@ public class MainActivity extends AppCompatActivity
         textViewNavNome  = (TextView)header.findViewById(R.id.textViewNavNome);
         textViewNavEmail = (TextView)header.findViewById(R.id.textViewNavEmail);
 
-        try{
-            SharedPreferences mPrefs = getApplicationContext().getSharedPreferences(getApplicationContext().getString(R.string.prefArq_userLogado), Context.MODE_PRIVATE);
-            String nome = mPrefs.getString(getString(R.string.dsLoginTblUser), "");
-            String email = mPrefs.getString(getString(R.string.dsLoginTblUser), "");
-            String senha = mPrefs.getString(getString(R.string.dsSenhaTblUser), "");
-
-            textViewNavNome.setText(nome);
-            textViewNavEmail.setText(email);
-
-        }catch (Exception e){
-            e.getMessage().toString();
-        }
 
         /*
         navHeaderNome toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -161,82 +155,25 @@ public class MainActivity extends AppCompatActivity
         recyclerView.setAdapter(adapter);
             */
 
-
         try{
-            if(!checkUserLogadoApontamentoStatus() ){
-                //se não tiver apontamento show dialog   - ESCREVER INSERT
-                exibeDialogApontamento();
+            activityUtil = new ActivityUtil();
+            // ESCREVER INSERT
+            if(activityUtil.verificaPrefUserLogado(getApplicationContext())){
+                JSONObject objectU = activityUtil.recuperaPrefUserLogado(getApplicationContext());
+                String senha  = objectU.getString(getString(R.string.dsSenhaTblUser));
+                textViewNavNome.setText(objectU.getString(getString(R.string.dsLoginTblUser)));
+                textViewNavEmail.setText(objectU.getString(getString(R.string.dsLoginTblUser)));
 
-                String altura = "";
-                String peso = "";
-                if(true){
-                    SharedPreferences facePref = getApplicationContext().getSharedPreferences(getApplicationContext().getString(R.string.prefArq_userLogadoApontamento), Context.MODE_PRIVATE);
-                    if (facePref != null) {
-                        if (facePref.getString(getApplicationContext().getString(R.string.prefStatus_userLogadoApontamento), null) != null) {
-                            altura = (facePref.getString(getApplicationContext().getString(R.string.dsAlturaTblUserAptmento), null));
-                            peso = (facePref.getString(getApplicationContext().getString(R.string.dsPesoTblUserAptmento), null));
-                        }
-                    }
-
+                if(activityUtil.verificaPrefUserLogadoApontamento(getApplicationContext())){
+                    JSONObject objectA = activityUtil.recuperaPrefUserLogadoApontamento(getApplicationContext());
+                    montaListApontamentoMock(objectA);
+                }else{
+                    exibeDialogApontamento();
                 }
-                listView=(ListView)findViewById(R.id.myList);
-
-                dataModels= new ArrayList<>();
-
-                dataModels.add(new Apontamento("Data", "26-1-17 - 13:34:08", peso + " - " + altura,"September 23, 2008"));
-                adapter= new CustomAdapter(dataModels,getApplicationContext());
-
-                listView.setAdapter(adapter);
-                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                        Apontamento dataModel= dataModels.get(position);
-
-                        Snackbar.make(view, dataModel.getName()+"\n"+dataModel.getType()+" API: "+dataModel.getVersion_number(), Snackbar.LENGTH_LONG)
-                                .setAction("No action", null).show();
-                    }
-                });
-
-            }else{
-                listView=(ListView)findViewById(R.id.myList);
-
-                dataModels= new ArrayList<>();
-
-                dataModels.add(new Apontamento("Apple Pie", "Android 1.0", "1","September 23, 2008"));
-                dataModels.add(new Apontamento("Banana Bread", "Android 1.1", "2","February 9, 2009"));
-                dataModels.add(new Apontamento("Cupcake", "Android 1.5", "3","April 27, 2009"));
-                dataModels.add(new Apontamento("Donut","Android 1.6","4","September 15, 2009"));
-                dataModels.add(new Apontamento("Eclair", "Android 2.0", "5","October 26, 2009"));
-                dataModels.add(new Apontamento("Froyo", "Android 2.2", "8","May 20, 2010"));
-                dataModels.add(new Apontamento("Gingerbread", "Android 2.3", "9","December 6, 2010"));
-                dataModels.add(new Apontamento("Honeycomb","Android 3.0","11","February 22, 2011"));
-                dataModels.add(new Apontamento("Ice Cream Sandwich", "Android 4.0", "14","October 18, 2011"));
-                dataModels.add(new Apontamento("Jelly Bean", "Android 4.2", "16","July 9, 2012"));
-                dataModels.add(new Apontamento("Kitkat", "Android 4.4", "19","October 31, 2013"));
-                dataModels.add(new Apontamento("Lollipop","Android 5.0","21","November 12, 2014"));
-                dataModels.add(new Apontamento("Marshmallow", "Android 6.0", "23","October 5, 2015"));
-
-                adapter= new CustomAdapter(dataModels,getApplicationContext());
-
-                listView.setAdapter(adapter);
-                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                        Apontamento dataModel= dataModels.get(position);
-
-                        Snackbar.make(view, dataModel.getName()+"\n"+dataModel.getType()+" API: "+dataModel.getVersion_number(), Snackbar.LENGTH_LONG)
-                                .setAction("No action", null).show();
-                    }
-                });
             }
-
         }catch (Exception e){
             e.getMessage().toString();
         }
-
-
 
         //Analytics Integration
         // Obtain the shared Tracker instance.
@@ -280,7 +217,8 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.action_cleanpreferences) {
             try{
                 activityUtil = new ActivityUtil();
-                activityUtil.cleanPrefLogado(getApplicationContext());
+                activityUtil.limpaPrefUserLogado(getApplicationContext());
+                activityUtil.limpaPrefUserLogadoApontamento(getApplicationContext());
                 startActivity(new Intent(this, Splash.class));
             }catch (Exception e){
                 e.getMessage().toString();
@@ -394,50 +332,6 @@ public class MainActivity extends AppCompatActivity
     }
  */
 
-    /**
-     * Verifica se o usuário já informou seus apontamentos
-     */
-
-public boolean checkUserLogadoApontamentoStatus(){
-    try{
-
-        SharedPreferences facePref = getApplicationContext().getSharedPreferences(getApplicationContext().getString(R.string.prefArq_userLogadoApontamento), Context.MODE_PRIVATE);
-        if (facePref != null) {
-            if (facePref.getString(getApplicationContext().getString(R.string.prefStatus_userLogadoApontamento), null) != null) {
-                String sjonPerfil = (facePref.getString(getApplicationContext().getString(R.string.prefStatus_userLogadoApontamento), null));
-                if (sjonPerfil.equals("true")) {
-                    return true;
-                }
-            }
-        }
-    }catch (Exception e){
-        e.getMessage().toString();
-    }
-    return false;
-}
-
-
-    /**
-     * Define apontamento do usuário
-     * */
-
-    public boolean defineApontemento(String ... Params){
-        try{
-            activityUtil = new ActivityUtil();
-            gps = new GpsService(getApplicationContext());
-            if(gps.canGetLocation()){
-                activityUtil.definePrefLogadoApontamento(getApplicationContext(), gps, activityUtil.getValeuJson(this, Params[0].toString(), Params[1].toString().toString()));
-                return  true;
-            }else{
-                gps.showSettingsAlert(this);
-            }
-        }catch (Exception e){
-            e.getMessage().toString();
-        }
-        return false;
-    }
-
-
     public void exibeDialogApontamento(){
         try{
             // con este tema personalizado evitamos los bordes por defecto
@@ -461,12 +355,23 @@ public boolean checkUserLogadoApontamentoStatus(){
 
                 @Override
                 public void onClick(View view) {
-                    if (editTextAltura.getText().toString().length()>0 && editTextPeso.getText().toString().length()>0) {
-                    defineApontemento(editTextAltura.getText().toString(), editTextPeso.getText().toString());
-                    customDialog.dismiss();
-                    //Toast.makeText(MainActivity.this, R.string.start, Toast.LENGTH_SHORT).show();
-                    }else{
-                        Toast.makeText(MainActivity.this, R.string.alertApontamento, Toast.LENGTH_SHORT).show();
+                    try{
+                        if (editTextAltura.getText().toString().length()>0 && editTextPeso.getText().toString().length()>0) {
+                            gps = new GpsService(getApplicationContext());
+
+                            JSONObject value = activityUtil.getValeuJson(getApplicationContext(),editTextAltura.getText().toString(), editTextPeso.getText().toString());
+
+                            activityUtil.definePrefUserLogadoApontamento(getApplicationContext(), gps, value);
+
+                            customDialog.dismiss();
+                            JSONObject objectA = activityUtil.recuperaPrefUserLogadoApontamento(view.getContext());
+                            montaListApontamento(objectA);
+                            //Toast.makeText(MainActivity.this, R.string.start, Toast.LENGTH_SHORT).show();
+                        }else{
+                            Toast.makeText(MainActivity.this, R.string.alertApontamento, Toast.LENGTH_SHORT).show();
+                        }
+                    }catch (Exception e){
+                        e.getMessage().toString();
                     }
                 }
             });
@@ -487,6 +392,76 @@ public boolean checkUserLogadoApontamentoStatus(){
             customDialog.show();
 
 
+        }catch (Exception e){
+            e.getMessage().toString();
+        }
+    }
+
+    public void montaListApontamento(JSONObject objectA){
+        try{
+
+            altura = objectA.getString(getApplicationContext().getString(R.string.dsAlturaTblUserAptmento));
+            peso   = objectA.getString(getApplicationContext().getString(R.string.dsPesoTblUserAptmento));
+
+            listView=(ListView)findViewById(R.id.myList);
+
+            dataModels= new ArrayList<>();
+
+            dataModels.add(new Apontamento("Data", "26-1-17 - 13:34:08", peso + " - " + altura,"September 23, 2008"));
+            adapter= new CustomAdapter(dataModels,getApplicationContext());
+
+            listView.setAdapter(adapter);
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                    Apontamento dataModel= dataModels.get(position);
+
+                    Snackbar.make(view, dataModel.getName()+"\n"+dataModel.getType()+" API: "+dataModel.getVersion_number(), Snackbar.LENGTH_LONG)
+                            .setAction("No action", null).show();
+                }
+            });
+        }catch (Exception e){
+            e.getMessage().toString();
+        }
+    }
+
+    public void montaListApontamentoMock(JSONObject objectA){
+        try{
+            altura = objectA.getString(getApplicationContext().getString(R.string.dsAlturaTblUserAptmento));
+            peso   = objectA.getString(getApplicationContext().getString(R.string.dsPesoTblUserAptmento));
+
+            listView=(ListView)findViewById(R.id.myList);
+
+            dataModels= new ArrayList<>();
+            dataModels.add(new Apontamento("Data", "26-1-17 - 13:34:08", peso + " - " + altura,"September 23, 2008"));
+            dataModels.add(new Apontamento("Apple Pie", "Android 1.0", "1","September 23, 2008"));
+            dataModels.add(new Apontamento("Banana Bread", "Android 1.1", "2","February 9, 2009"));
+            dataModels.add(new Apontamento("Cupcake", "Android 1.5", "3","April 27, 2009"));
+            dataModels.add(new Apontamento("Donut","Android 1.6","4","September 15, 2009"));
+            dataModels.add(new Apontamento("Eclair", "Android 2.0", "5","October 26, 2009"));
+            dataModels.add(new Apontamento("Froyo", "Android 2.2", "8","May 20, 2010"));
+            dataModels.add(new Apontamento("Gingerbread", "Android 2.3", "9","December 6, 2010"));
+            dataModels.add(new Apontamento("Honeycomb","Android 3.0","11","February 22, 2011"));
+            dataModels.add(new Apontamento("Ice Cream Sandwich", "Android 4.0", "14","October 18, 2011"));
+            dataModels.add(new Apontamento("Jelly Bean", "Android 4.2", "16","July 9, 2012"));
+            dataModels.add(new Apontamento("Kitkat", "Android 4.4", "19","October 31, 2013"));
+            dataModels.add(new Apontamento("Lollipop","Android 5.0","21","November 12, 2014"));
+            dataModels.add(new Apontamento("Marshmallow", "Android 6.0", "23","October 5, 2015"));
+
+            adapter= new CustomAdapter(dataModels,getApplicationContext());
+
+            listView.setAdapter(adapter);
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                    Apontamento dataModel= dataModels.get(position);
+
+                    Snackbar.make(view, dataModel.getName()+"\n"+dataModel.getType()+" API: "+dataModel.getVersion_number(), Snackbar.LENGTH_LONG)
+                            .setAction("No action", null).show();
+                }
+            });
         }catch (Exception e){
             e.getMessage().toString();
         }
