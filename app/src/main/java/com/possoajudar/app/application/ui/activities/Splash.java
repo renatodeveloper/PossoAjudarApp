@@ -53,7 +53,7 @@ public class Splash extends Activity implements IDaoModel {
 
             daoModelPresenter.createdbExterno();
 
-
+            //activityUtil.deleteDatabase(getApplicationContext());
         } catch (Exception e) {
             e.printStackTrace();
         }
