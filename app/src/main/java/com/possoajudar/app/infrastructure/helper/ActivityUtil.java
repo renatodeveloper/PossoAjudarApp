@@ -384,7 +384,7 @@ Guarda status do apontamento do usuário
         return false;
     }
 
-    public void deleteDatabase() {
+    public void deleteDatabase(Context context) {
         File data = Environment.getDataDirectory();
         String dbPath = "/user/0/com.possoajudar.app.debug/databases/AJUDAR.db";
         File current_db = new File(data, dbPath);
