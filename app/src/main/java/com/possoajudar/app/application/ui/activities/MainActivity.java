@@ -1,6 +1,7 @@
 package com.possoajudar.app.application.ui.activities;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,6 +11,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -32,6 +34,10 @@ import com.google.android.gms.analytics.StandardExceptionParser;
 import com.google.android.gms.analytics.Tracker;
 import com.possoajudar.app.R;
 import com.possoajudar.app.application.module.app.GoogleAnalyticsApplication;
+import com.possoajudar.app.application.service.ICadApontamentoView;
+import com.possoajudar.app.application.service.ICadUserView;
+import com.possoajudar.app.application.service.cadastro.CadApontamentoPresenter;
+import com.possoajudar.app.application.service.cadastro.CadApontamentoService;
 import com.possoajudar.app.application.service.gps.GpsService;
 import com.possoajudar.app.application.ui.adapter.CustomAdapter;
 import com.possoajudar.app.application.ui.fragments.PossoAjudarAppFrag;
@@ -45,7 +51,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, ICadApontamentoView{
 
     public ActivityUtil activityUtil;
     GpsService gps;
@@ -68,6 +74,14 @@ public class MainActivity extends AppCompatActivity
 
     String altura = "";
     String peso = "";
+
+    ProgressDialog progressDialog;
+    private CadApontamentoPresenter cadApontamentoPresenter;
+    private CadApontamentoService cadApontamentoService;
+
+    EditText editTextAltura = null;
+    EditText editTextPeso = null;
+
 
     @Override
     protected void onResume() {
@@ -156,6 +170,10 @@ public class MainActivity extends AppCompatActivity
             */
 
         try{
+
+            cadApontamentoPresenter = new CadApontamentoPresenter(this, cadApontamentoService, getApplicationContext());
+            progressDialog = new ProgressDialog(this);
+
             activityUtil = new ActivityUtil();
             // ESCREVER INSERT
             if(activityUtil.verificaPrefUserLogado(getApplicationContext())){
@@ -348,8 +366,8 @@ public class MainActivity extends AppCompatActivity
 
             TextView titulo = (TextView) customDialog.findViewById(R.id.titulo);
             titulo.setText("Informe aqui");
-            final EditText editTextAltura = (EditText) customDialog.findViewById(R.id.lyApontamentoEditTextAltura);
-            final EditText editTextPeso = (EditText) customDialog.findViewById(R.id.lyApontamentoEditTextPeso);
+            editTextAltura = (EditText) customDialog.findViewById(R.id.lyApontamentoEditTextAltura);
+            editTextPeso = (EditText) customDialog.findViewById(R.id.lyApontamentoEditTextPeso);
 
             ((Button) customDialog.findViewById(R.id.start)).setOnClickListener(new View.OnClickListener() {
 
@@ -357,15 +375,10 @@ public class MainActivity extends AppCompatActivity
                 public void onClick(View view) {
                     try{
                         if (editTextAltura.getText().toString().length()>0 && editTextPeso.getText().toString().length()>0) {
-                            gps = new GpsService(getApplicationContext());
 
-                            JSONObject value = activityUtil.getValeuJson(getApplicationContext(),editTextAltura.getText().toString(), editTextPeso.getText().toString());
-
-                            activityUtil.definePrefUserLogadoApontamento(getApplicationContext(), gps, value);
-
+                            cadApontamentoPresenter.registerApontamentoUser();
                             customDialog.dismiss();
-                            JSONObject objectA = activityUtil.recuperaPrefUserLogadoApontamento(view.getContext());
-                            montaListApontamento(objectA);
+
                             //Toast.makeText(MainActivity.this, R.string.start, Toast.LENGTH_SHORT).show();
                         }else{
                             Toast.makeText(MainActivity.this, R.string.alertApontamento, Toast.LENGTH_SHORT).show();
@@ -465,5 +478,53 @@ public class MainActivity extends AppCompatActivity
         }catch (Exception e){
             e.getMessage().toString();
         }
+    }
+
+    @Override
+    public String getCadApontamentoAltura() {
+        return editTextAltura.getText().toString();
+    }
+
+    @Override
+    public String getCadApontamentoPeso() {
+        return editTextPeso.getText().toString();
+    }
+
+    @Override
+    public void showCadApontamentoAlturaError(int resId) {
+        editTextAltura.setError(getString(resId));
+    }
+
+    @Override
+    public void showCadApontamentoPesoError(int resId) {
+        editTextPeso.setError(getString(resId));
+    }
+
+    @Override
+    public void showCadApontamentoError(int resId) {
+        Toast.makeText(this, getString(resId), Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void startMainListActivity() {
+        try{
+            gps = new GpsService(getApplicationContext());
+
+            JSONObject value = activityUtil.getValeuJson(getApplicationContext(),this.getCadApontamentoAltura(), this.getCadApontamentoPeso());
+
+            activityUtil.definePrefUserLogadoApontamento(getApplicationContext(), gps, value);
+            JSONObject objectA = activityUtil.recuperaPrefUserLogadoApontamento(this);
+            montaListApontamento(objectA);
+        }catch (Exception e){
+            e.getMessage().toString();
+        }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }
