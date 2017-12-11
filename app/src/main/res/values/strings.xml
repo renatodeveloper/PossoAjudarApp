@@ -57,10 +57,18 @@
     <string name="folderError">Folder POSSO indisponível</string>
 
     <!-- banco de dados -->
-    <string name="sqlCreateTableRedeSocial">CREATE TABLE RedeSocial (idRedeSocial INTEGER PRIMARY KEY AUTOINCREMENT, dsRedeSocial TEXT);
-</string>
-    <string name="sqlCreateTableUsuario">CREATE TABLE Usuario (idUsuario INTEGER PRIMARY KEY AUTOINCREMENT, dsLogin TEXT, dsSenha TEXT, idRedeSocial INTEGER, FOREIGN KEY (idRedeSocial) REFERENCES RedeSocial(idRedeSocial));
-</string>
+    <string name="sqlCreateTableRedeSocial">
+        CREATE TABLE RedeSocial (idRedeSocial INTEGER PRIMARY KEY AUTOINCREMENT, dsRedeSocial TEXT);
+    </string>
+
+    <string name="sqlCreateTableUsuario">
+        CREATE TABLE Usuario (idUsuario INTEGER PRIMARY KEY AUTOINCREMENT, dsLogin TEXT, dsSenha TEXT, idRedeSocial INTEGER, FOREIGN KEY (idRedeSocial) REFERENCES RedeSocial(idRedeSocial));
+    </string>
+
+    <string name="sqlCreateTableApontamento">
+        CREATE TABLE Apontamento (idApontamento INTEGER PRIMARY KEY AUTOINCREMENT, dataHora INTEGER, dsDataHora TEXT, vlPeso FLOAT, vlAltura FLOAT, idUsuario INTEGER, FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario));
+    </string>
+
 
     <!-- tabelas -->
     <string name="dsNameTblUser">Usuario</string>
@@ -74,8 +82,8 @@
 
     <!-- tabelas -->
     <string name="dsNameTblUserAptmento">Apontamento</string>
-    <string name="dsAlturaTblUserAptmento">dsAltura</string>
-    <string name="dsPesoTblUserAptmento">dsPeso</string>
+    <string name="dsAlturaTblUserAptmento">vlAltura</string>
+    <string name="dsPesoTblUserAptmento">vlPeso</string>
 
 
 
@@ -110,5 +118,9 @@
     <string name="dsPeso">Peso</string>
     <string name="alertApontamento">Você deve informar sua Altura e Peso!</string>
 
+    <!-- layout dialog screen apontamento -->
+    <string name="strLyCadastroApontamentoTextViewAltura">Informe sua altura!!!</string>
+    <string name="strLyCadastroApontamentoTextViewPeso">Informe seu peso</string>
+    <string name="strLyCadastrofailedApontamento">Falha no cadastro do apontamento!</string>
 
 </resources>
