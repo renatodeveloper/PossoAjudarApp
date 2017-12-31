@@ -154,6 +154,56 @@ Guarda status do apontamento do usuário
         }
     }
 
+    public void definePrefFormLogin(Context context, GpsService gps, JSONObject jsonObject) {
+        try{
+            if(gps.canGetLocation()){
+
+                JSONObject json = new JSONObject();
+                json.put(context.getString(R.string.dsLoginTblUser), jsonObject.getString(context.getString(R.string.dsGeneric_A)));
+                json.put(context.getString(R.string.dsSenhaTblUser), jsonObject.getString(context.getString(R.string.dsGeneric_B)));
+                json.put(context.getString(R.string.prefStatus_userLogado),true);
+                json.put(context.getString(R.string.prefDataTime_userLogado), getDateTime(context));
+                json.put(context.getString(R.string.prefLatitude_userLogado), gps.getLatitude());
+                json.put(context.getString(R.string.prefLongitude_userLogado), gps.getLongitude());
+                json.put(context.getString(R.string.prefAltitude_userLogado), gps.getAltitude());
+                json.put(context.getString(R.string.prefSpeed_userLogado), gps.getSpeed());
+
+
+                SharedPreferences mPrefs = context.getSharedPreferences(context.getString(R.string.prefArq_formLogin), Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = mPrefs.edit();
+
+
+                editor.putString(context.getString(R.string.prefJSON_userLogado), json.toString());
+                editor.putString(context.getString(R.string.dsLoginTblUser), json.getString(context.getString(R.string.dsLoginTblUser)));
+                editor.putString(context.getString(R.string.dsSenhaTblUser), json.getString(context.getString(R.string.dsSenhaTblUser)));
+                editor.putString(context.getString(R.string.prefStatus_userLogado),json.getString(context.getString(R.string.prefStatus_userLogado)));
+                editor.putString(context.getString(R.string.prefDataTime_userLogado), json.getString(context.getString(R.string.prefDataTime_userLogado)));
+                editor.putString(context.getString(R.string.prefLatitude_userLogado),json.getString(context.getString(R.string.prefLatitude_userLogado)));
+                editor.putString(context.getString(R.string.prefLongitude_userLogado),json.getString(context.getString(R.string.prefLongitude_userLogado)));
+                editor.putString(context.getString(R.string.prefAltitude_userLogado),json.getString(context.getString(R.string.prefAltitude_userLogado)));
+                editor.putString(context.getString(R.string.prefSpeed_userLogado),json.getString(context.getString(R.string.prefSpeed_userLogado)));
+                editor.commit();
+            }else{
+                gps.showSettingsAlert();
+            }
+        }catch (Exception e) {
+            e.getMessage().toString();
+        }
+    }
+
+    public void limpaPrefFormLogin(Context context) {
+        try{
+            SharedPreferences mPrefs = context.getSharedPreferences(context.getString(R.string.prefArq_formLogin), context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = mPrefs.edit();
+            editor.clear();
+
+            editor.commit();
+
+        }catch (Exception e) {
+            e.getMessage().toString();
+        }
+    }
+
 
     //LIMPA Usuário logado
     public void limpaPrefUserLogado(Context context) {
@@ -213,6 +263,26 @@ Guarda status do apontamento do usuário
     }
 
 
+    // RECUPERA  Usuário
+    public JSONObject recuperaPrefFormLogin(Context context){
+        JSONObject result = new JSONObject();
+        try{
+
+            SharedPreferences mPrefs = context.getSharedPreferences(context.getString(R.string.prefArq_formLogin), Context.MODE_PRIVATE);
+            String status = mPrefs.getString(context.getString(R.string.prefStatus_userLogado), "");
+            if(status.equals("true")){
+                result.put(context.getString(R.string.dsLoginTblUser), mPrefs.getString(context.getString(R.string.dsLoginTblUser), ""));
+                result.put(context.getString(R.string.dsLoginTblUser), mPrefs.getString(context.getString(R.string.dsLoginTblUser), ""));
+                result.put(context.getString(R.string.dsSenhaTblUser), mPrefs.getString(context.getString(R.string.dsSenhaTblUser), ""));
+                return result;
+            }
+        }catch (Exception e){
+            e.getMessage().toString();
+        }
+        return result;
+    }
+
+
       // RECUPERA  Usuário
       public JSONObject recuperaPrefUserLogado(Context context){
           JSONObject result = new JSONObject();
@@ -242,6 +312,7 @@ Guarda status do apontamento do usuário
             if(status.equals("true")){
                 result.put(context.getString(R.string.dsAlturaTblUserAptmento), mPrefs.getString(context.getString(R.string.dsAlturaTblUserAptmento), ""));
                 result.put(context.getString(R.string.dsPesoTblUserAptmento), mPrefs.getString(context.getString(R.string.dsPesoTblUserAptmento), ""));
+                result.put(context.getString(R.string.prefDataTime_userLogado), mPrefs.getString(context.getString(R.string.prefDataTime_userLogado), ""));
                 return result;
             }
         }catch (Exception e){
@@ -439,10 +510,35 @@ Guarda status do apontamento do usuário
         try{
             result.put(context.getString(R.string.dsGeneric_A), params[0]);
             result.put(context.getString(R.string.dsGeneric_B), params[1]);
+            result.put(context.getString(R.string.dsGeneric_C), params[2]);
+            result.put(context.getString(R.string.dsGeneric_D), params[3]);
         }catch (Exception e){
             e.getMessage().toString();
         }
         return result;
     }
+
+    public static String getDataHora(long currentTimeMillis){
+        try{
+            SimpleDateFormat sdf = new SimpleDateFormat("MMM dd,yyyy HH:mm");
+            Date resultdate = new Date(currentTimeMillis);
+            return  sdf.format(resultdate).toString();
+        }catch (Exception e){
+            e.getMessage().toString();
+        }
+        return "";
+    }
+
+    public static String getDataHora(){
+        try{
+            SimpleDateFormat sdf = new SimpleDateFormat("MMM dd,yyyy HH:mm");
+            Date resultdate = new Date(System.currentTimeMillis());
+            return  sdf.format(resultdate).toString();
+        }catch (Exception e){
+            e.getMessage().toString();
+        }
+        return "";
+    }
+
 
 }
