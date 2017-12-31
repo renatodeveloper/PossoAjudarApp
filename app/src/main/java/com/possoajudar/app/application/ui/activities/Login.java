@@ -71,12 +71,10 @@ public class Login extends Activity implements ILoginView {
     TextView sucessologin;
     TextView newcountView;
 
-
     private LoginPresenter loginPresenter;
     private LoginService loginService;
     public ActivityUtil activityUtil;
     GpsService gps;
-
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
@@ -95,17 +93,14 @@ public class Login extends Activity implements ILoginView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ly_login);
         //ButterKnife.bind(this);
-
-      //  ((LoginApplication) getApplication()).getAppComponent().inject(this);
+       //((LoginApplication) getApplication()).getAppComponent().inject(this);
 
         final String URL = BuildConfig.API_URL;
-
         try{
             activityUtil = new ActivityUtil();
         }catch (Exception e){
             e.getMessage().toString();
         }
-
 
         usernameView = (EditText) findViewById(R.id.input_email);
         passwordView = (EditText) findViewById(R.id.input_password);
@@ -117,7 +112,19 @@ public class Login extends Activity implements ILoginView {
         newcountView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(Login.this, CadUsuario.class));
+                try{
+                    gps = new GpsService(getApplicationContext());
+                    if(gps.canGetLocation()){
+                        if(usernameView.getText().toString().length()>0 || passwordView.getText().toString().length()>0){
+                            activityUtil.definePrefFormLogin(getApplicationContext(), gps, activityUtil.getValeuJson(getApplicationContext(), usernameView.getText().toString(), passwordView.getText().toString()));
+                            startActivity(new Intent(Login.this, CadUsuario.class));
+                        }else{
+                            startActivity(new Intent(Login.this, CadUsuario.class));
+                        }
+                    }
+                }catch (Exception e){
+                    e.getMessage().toString();
+                }
             }
         });
 
@@ -129,11 +136,9 @@ public class Login extends Activity implements ILoginView {
             }
         });
          */
-
     }
 
     /* butterknife.OnClick
-
          @OnClick(R.id.btn_login)
         public void submit() {
             // TODO submit data to server...
@@ -149,9 +154,7 @@ public class Login extends Activity implements ILoginView {
     }
 
     @Override
-    public String getUsername() {
-        return usernameView.getText().toString();
-    }
+    public String getUsername() {return usernameView.getText().toString();}
 
     @Override
     public String getPassword() {
@@ -160,13 +163,11 @@ public class Login extends Activity implements ILoginView {
 
     @Override
     public void showUsernameError(int resId) {
-
         usernameView.setError(getString(resId));
     }
 
     @Override
     public void showPasswordError(int resId) {
-
         passwordView.setError(getString(resId));
     }
 
@@ -178,7 +179,6 @@ public class Login extends Activity implements ILoginView {
 
     @Override
     public void startMainActivity() {
-
         gps = new GpsService(getApplicationContext());
         if(gps.canGetLocation()){
             activityUtil.definePrefUserLogado(getApplicationContext(), gps, activityUtil.getValeuJson(this, usernameView.getText().toString(), passwordView.getText().toString()));
