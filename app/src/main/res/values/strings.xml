@@ -3,6 +3,7 @@
     <string name="titlelogo">3rDeveloper</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="add_apontamento">Informar medidas</string>
     <string name="action_settings">Settings</string>
     <string name="action_cleanPreferences">Restaurar login</string>
     <string name="app_title_login">Bem vindo ao conversa com bla!</string>
@@ -33,6 +34,7 @@
     <string name="prefLongitude_userLogado">longitude</string>
     <string name="prefAltitude_userLogado">altitude</string>
     <string name="prefSpeed_userLogado">speed</string>
+    <string name="prefArq_formLogin">prefArq_formLogin</string>
 
     <string name="prefArq_userLogadoApontamento">prefArq_userLogadoApontamento</string>
     <string name="prefStatus_userLogadoApontamento">status</string>
@@ -75,16 +77,21 @@
     <string name="sqlAlterTblUsuario">ALTER TABLE Usuarios ADD COLUMN nrObs TEXT</string>
     <string name="dsLoginTblUser">dsLogin</string>
     <string name="dsSenhaTblUser">dsSenha</string>
+    <string name="idTblUser">idUsuario</string>
 
     <!-- ... generic keys ... -->
     <string name="dsGeneric_A">dsGeneric_A</string>
     <string name="dsGeneric_B">dsGeneric_B</string>
+    <string name="dsGeneric_C">dsGeneric_C</string>
+    <string name="dsGeneric_D">dsGeneric_D</string>
 
     <!-- tabelas -->
+    <string name="idTblUserAptmento">idApontamento</string>
     <string name="dsNameTblUserAptmento">Apontamento</string>
     <string name="dsAlturaTblUserAptmento">vlAltura</string>
     <string name="dsPesoTblUserAptmento">vlPeso</string>
-
+    <string name="dsDataTimeTblUserAptmento">dsDataHora</string>
+    <string name="dataTimeTblUserAptmento">dataHora</string>
 
 
     <string name="errorDbCreateMemoriaInterna">NÃO FOI POSSÍVEL CRIAR O BANCO NA MEMÓRIA INTERNA. Error em: MySQLiteOpenHelper</string>
@@ -121,6 +128,9 @@
     <!-- layout dialog screen apontamento -->
     <string name="strLyCadastroApontamentoTextViewAltura">Informe sua altura!!!</string>
     <string name="strLyCadastroApontamentoTextViewPeso">Informe seu peso</string>
+    <string name="strLyCadastroApontamentoStrDataTime">Ocorreu um error ao atribuir a data do Apontamento!</string>
+    "Ocorreu um error ao atribuir da data do apontamento!"
     <string name="strLyCadastrofailedApontamento">Falha no cadastro do apontamento!</string>
+    <string name="strLyMontaListafailedApontamento">Falha na exibição da lista de apontameto!</string>
 
 </resources>
