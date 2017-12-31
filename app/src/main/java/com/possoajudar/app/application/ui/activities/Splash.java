@@ -47,11 +47,13 @@ public class Splash extends Activity implements IDaoModel {
                 checkUserLogado();
             }
              */
-
+            /*
+                Cria banco na memória interna e exporta esse mesmo banco para a memoria externa
+             */
             daoModelPresenter = new DaoModelPresenter(this, getApplicationContext());
             daoModelPresenter.createdbInterno();
 
-            daoModelPresenter.createdbExterno();
+            //daoModelPresenter.createdbExterno();
 
             //activityUtil.deleteDatabase(getApplicationContext());
         } catch (Exception e) {
