@@ -22,6 +22,9 @@ import com.possoajudar.app.application.service.cadastro.CadUserService;
 import com.possoajudar.app.application.service.gps.GpsService;
 import com.possoajudar.app.infrastructure.helper.ActivityUtil;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import javax.inject.Inject;
 
 import roboguice.activity.RoboActivity;
@@ -36,7 +39,7 @@ public class CadUsuario extends RoboActivity implements ICadUserView {
     @InjectView(R.id.lyCadUserEditTextEmail) EditText userEmail;
     @InjectView(R.id.lyCadUserEditTextSenha) EditText userSenha;
     @InjectView(R.id.lyCadUserImageViewCadastrar) ImageView addUser;
-    @InjectView(R.id.lyCadUserImageViewLimpar) ImageView clanUser;
+    @InjectView(R.id.lyCadUserImageViewLimpar) ImageView cleanUser;
 
     ProgressDialog progressDialog;
     public ActivityUtil activityUtil;
@@ -62,7 +65,15 @@ public class CadUsuario extends RoboActivity implements ICadUserView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ly_cad_usuario);
-
+        try {
+            activityUtil = new ActivityUtil();
+        JSONObject object = activityUtil.recuperaPrefFormLogin(getApplicationContext());
+        if(object != null){
+                userEmail.setText(object.getString(getApplicationContext().getString(R.string.dsLoginTblUser)));
+                userSenha.setText(object.getString(getApplicationContext().getString(R.string.dsSenhaTblUser)));}
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         cadUserPresenter = new CadUserPresenter(this, cadUserService, getApplicationContext());
 
         progressDialog = new ProgressDialog(this);
@@ -80,14 +91,16 @@ public class CadUsuario extends RoboActivity implements ICadUserView {
                 //progressDialog.show();
                 //Toast.makeText(getApplicationContext(), "Olá..", Toast.LENGTH_LONG).show();
                 cadUserPresenter.registerNewUser();
+                activityUtil.limpaPrefFormLogin(getApplicationContext());
             }
         });
 
-        clanUser.setOnClickListener(new View.OnClickListener() {
+        cleanUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 userEmail.setText("");
                 userSenha.setText("");
+                activityUtil.limpaPrefFormLogin(getApplicationContext());
             }
         });
 
