@@ -45,6 +45,7 @@ import com.possoajudar.app.application.ui.recyclerview.MyRecyclerViewAdapter;
 import com.possoajudar.app.domain.model.Apontamento;
 import com.possoajudar.app.infrastructure.helper.ActivityUtil;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -74,6 +75,7 @@ public class MainActivity extends AppCompatActivity
 
     String altura = "";
     String peso = "";
+    String dataTime = "";
 
     ProgressDialog progressDialog;
     private CadApontamentoPresenter cadApontamentoPresenter;
@@ -182,9 +184,16 @@ public class MainActivity extends AppCompatActivity
                 textViewNavNome.setText(objectU.getString(getString(R.string.dsLoginTblUser)));
                 textViewNavEmail.setText(objectU.getString(getString(R.string.dsLoginTblUser)));
 
-                if(activityUtil.verificaPrefUserLogadoApontamento(getApplicationContext())){
-                    JSONObject objectA = activityUtil.recuperaPrefUserLogadoApontamento(getApplicationContext());
-                    montaListApontamentoMock(objectA);
+                //se já tem apontamento para este usuário
+                if(activityUtil.verificaPrefUserLogadoApontamento(getApplicationContext())|| cadApontamentoPresenter.existApontamento(getApplicationContext()) ){
+                    //JSONObject objectA = activityUtil.recuperaPrefUserLogadoApontamento(getApplicationContext());
+                    //montaListApontamentoMock(objectA);
+                    try{
+                        cadApontamentoPresenter.getArrayApontamentoUser(getApplicationContext());
+                    }catch (Exception e){
+                        e.getMessage().toString();
+                    }
+
                 }else{
                     exibeDialogApontamento();
                 }
@@ -225,6 +234,14 @@ public class MainActivity extends AppCompatActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+
+        if (id == R.id.add_apontamento) {
+            try{
+                exibeDialogApontamento();
+            }catch (Exception e){
+                e.getMessage().toString();
+            }
+        }
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
@@ -375,7 +392,6 @@ public class MainActivity extends AppCompatActivity
                 public void onClick(View view) {
                     try{
                         if (editTextAltura.getText().toString().length()>0 && editTextPeso.getText().toString().length()>0) {
-
                             cadApontamentoPresenter.registerApontamentoUser();
                             customDialog.dismiss();
 
@@ -409,25 +425,20 @@ public class MainActivity extends AppCompatActivity
             e.getMessage().toString();
         }
     }
-
+    /*
     public void montaListApontamento(JSONObject objectA){
         try{
-
             altura = objectA.getString(getApplicationContext().getString(R.string.dsAlturaTblUserAptmento));
             peso   = objectA.getString(getApplicationContext().getString(R.string.dsPesoTblUserAptmento));
-
+            dataTime = objectA.getString(getApplicationContext().getString(R.string.prefDataTime_userLogado));
             listView=(ListView)findViewById(R.id.myList);
-
             dataModels= new ArrayList<>();
-
             dataModels.add(new Apontamento("Data", "26-1-17 - 13:34:08", peso + " - " + altura,"September 23, 2008"));
             adapter= new CustomAdapter(dataModels,getApplicationContext());
-
             listView.setAdapter(adapter);
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
                     Apontamento dataModel= dataModels.get(position);
 
                     Snackbar.make(view, dataModel.getName()+"\n"+dataModel.getType()+" API: "+dataModel.getVersion_number(), Snackbar.LENGTH_LONG)
@@ -438,7 +449,7 @@ public class MainActivity extends AppCompatActivity
             e.getMessage().toString();
         }
     }
-
+*/
     public void montaListApontamentoMock(JSONObject objectA){
         try{
             altura = objectA.getString(getApplicationContext().getString(R.string.dsAlturaTblUserAptmento));
@@ -489,6 +500,49 @@ public class MainActivity extends AppCompatActivity
     public String getCadApontamentoPeso() {
         return editTextPeso.getText().toString();
     }
+    @Override
+    public String getCadApontamentoDsDataTime() {
+        return ActivityUtil.getDataHora(System.currentTimeMillis());
+    }
+    @Override
+    public long getCadApontamentoDataTime() {
+        return System.currentTimeMillis();
+    }
+
+    @Override
+    public JSONArray montaListaApondatamento(JSONArray jsonArray) {
+            try{
+                final ArrayList<Apontamento> myDataModels;
+                listView=(ListView)findViewById(R.id.myList);
+                myDataModels= new ArrayList<>();
+                for(int x= 0; x<jsonArray.length(); x++){
+                    JSONObject object = (JSONObject) jsonArray.get(x);
+                    int    idApontamento =  object.getInt(getString(R.string.idTblUserAptmento));
+                    int    dataHora      =  object.getInt(getString(R.string.dataTimeTblUserAptmento));
+                    String dsDataHora    =  object.getString(getString(R.string.dsDataTimeTblUserAptmento));
+                    String dsAltura      = object.getString(getString(R.string.dsAlturaTblUserAptmento));
+                    String dsPeso        = object.getString(getString(R.string.dsPesoTblUserAptmento));
+                    int    idUsuario     = object.getInt(getString(R.string.idTblUser));
+
+
+                    myDataModels.add(new Apontamento("Data", dsDataHora, dsPeso + " - " + dsAltura,dsDataHora));
+                }
+                adapter = new CustomAdapter(myDataModels,getApplicationContext());
+                listView.setAdapter(adapter);
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Apontamento dataModel= myDataModels.get(position);
+                        Snackbar.make(view, dataModel.getName()+"\n"+dataModel.getType()+" API: "+dataModel.getVersion_number(), Snackbar.LENGTH_LONG)
+                                .setAction("No action", null).show();
+                    }
+                });
+            }catch (Exception e){
+                e.getMessage().toString();
+            }
+            //Toast.makeText(this, "Total da lista de itens a ser exibido: " + String.valueOf(jsonArray.length()), Toast.LENGTH_LONG).show();
+        return null;
+    }
 
     @Override
     public void showCadApontamentoAlturaError(int resId) {
@@ -501,17 +555,26 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
+    public void showCadApontamentoDataTimeError(int resId) {
+        Toast.makeText(getApplicationContext(), getString(resId), Toast.LENGTH_LONG).show();
+    }
+
+    @Override
     public void showCadApontamentoError(int resId) {
         Toast.makeText(this, getString(resId), Toast.LENGTH_LONG).show();
     }
 
     @Override
+    public void showMontaListaApontamentoError(int resId) {
+        Toast.makeText(this, getString(resId), Toast.LENGTH_LONG).show();
+    }
+
+    /*
+    @Override
     public void startMainListActivity() {
         try{
             gps = new GpsService(getApplicationContext());
-
             JSONObject value = activityUtil.getValeuJson(getApplicationContext(),this.getCadApontamentoAltura(), this.getCadApontamentoPeso());
-
             activityUtil.definePrefUserLogadoApontamento(getApplicationContext(), gps, value);
             JSONObject objectA = activityUtil.recuperaPrefUserLogadoApontamento(this);
             montaListApontamento(objectA);
@@ -519,7 +582,7 @@ public class MainActivity extends AppCompatActivity
             e.getMessage().toString();
         }
     }
-
+ */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
