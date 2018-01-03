@@ -102,7 +102,7 @@ public class CadApontamentoService {
             DaoModelService daoModelService = null;
             SQLiteDatabase database =  daoModelService.getdbInterno(context);
             String[] args = { String.valueOf(idUsuarioLogado)};
-            Cursor cursor = database.query(context.getString(R.string.dsNameTblUserAptmento), null, "idUsuario=?"  , args, null,null,null);
+            Cursor cursor = database.query(context.getString(R.string.dsNameTblUserAptmento), null, "idUsuario=?"  , args, null,null,"idApontamento desc");
             if(cursor.getCount()>0){
                 cursor.moveToFirst();
                 arrayReturn = new JSONArray(){};
