@@ -39,8 +39,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import roboguice.activity.RoboActivity;
-import roboguice.inject.InjectView;
+
 
 
 import static android.widget.Toast.LENGTH_LONG;
@@ -121,6 +120,8 @@ public class Login extends Activity implements ILoginView {
                         }else{
                             startActivity(new Intent(Login.this, CadUsuario.class));
                         }
+                    }else{
+                        Toast.makeText(getApplicationContext(),"Habilite o GPS", Toast.LENGTH_LONG).show();
                     }
                 }catch (Exception e){
                     e.getMessage().toString();
