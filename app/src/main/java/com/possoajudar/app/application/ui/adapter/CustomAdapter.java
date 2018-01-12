@@ -36,7 +36,7 @@ public class CustomAdapter  extends ArrayAdapter<Apontamento> implements View.On
 
 
     public CustomAdapter(ArrayList<Apontamento> data, Context context) {
-        super(context, R.layout.row_item, data);
+        super(context, R.layout.list_row, data);//row_item
         this.dataSet = data;
         this.mContext=context;
 
@@ -86,7 +86,7 @@ public class CustomAdapter  extends ArrayAdapter<Apontamento> implements View.On
 
             viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
-            convertView = inflater.inflate(R.layout.row_item, parent, false);
+            convertView = inflater.inflate(R.layout.list_row, parent, false);//row_item
             viewHolder.txtName = (TextView) convertView.findViewById(R.id.name);
             viewHolder.txtType = (TextView) convertView.findViewById(R.id.type);
             viewHolder.txtVersion = (TextView) convertView.findViewById(R.id.version_number);
