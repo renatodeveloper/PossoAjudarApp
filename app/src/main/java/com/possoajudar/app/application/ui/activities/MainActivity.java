@@ -386,6 +386,15 @@ public class MainActivity extends AppCompatActivity
             editTextAltura = (EditText) customDialog.findViewById(R.id.lyApontamentoEditTextAltura);
             editTextPeso = (EditText) customDialog.findViewById(R.id.lyApontamentoEditTextPeso);
 
+            //*** get conteúdo já apontando
+            JSONObject objectA = activityUtil.recuperaPrefUserLogadoApontamento(getApplicationContext());
+            if(objectA.getString(getApplicationContext().getString(R.string.dsAlturaTblUserAptmento)).toString().length()>0){
+                editTextAltura.setText(objectA.getString(getApplicationContext().getString(R.string.dsAlturaTblUserAptmento)));
+                editTextPeso.requestFocus();
+                //altura = objectA.getString(getApplicationContext().getString(R.string.dsAlturaTblUserAptmento));
+                //peso   = objectA.getString(getApplicationContext().getString(R.string.dsPesoTblUserAptmento));
+            }
+
             ((Button) customDialog.findViewById(R.id.start)).setOnClickListener(new View.OnClickListener() {
 
                 @Override
@@ -393,6 +402,13 @@ public class MainActivity extends AppCompatActivity
                     try{
                         if (editTextAltura.getText().toString().length()>0 && editTextPeso.getText().toString().length()>0) {
                             cadApontamentoPresenter.registerApontamentoUser();
+
+                            //define preferences apontamento
+                            gps = new GpsService(getApplicationContext());
+                            JSONObject value = activityUtil.getValeuJson(getApplicationContext(),editTextAltura.getText().toString(), editTextPeso.getText().toString());
+                            activityUtil.definePrefUserLogadoApontamento(getApplicationContext(), gps, value);
+                            JSONObject objectA = activityUtil.recuperaPrefUserLogadoApontamento(getApplicationContext());
+
                             customDialog.dismiss();
 
                             //Toast.makeText(MainActivity.this, R.string.start, Toast.LENGTH_SHORT).show();
