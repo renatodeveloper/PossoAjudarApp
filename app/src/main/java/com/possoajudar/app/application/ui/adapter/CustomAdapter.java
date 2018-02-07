@@ -27,16 +27,16 @@ public class CustomAdapter  extends ArrayAdapter<Apontamento> implements View.On
 
     // View lookup cache
     private static class ViewHolder {
-        TextView txtName;
-        TextView txtType;
-        TextView txtVersion;
-        ImageView info;
+        TextView txtApontamento;
+        TextView txtDataApontamento;
+        TextView txtStatus;
+        ImageView propaganda;
     }
 
 
 
     public CustomAdapter(ArrayList<Apontamento> data, Context context) {
-        super(context, R.layout.list_row, data);//row_item
+        super(context, R.layout.list_row_apontamento, data);//row_item
         this.dataSet = data;
         this.mContext=context;
 
@@ -86,11 +86,11 @@ public class CustomAdapter  extends ArrayAdapter<Apontamento> implements View.On
 
             viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
-            convertView = inflater.inflate(R.layout.list_row, parent, false);//row_item
-            viewHolder.txtName = (TextView) convertView.findViewById(R.id.name);
-            viewHolder.txtType = (TextView) convertView.findViewById(R.id.type);
-            viewHolder.txtVersion = (TextView) convertView.findViewById(R.id.version_number);
-            viewHolder.info = (ImageView) convertView.findViewById(R.id.item_info);
+            convertView = inflater.inflate(R.layout.list_row_apontamento, parent, false);//row_item
+            viewHolder.txtApontamento = (TextView) convertView.findViewById(R.id.textViewApontamento);
+            viewHolder.txtDataApontamento = (TextView) convertView.findViewById(R.id.textViewDataApontamento);
+            viewHolder.txtStatus = (TextView) convertView.findViewById(R.id.textViewStatus);
+            viewHolder.propaganda = (ImageView) convertView.findViewById(R.id.img_propaganda);
 
             result=convertView;
 
@@ -105,11 +105,11 @@ public class CustomAdapter  extends ArrayAdapter<Apontamento> implements View.On
         lastPosition = position;
 
 
-        viewHolder.txtName.setText(dataModel.getName());
-        viewHolder.txtType.setText(dataModel.getType());
-        viewHolder.txtVersion.setText(dataModel.getVersion_number());
-        viewHolder.info.setOnClickListener(this);
-        viewHolder.info.setTag(position);
+        viewHolder.txtApontamento.setText(dataModel.getName());
+        viewHolder.txtDataApontamento.setText(dataModel.getType());
+        viewHolder.txtStatus.setText(dataModel.getVersion_number());
+        viewHolder.propaganda.setOnClickListener(this);
+        viewHolder.propaganda.setTag(position);
         // Return the completed view to render on screen
         return convertView;
     }
