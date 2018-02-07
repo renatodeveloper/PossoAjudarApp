@@ -387,13 +387,20 @@ public class MainActivity extends AppCompatActivity
             editTextPeso = (EditText) customDialog.findViewById(R.id.lyApontamentoEditTextPeso);
 
             //*** get conteúdo já apontando
-            JSONObject objectA = activityUtil.recuperaPrefUserLogadoApontamento(getApplicationContext());
-            if(objectA.getString(getApplicationContext().getString(R.string.dsAlturaTblUserAptmento)).toString().length()>0){
-                editTextAltura.setText(objectA.getString(getApplicationContext().getString(R.string.dsAlturaTblUserAptmento)));
-                editTextPeso.requestFocus();
-                //altura = objectA.getString(getApplicationContext().getString(R.string.dsAlturaTblUserAptmento));
-                //peso   = objectA.getString(getApplicationContext().getString(R.string.dsPesoTblUserAptmento));
-            }
+
+             try{
+                 JSONObject objectA = activityUtil.recuperaPrefUserLogadoApontamento(getApplicationContext());
+                    if(objectA != null && objectA.length()>0){
+                        if(objectA.getString(getApplicationContext().getString(R.string.dsAlturaTblUserAptmento)).toString().length()>0){
+                            editTextAltura.setText(objectA.getString(getApplicationContext().getString(R.string.dsAlturaTblUserAptmento)));
+                            editTextPeso.requestFocus();
+                            //altura = objectA.getString(getApplicationContext().getString(R.string.dsAlturaTblUserAptmento));
+                            //peso   = objectA.getString(getApplicationContext().getString(R.string.dsPesoTblUserAptmento));
+                        }
+                    }
+                    }catch (Exception e){
+                        e.getMessage().toString();
+             }
 
             ((Button) customDialog.findViewById(R.id.start)).setOnClickListener(new View.OnClickListener() {
 
@@ -407,8 +414,13 @@ public class MainActivity extends AppCompatActivity
                             gps = new GpsService(getApplicationContext());
                             JSONObject value = activityUtil.getValeuJson(getApplicationContext(),editTextAltura.getText().toString(), editTextPeso.getText().toString());
                             activityUtil.definePrefUserLogadoApontamento(getApplicationContext(), gps, value);
-                            JSONObject objectA = activityUtil.recuperaPrefUserLogadoApontamento(getApplicationContext());
 
+                            try{
+                                JSONObject objectA = activityUtil.recuperaPrefUserLogadoApontamento(getApplicationContext());
+                                if(objectA != null){}
+                            }catch (Exception e){
+                                e.getMessage().toString();
+                            }
                             customDialog.dismiss();
 
                             //Toast.makeText(MainActivity.this, R.string.start, Toast.LENGTH_SHORT).show();
@@ -535,13 +547,14 @@ public class MainActivity extends AppCompatActivity
                     JSONObject object = (JSONObject) jsonArray.get(x);
                     int    idApontamento =  object.getInt(getString(R.string.idTblUserAptmento));
                     int    dataHora      =  object.getInt(getString(R.string.dataTimeTblUserAptmento));
-                    String dsDataHora    =  object.getString(getString(R.string.dsDataTimeTblUserAptmento));
+                    String dataAapontamento    =  object.getString(getString(R.string.dsDataTimeTblUserAptmento));
                     String dsAltura      = object.getString(getString(R.string.dsAlturaTblUserAptmento));
                     String dsPeso        = object.getString(getString(R.string.dsPesoTblUserAptmento));
                     int    idUsuario     = object.getInt(getString(R.string.idTblUser));
+                    String apontamento = "Peso: " + dsPeso + " - Altura: " + dsAltura;
+                    String status = "No peso";
 
-
-                    myDataModels.add(new Apontamento("Data", dsDataHora, dsPeso + " - " + dsAltura,dsDataHora));
+                    myDataModels.add(new Apontamento(apontamento, dataAapontamento, status, "dsfeature"));
                 }
                 adapter = new CustomAdapter(myDataModels,getApplicationContext());
                 listView.setAdapter(adapter);
