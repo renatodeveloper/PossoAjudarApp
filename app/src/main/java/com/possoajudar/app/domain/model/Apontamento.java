@@ -13,31 +13,31 @@ public class Apontamento {
     public int image;
 
     //**************************************************************************************
-    String name;
-    String type;
-    String version_number;
+    String apontamento;
+    String dataApontamento;
+    String status;
     String feature;
 
-    public Apontamento(String name, String type, String version_number, String feature ) {
-        this.name=name;
-        this.type=type;
-        this.version_number=version_number;
+    public Apontamento(String apontamento, String dataApontamento, String status, String feature ) {
+        this.apontamento=apontamento;
+        this.dataApontamento=dataApontamento;
+        this.status=status;
         this.feature=feature;
 
     }
 
     public String getName() {
-        return name;
+        return apontamento;
     }
 
 
     public String getType() {
-        return type;
+        return dataApontamento;
     }
 
 
     public String getVersion_number() {
-        return version_number;
+        return status;
     }
 
 
