@@ -246,7 +246,8 @@ public class MainActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             //startActivity(new Intent(MainActivity.this, ListApontamento.class));
-            startActivity(new Intent(MainActivity.this, ListHistorico.class));
+            //startActivity(new Intent(MainActivity.this, ListHistorico.class));
+            startActivity(new Intent(MainActivity.this, CadConfServ.class));
             return true;
         }
         if (id == R.id.action_cleanpreferences) {
