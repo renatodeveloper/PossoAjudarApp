@@ -54,6 +54,22 @@
     <string name="strLyCadastroDeUsuarioEditTextHintSenha">Entre com a senha</string>
     <string name="strLyCadastrofailed">Falha no cadastro do novo usuário!</string>
 
+    <!-- layout screen cadastrar configuração de serviço -->
+    <string name="strLyCadastroDeConfServTitle">Cadastro de Configuração de Serviço</string>
+    <string name="strLyCadastroDeConfServOptionAllDays">Todos os Dias</string>
+    <string name="strLyCadastroDeConfServOptionAllWeek">Toda Semana</string>
+    <string name="strLyCadastroDeConfServOptionAllWeekend">Todo Fim Semana</string>
+    <string name="strLyCadastroDeConfServOption15Days">Intervalo de 15 dias</string>
+    <string name="strLyCadastroDeConfServOptionAllMonth">Todo Mês</string>
+
+
+    <string name="strLyCadastroDeConfServRadioOption">Selecione uma opção</string>
+    <string name="strLyCadastroConfServfailed">Falha no cadastro de configuração de serviço!</string>
+    <string name="prefArqValueConfServ">prefArqValueConfServ</string>
+    <string name="dsValueConfServ">valueConfServico</string>
+    <string name="idConfServico">idServico</string>
+    <string name="dsConfServiceDefaultAlldays">1</string>
+
     <!-- parametros DAO -->
     <string name="folder">"/POSSO/"</string>
     <string name="folderError">Folder POSSO indisponível</string>
@@ -63,13 +79,43 @@
         CREATE TABLE RedeSocial (idRedeSocial INTEGER PRIMARY KEY AUTOINCREMENT, dsRedeSocial TEXT);
     </string>
 
+    <string name="sqlCreateTableConfServ">
+        CREATE TABLE Servico (idServico INTEGER PRIMARY KEY AUTOINCREMENT, dsServico TEXT);
+    </string>
+
     <string name="sqlCreateTableUsuario">
-        CREATE TABLE Usuario (idUsuario INTEGER PRIMARY KEY AUTOINCREMENT, dsLogin TEXT, dsSenha TEXT, idRedeSocial INTEGER, FOREIGN KEY (idRedeSocial) REFERENCES RedeSocial(idRedeSocial));
+        CREATE TABLE Usuario (idUsuario INTEGER PRIMARY KEY AUTOINCREMENT, dsLogin TEXT, dsSenha TEXT,
+       idRedeSocial INTEGER, idServico    INTEGER,
+       FOREIGN KEY (idRedeSocial) REFERENCES RedeSocial(idRedeSocial),
+       FOREIGN KEY (idServico) REFERENCES Servico(idServico));
     </string>
 
     <string name="sqlCreateTableApontamento">
         CREATE TABLE Apontamento (idApontamento INTEGER PRIMARY KEY AUTOINCREMENT, dataHora INTEGER, dsDataHora TEXT, vlPeso FLOAT, vlAltura FLOAT, idUsuario INTEGER, FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario));
     </string>
+
+    <string name="sqlInsertTableConfService">
+        CREATE TABLE Apontamento (idApontamento INTEGER PRIMARY KEY AUTOINCREMENT, dataHora INTEGER, dsDataHora TEXT, vlPeso FLOAT, vlAltura FLOAT, idUsuario INTEGER, FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario));
+    </string>
+
+    <!-- carga rede social-->
+    <string name="sqlCargaRedeSocialFacebook">INSERT INTO RedeSocial(dsRedeSocial) values  ("'"Facebook"'");</string>
+    <string name="sqlCargaRedeSocialInstagram">INSERT INTO RedeSocial(dsRedeSocial) values ("'"Instagram"'");</string>
+    <string name="sqlCargaRedeSocialLinkedIn">INSERT INTO RedeSocial(dsRedeSocial) values ("'"LinkedIn"'");</string>
+    <string name="sqlCargaRedeSocialTwitter">INSERT INTO RedeSocial(dsRedeSocial) values ("'"Twitter"'");</string>
+    <string name="sqlCargaRedeSocialWhatsApp">INSERT INTO RedeSocial(dsRedeSocial) values ("'"WhatsApp"'");</string>
+    <string name="sqlCargaRedeSocialFacebookMessenger">INSERT INTO RedeSocial(dsRedeSocial) values ("'"Facebook Messenger"'");</string>
+    <string name="sqlCargaRedeSocialYouTube">INSERT INTO RedeSocial(dsRedeSocial) values ("'"YouTube"'");</string>
+    <string name="sqlCargaRedeSocialSnapchat">INSERT INTO RedeSocial(dsRedeSocial) values ("'"Snapchat"'");</string>
+    <string name="sqlCargaRedeSocialGoogle">INSERT INTO RedeSocial(dsRedeSocial) values ("'"Google+"'");</string>
+    <string name="sqlCargaRedeSocialPinterest">INSERT INTO RedeSocial(dsRedeSocial) values ("'"Pinterest"'");</string>
+
+    <!-- carga configuração de serviço-->
+    <string name="sqlCargaConfServAlldays">INSERT INTO Servico(dsServico) values ("'"Alldays"'");</string>
+    <string name="sqlCargaConfServAllweek">INSERT INTO Servico(dsServico) values ("'"Allweek"'");</string>
+    <string name="sqlCargaConfServAllweekend">INSERT INTO Servico(dsServico) values ("'"Allweekend"'");</string>
+    <string name="sqlCargaConfServ15days">INSERT INTO Servico(dsServico) values ("'"15days"'");</string>
+    <string name="sqlCargaConfServAllmonth">INSERT INTO Servico(dsServico) values ("'"Allmonth"'");</string>
 
 
     <!-- tabelas -->
