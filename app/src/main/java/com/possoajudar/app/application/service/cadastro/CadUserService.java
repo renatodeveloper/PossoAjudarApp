@@ -25,6 +25,7 @@ public class CadUserService {
                     ContentValues values = new ContentValues();
                     values.put(context.getString(R.string.dsLoginTblUser), jsonValueLogin.getString(context.getString(R.string.dsGeneric_A)));
                     values.put(context.getString(R.string.dsSenhaTblUser), jsonValueLogin.getString(context.getString(R.string.dsGeneric_B)));
+                    values.put(context.getString(R.string.idConfServico), context.getString(R.string.dsConfServiceDefaultAlldays));
                     long result  = database.insert(context.getString(R.string.dsNameTblUser), null, values);
                     if(result >0){
                         //check insert select... fazer com o valida user
