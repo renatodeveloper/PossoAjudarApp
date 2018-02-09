@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/grey_300"
+        android:layout_marginRight="@dimen/dimen10dip"
+        android:layout_marginLeft="@dimen/dimen10dip"
+        >
+        <TextView
+            android:id="@+id/lyCadConfServTextViewTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/strLyCadastroDeConfServTitle"
+            android:textSize="@dimen/dimen16dip"
+            android:textColor="@android:color/black"
+            android:textAlignment="center"
+            android:layout_marginTop="@dimen/dimen5dp"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/dimen15dip">
+
+            <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <RadioButton android:id="@+id/radio_alldays"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/strLyCadastroDeConfServOptionAllDays"
+                    android:checked="true"/>
+                <RadioButton android:id="@+id/radio_allweek"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/strLyCadastroDeConfServOptionAllWeek" />
+                <RadioButton android:id="@+id/radio_allweekend"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/strLyCadastroDeConfServOptionAllWeekend" />
+                <RadioButton android:id="@+id/radio_15days"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/strLyCadastroDeConfServOption15Days" />
+                <RadioButton android:id="@+id/radio_allmonth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/strLyCadastroDeConfServOptionAllMonth" />
+            </RadioGroup>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/dimen35dip"
+            android:weightSum="1">
+
+            <ImageView
+                android:id="@+id/lyCadConfServImageViewCadastrar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:src="@drawable/ic_menu_send"
+                android:foregroundGravity="left"/>
+            <ImageView
+                android:id="@+id/lyCadConfServImageViewLimpar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:src="@drawable/return32x32"
+                android:foregroundGravity="left"/>
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
