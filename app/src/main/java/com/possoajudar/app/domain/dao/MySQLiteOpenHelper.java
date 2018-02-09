@@ -76,8 +76,29 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
      * @param db A base de dados onde os comandos serão executados
      */
     public void startdb(SQLiteDatabase db) throws IOException {
-        String[] sql = new String[]{contexto.getString(R.string.sqlCreateTableRedeSocial),  contexto.getString(R.string.sqlCreateTableUsuario),
-                contexto.getString(R.string.sqlCreateTableApontamento)};
+        String[] sql = new String[]{contexto.getString(R.string.sqlCreateTableRedeSocial),
+                                    contexto.getString(R.string.sqlCreateTableConfServ),
+                                    contexto.getString(R.string.sqlCreateTableUsuario),
+                                    contexto.getString(R.string.sqlCreateTableApontamento),
+
+                contexto.getString(R.string.sqlCargaRedeSocialFacebook),
+                contexto.getString(R.string.sqlCargaRedeSocialInstagram),
+                contexto.getString(R.string.sqlCargaRedeSocialLinkedIn),
+                contexto.getString(R.string.sqlCargaRedeSocialTwitter),
+                contexto.getString(R.string.sqlCargaRedeSocialWhatsApp),
+                contexto.getString(R.string.sqlCargaRedeSocialFacebookMessenger),
+                contexto.getString(R.string.sqlCargaRedeSocialYouTube),
+                contexto.getString(R.string.sqlCargaRedeSocialSnapchat),
+                contexto.getString(R.string.sqlCargaRedeSocialGoogle),
+                contexto.getString(R.string.sqlCargaRedeSocialPinterest),
+
+                contexto.getString(R.string.sqlCargaConfServAlldays),
+                contexto.getString(R.string.sqlCargaConfServAllweek),
+                contexto.getString(R.string.sqlCargaConfServAllweekend),
+                contexto.getString(R.string.sqlCargaConfServ15days),
+                contexto.getString(R.string.sqlCargaConfServAllmonth),
+
+        };
 
         //String[] sql = contexto.getString(R.string.sqlCreateTableUsuario).split("\n");
         db.beginTransaction();
