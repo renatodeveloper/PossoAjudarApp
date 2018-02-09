@@ -52,7 +52,7 @@
         <activity android:name=".application.ui.activities.ListApontamento"/>
         <activity android:name=".application.ui.activities.ListHistorico"/>
         <activity android:name=".application.ui.activities.CadUsuario"/>
-
+        <activity android:name=".application.ui.activities.CadConfServ"/>
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="fd19a3646e17896488e88ddbbd1963ffe5e2b7e0"
