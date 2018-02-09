@@ -190,7 +190,36 @@ Guarda status do apontamento do usuário
             e.getMessage().toString();
         }
     }
+    // DEFINE Configuração do Serviço - Tempo em que o usuário irá informar o seu apontamento
+    public void definePrefConfService(Context context,JSONObject jsonObject) {
+        try{
+                JSONObject json = new JSONObject();
+                json.put(context.getString(R.string.dsValueConfServ), jsonObject.getString(context.getString(R.string.dsValueConfServ)));
+                SharedPreferences mPrefs = context.getSharedPreferences(context.getString(R.string.prefArqValueConfServ), Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = mPrefs.edit();
+                editor.putString(context.getString(R.string.dsValueConfServ), json.toString());
+                editor.commit();
 
+        }catch (Exception e) {
+            e.getMessage().toString();
+        }
+    }
+    // RECUPERA  Configuração do Serviço
+    public JSONObject recuperaPrefConfService(Context context){
+        JSONObject result = new JSONObject();
+        try{
+
+            SharedPreferences mPrefs = context.getSharedPreferences(context.getString(R.string.prefArqValueConfServ), Context.MODE_PRIVATE);
+            String status = mPrefs.getString(context.getString(R.string.dsValueConfServ), "");
+            if(status.length()>0){
+                result.put(context.getString(R.string.dsValueConfServ), mPrefs.getString(context.getString(R.string.dsValueConfServ), ""));
+                return result;
+            }
+        }catch (Exception e){
+            e.getMessage().toString();
+        }
+        return result;
+    }
     public void limpaPrefFormLogin(Context context) {
         try{
             SharedPreferences mPrefs = context.getSharedPreferences(context.getString(R.string.prefArq_formLogin), context.MODE_PRIVATE);
@@ -204,6 +233,18 @@ Guarda status do apontamento do usuário
         }
     }
 
+    public void limpaPrefConfServ(Context context) {
+        try{
+            SharedPreferences mPrefs = context.getSharedPreferences(context.getString(R.string.prefArqValueConfServ), context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = mPrefs.edit();
+            editor.clear();
+
+            editor.commit();
+
+        }catch (Exception e) {
+            e.getMessage().toString();
+        }
+    }
 
     //LIMPA Usuário logado
     public void limpaPrefUserLogado(Context context) {
