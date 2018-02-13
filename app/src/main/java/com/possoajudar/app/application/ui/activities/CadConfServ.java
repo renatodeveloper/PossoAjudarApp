@@ -1,4 +1,5 @@
 package com.possoajudar.app.application.ui.activities;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.widget.Toast;
 
 import com.possoajudar.app.R;
 import com.possoajudar.app.application.service.ICadConfServView;
+import com.possoajudar.app.application.service.ServicoApontamento;
 import com.possoajudar.app.application.service.cadastro.CadConfServPresenter;
 import com.possoajudar.app.application.service.cadastro.CadConfServService;
 import com.possoajudar.app.infrastructure.helper.ActivityUtil;
@@ -59,6 +61,16 @@ public class CadConfServ extends RoboActivity implements ICadConfServView{
             public void onClick(View v) {
                 //Toast.makeText(getApplicationContext(), "CLICK BY roboguice.inject.InjectView - CAD", Toast.LENGTH_LONG).show();
                 cadConfServPresenter.registerConfServ();
+
+
+                /*
+                 Intent intent = new Intent();
+                intent.putExtra("id", "Some Value Here to return");
+                setResult(Activity.RESULT_OK, intent);
+                finish();
+                 */
+
+
             }
         });
         cleanCondServ.setOnClickListener(new View.OnClickListener() {
@@ -119,6 +131,10 @@ public class CadConfServ extends RoboActivity implements ICadConfServView{
 
     @Override
     public void startMainActivity() {
-        startActivity(new Intent(this, MainActivity.class));
+
+        Intent intent = new Intent();
+        intent.putExtra("id", "Some Value Here to return");
+        setResult(Activity.RESULT_OK, intent);
+        finish();
     }
 }
