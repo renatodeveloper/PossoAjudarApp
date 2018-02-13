@@ -46,13 +46,20 @@
         </activity>
         <activity android:name=".application.ui.activities.Login"></activity>
         <activity android:name=".application.ui.activities.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" android:screenOrientation="portrait"></activity>
         <activity android:name=".application.ui.activities.ContainerFragmentActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".application.ui.activities.ListApontamento"/>
         <activity android:name=".application.ui.activities.ListHistorico"/>
         <activity android:name=".application.ui.activities.CadUsuario"/>
         <activity android:name=".application.ui.activities.CadConfServ"/>
+        <service android:name=".application.service.ServicoApontamento"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="SERVICO_APONTAMENTO"></action>
+            </intent-filter>
+        </service>
+
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="fd19a3646e17896488e88ddbbd1963ffe5e2b7e0"
