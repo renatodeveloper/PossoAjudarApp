@@ -1,5 +1,6 @@
 package com.possoajudar.app.application.ui.activities;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -36,6 +37,7 @@ import com.possoajudar.app.R;
 import com.possoajudar.app.application.module.app.GoogleAnalyticsApplication;
 import com.possoajudar.app.application.service.ICadApontamentoView;
 import com.possoajudar.app.application.service.ICadUserView;
+import com.possoajudar.app.application.service.ServicoApontamento;
 import com.possoajudar.app.application.service.cadastro.CadApontamentoPresenter;
 import com.possoajudar.app.application.service.cadastro.CadApontamentoService;
 import com.possoajudar.app.application.service.gps.GpsService;
@@ -46,6 +48,7 @@ import com.possoajudar.app.domain.model.Apontamento;
 import com.possoajudar.app.infrastructure.helper.ActivityUtil;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -83,13 +86,41 @@ public class MainActivity extends AppCompatActivity
 
     EditText editTextAltura = null;
     EditText editTextPeso = null;
-
+    static final int REQUEST_SERVER = 1;
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        try{
+            //limpa todas as preferences
+            activityUtil.cleanAllPreferences(getApplicationContext());
+            new ServicoApontamento().stopService();
+        }catch (Exception e){
+            e.getMessage().toString();
+        }
+    }
 
     @Override
     protected void onResume() {
         super.onResume();
         mTracker.setScreenName("Main Screen");
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+
+        //Toast.makeText(getApplicationContext(), "onResume", Toast.LENGTH_LONG).show();
+
+        /*
+            Método que executa após o serviço ter seu tempo ocioso atingido
+         */
+        JSONObject object = activityUtil.recuperaPrefFlagInfoMedidas(getApplicationContext());
+        if(object != null && object.length()>0){
+            try {
+                if(object.getBoolean(getApplicationContext().getString(R.string.prefArqInfoMedidasVal))){
+                    exibeDialogApontamento();
+                    activityUtil.limpaPrefFlagInfoMedidas(getApplicationContext());
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private Tracker mTracker;
@@ -140,20 +171,16 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         */
 
-
         //*** - Implementação RecyclerView
 
         /**
          *
-
         myOnClickListener = new MyOnClickListener(this);
         recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-
-
 
         data = new ArrayList<Apontamento>();
         for (int i = 0; i < Apontamento.getArrayDs().length; i++) {
@@ -164,7 +191,6 @@ public class MainActivity extends AppCompatActivity
                     Apontamento.getArrayImgStatus()[i]
             ));
         }
-
         removedItems = new ArrayList<Integer>();
 
         adapter = new MyRecyclerViewAdapter(data);
@@ -177,7 +203,6 @@ public class MainActivity extends AppCompatActivity
             progressDialog = new ProgressDialog(this);
 
             activityUtil = new ActivityUtil();
-            // ESCREVER INSERT
             if(activityUtil.verificaPrefUserLogado(getApplicationContext())){
                 JSONObject objectU = activityUtil.recuperaPrefUserLogado(getApplicationContext());
                 String senha  = objectU.getString(getString(R.string.dsSenhaTblUser));
@@ -193,7 +218,6 @@ public class MainActivity extends AppCompatActivity
                     }catch (Exception e){
                         e.getMessage().toString();
                     }
-
                 }else{
                     exibeDialogApontamento();
                 }
@@ -207,6 +231,8 @@ public class MainActivity extends AppCompatActivity
         GoogleAnalyticsApplication application = (GoogleAnalyticsApplication) getApplication();
         mTracker = application.getDefaultTracker();
 
+        activityUtil.definePrefConfServico(getApplicationContext(), 1);
+        startService(new Intent(getApplicationContext(), ServicoApontamento.class));
     }
 
 
@@ -247,14 +273,14 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.action_settings) {
             //startActivity(new Intent(MainActivity.this, ListApontamento.class));
             //startActivity(new Intent(MainActivity.this, ListHistorico.class));
-            startActivity(new Intent(MainActivity.this, CadConfServ.class));
+            //startActivity(new Intent(MainActivity.this, CadConfServ.class));
+            startActivityForResult(new Intent(MainActivity.this, CadConfServ.class), REQUEST_SERVER);
+
             return true;
         }
         if (id == R.id.action_cleanpreferences) {
             try{
-                activityUtil = new ActivityUtil();
-                activityUtil.limpaPrefUserLogado(getApplicationContext());
-                activityUtil.limpaPrefUserLogadoApontamento(getApplicationContext());
+                activityUtil.cleanAllPreferences(getApplicationContext());
                 startActivity(new Intent(this, Splash.class));
             }catch (Exception e){
                 e.getMessage().toString();
@@ -448,7 +474,7 @@ public class MainActivity extends AppCompatActivity
             });
             //exibe na tela o dialog
             customDialog.show();
-
+            //activityUtil.limpaPrefInfoMedidas(getApplicationContext());
 
         }catch (Exception e){
             e.getMessage().toString();
@@ -619,5 +645,30 @@ public class MainActivity extends AppCompatActivity
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Check which request we're responding to
+        if (requestCode == REQUEST_SERVER) {
+            // Make sure the request was successful
+            if (resultCode == RESULT_OK) {
+
+              String  id = data.getExtras().getString("id");
+              if(id.length()>0){
+                  JSONObject obj = activityUtil.recuperaPrefConfServico(getApplicationContext());
+                  if (obj != null) {
+                      String idServico = getString(R.string.idConfServico);
+                      String dsServico = getString(R.string.dsConfServicoDefault);
+                      new ServicoApontamento().onDestroy();
+
+                  }
+              }
+            }else if (resultCode == Activity.RESULT_CANCELED) {
+                // some stuff that will happen if there's no result
+            }
+        }
     }
 }
