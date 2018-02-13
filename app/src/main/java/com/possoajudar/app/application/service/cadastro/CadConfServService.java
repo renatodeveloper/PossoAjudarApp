@@ -2,10 +2,12 @@ package com.possoajudar.app.application.service.cadastro;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.possoajudar.app.R;
+import com.possoajudar.app.application.service.ServicoApontamento;
 import com.possoajudar.app.application.service.dao.DaoModelService;
 import com.possoajudar.app.infrastructure.helper.ActivityUtil;
 
@@ -37,6 +39,8 @@ public class CadConfServService {
                     cursor.moveToFirst();
                     int idServico = cursor.getInt(cursor.getColumnIndex(context.getString(R.string.idConfServico)));
                     String dsLogin = cursor.getString(cursor.getColumnIndex(context.getString(R.string.dsLoginTblUser)));
+                    int idUser = cursor.getInt(cursor.getColumnIndex(context.getString(R.string.idTblUser)));
+
                     if(dsLogin.length()>0 && idServico>0){
                         values.clear();
                         values = new ContentValues();
@@ -46,13 +50,16 @@ public class CadConfServService {
                         result = database.update(context.getString(R.string.dsNameTblUser), values, "dsLogin=?", args);
                         values.clear();;
                         if(result>0){
-                            JSONObject object = new JSONObject();
-                            object.put(context.getString(R.string.dsValueConfServ), jsonValue.getString(context.getString(R.string.dsGeneric_A)));
-                            activityUtil.definePrefConfService(context, object);
-                            JSONObject obj = activityUtil.recuperaPrefConfService(context);
+                            activityUtil.definePrefConfServico(context, Integer.valueOf(jsonValue.getString(context.getString(R.string.dsGeneric_A))));
+                            JSONObject obj = activityUtil.recuperaPrefConfServico(context);
                             if (obj != null) {
-                                //startServiceConfig
-
+                                String[] argsId= {String.valueOf(idUser)};
+                                cursor = database.query(context.getString(R.string.dsNameTblUserAptmento), null, "idUsuario=?", argsId, null,null,null);
+                                if(cursor.getCount()>0){
+                                    cursor.moveToLast();
+                                    int idApontamento = cursor.getInt(cursor.getColumnIndex(context.getString(R.string.idTblUserAptmento)));
+                                    long dataHoraUltimoApontamento = cursor.getLong(cursor.getColumnIndex(context.getString(R.string.dataTimeTblUserAptmento)));
+                                }
                                 return true;
                             }
                         }
