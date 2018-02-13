@@ -66,9 +66,11 @@
     <string name="strLyCadastroDeConfServRadioOption">Selecione uma opção</string>
     <string name="strLyCadastroConfServfailed">Falha no cadastro de configuração de serviço!</string>
     <string name="prefArqValueConfServ">prefArqValueConfServ</string>
-    <string name="dsValueConfServ">valueConfServico</string>
     <string name="idConfServico">idServico</string>
-    <string name="dsConfServiceDefaultAlldays">1</string>
+    <string name="dsConfServicoDefault">default</string>
+    <string name="dsConfServicoDefaultAlldays">1</string>
+    <string name="prefArqInfoMedidas">prefArqInfoMedidas</string>
+    <string name="prefArqInfoMedidasVal">prefArqInfoMedidasVal</string>
 
     <!-- parametros DAO -->
     <string name="folder">"/POSSO/"</string>
