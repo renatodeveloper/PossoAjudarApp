@@ -1,22 +1,8 @@
 package com.possoajudar.app.application.ui.activities;
 
-import android.Manifest;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationManager;
-import android.os.Build;
 import android.os.Bundle;
-import android.preference.Preference;
-import android.provider.Settings;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.widget.AppCompatButton;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -32,17 +18,9 @@ import com.possoajudar.app.application.service.login.LoginService;
 import com.possoajudar.app.domain.model.Apontamento;
 import com.possoajudar.app.infrastructure.helper.ActivityUtil;
 
-import org.json.JSONObject;
-
 import javax.inject.Inject;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
-
-
-import static android.widget.Toast.LENGTH_LONG;
 import static android.widget.Toast.LENGTH_SHORT;
 
 /**
@@ -94,7 +72,7 @@ public class Login extends Activity implements ILoginView {
         //ButterKnife.bind(this);
        //((LoginApplication) getApplication()).getAppComponent().inject(this);
 
-        final String URL = BuildConfig.API_URL;
+        //final String URL = BuildConfig.API_URL;
         try{
             activityUtil = new ActivityUtil();
         }catch (Exception e){
