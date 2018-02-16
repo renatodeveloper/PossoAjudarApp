@@ -65,7 +65,7 @@ public class CadConfServ extends RoboActivity implements ICadConfServView{
 
                 /*
                  Intent intent = new Intent();
-                intent.putExtra("id", "Some Value Here to return");
+                intent.putExtra("id", "Some Value Here to voltar");
                 setResult(Activity.RESULT_OK, intent);
                 finish();
                  */
@@ -133,7 +133,7 @@ public class CadConfServ extends RoboActivity implements ICadConfServView{
     public void startMainActivity() {
 
         Intent intent = new Intent();
-        intent.putExtra("id", "Some Value Here to return");
+        intent.putExtra("id", "Some Value Here to voltar");
         setResult(Activity.RESULT_OK, intent);
         finish();
     }
