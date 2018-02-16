@@ -28,11 +28,16 @@
         android:name=".application.module.app.GoogleAnalyticsApplication"
 
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/icon_question"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <meta-data
+            android:name="roboguice.modules"
+            android:value="com.possoajudar.app.application.module.retrofit.ApplicationModule" />
+
         <activity
             android:name=".application.ui.activities.Splash"
             android:label="@string/app_name"
@@ -53,6 +58,7 @@
         <activity android:name=".application.ui.activities.ListHistorico"/>
         <activity android:name=".application.ui.activities.CadUsuario"/>
         <activity android:name=".application.ui.activities.CadConfServ"/>
+        <activity android:name=".application.ui.activities.Dimensao"/>
         <service android:name=".application.service.ServicoApontamento"
             android:exported="false">
             <intent-filter>
