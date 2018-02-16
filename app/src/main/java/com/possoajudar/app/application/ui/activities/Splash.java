@@ -108,12 +108,14 @@ public class Splash extends Activity implements IDaoModel {
                     String sjonPerfil = (facePref.getString(getApplicationContext().getString(R.string.prefStatus_userLogado), null));
                     if (sjonPerfil.equals("true")) {
                         startActivity(new Intent(this, MainActivity.class));
+                        //startActivity(new Intent(this, Dimensao.class));
                         return;
 
                     }
                 }
             }
             startActivity(new Intent(this, Login.class));
+            //startActivity(new Intent(this, Dimensao.class));
         }catch (Exception e){
             e.getMessage().toString();
         }
