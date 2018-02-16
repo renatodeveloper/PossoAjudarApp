@@ -3,14 +3,12 @@ package com.possoajudar.app.application.ui.activities;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
+import android.os.Handler;
+import android.os.Message;
 import android.support.design.widget.Snackbar;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
 import android.view.View;
@@ -33,29 +31,41 @@ import android.widget.Toast;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.StandardExceptionParser;
 import com.google.android.gms.analytics.Tracker;
+import com.google.inject.Inject;
+import com.google.inject.name.Named;
 import com.possoajudar.app.R;
 import com.possoajudar.app.application.module.app.GoogleAnalyticsApplication;
+import com.possoajudar.app.application.module.retrofit.ApplicationModule;
+import com.possoajudar.app.application.service.ApplicationService;
+import com.possoajudar.app.application.service.ApplicationServiceCallback;
+import com.possoajudar.app.application.service.ApplicationServiceError;
 import com.possoajudar.app.application.service.ICadApontamentoView;
-import com.possoajudar.app.application.service.ICadUserView;
 import com.possoajudar.app.application.service.ServicoApontamento;
 import com.possoajudar.app.application.service.cadastro.CadApontamentoPresenter;
 import com.possoajudar.app.application.service.cadastro.CadApontamentoService;
 import com.possoajudar.app.application.service.gps.GpsService;
 import com.possoajudar.app.application.ui.adapter.CustomAdapter;
-import com.possoajudar.app.application.ui.fragments.PossoAjudarAppFrag;
-import com.possoajudar.app.application.ui.recyclerview.MyRecyclerViewAdapter;
 import com.possoajudar.app.domain.model.Apontamento;
+import com.possoajudar.app.domain.model.Movie;
+import com.possoajudar.app.domain.model.MoviesResponse;
+import com.possoajudar.app.domain.model.Usuario;
+import com.possoajudar.app.infrastructure.Constants;
 import com.possoajudar.app.infrastructure.helper.ActivityUtil;
+import com.possoajudar.app.infrastructure.helper.BaseActivity;
+import com.possoajudar.app.infrastructure.helper.DialogHelper;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, ICadApontamentoView{
+import butterknife.BindString;
+import retrofit.Response;
+
+public class MainActivity extends BaseActivity
+        implements NavigationView.OnNavigationItemSelectedListener, ICadApontamentoView, ApplicationServiceCallback<MoviesResponse> {
 
     public ActivityUtil activityUtil;
     GpsService gps;
@@ -87,6 +97,22 @@ public class MainActivity extends AppCompatActivity
     EditText editTextAltura = null;
     EditText editTextPeso = null;
     static final int REQUEST_SERVER = 1;
+
+
+    //ciclo on
+    @Inject
+    @Named(ApplicationModule.GETFAPONTAMENTOS)
+    ApplicationService<Movie, MoviesResponse> getApontamentos;
+
+    @BindString(R.string.text_servico_code)
+    String error;
+
+    Thread thread = null;
+    Handler hdl;
+    String strErro = "";
+    ProgressDialog progDialog;
+
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -123,12 +149,18 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+
+    @Override
+    protected int getContentView() {
+        return R.layout.activity_main;
+    }
+
     private Tracker mTracker;
     Dialog customDialog = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        //setContentView(R.layout.activity_main);
         //menu ***
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -182,13 +214,13 @@ public class MainActivity extends AppCompatActivity
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        data = new ArrayList<Apontamento>();
-        for (int i = 0; i < Apontamento.getArrayDs().length; i++) {
-            data.add(new Apontamento(
-                    Apontamento.getArrayDs()[i],
-                    Apontamento.getArraySubDs()[i],
-                    Apontamento.getArrayId()[i],
-                    Apontamento.getArrayImgStatus()[i]
+        data = new ArrayList<ApontamentoResponse>();
+        for (int i = 0; i < ApontamentoResponse.getArrayDs().length; i++) {
+            data.add(new ApontamentoResponse(
+                    ApontamentoResponse.getArrayDs()[i],
+                    ApontamentoResponse.getArraySubDs()[i],
+                    ApontamentoResponse.getArrayId()[i],
+                    ApontamentoResponse.getArrayImgStatus()[i]
             ));
         }
         removedItems = new ArrayList<Integer>();
@@ -233,9 +265,16 @@ public class MainActivity extends AppCompatActivity
 
         activityUtil.definePrefConfServico(getApplicationContext(), 1);
         startService(new Intent(getApplicationContext(), ServicoApontamento.class));
+
+
+
+        //ciclo on
+        try{
+            iniciaProgress();
+        }catch (Exception e){
+            e.getMessage().toString();
+        }
     }
-
-
 
     @Override
     public void onBackPressed() {
@@ -288,15 +327,15 @@ public class MainActivity extends AppCompatActivity
             return true;
         }
 
+        /* Opções de teste
         if (id == R.id.action_fragment) {
             try{
                 startActivity(new Intent(MainActivity.this, ContainerFragmentActivity.class));
             }catch (Exception e){
                 e.getMessage().toString();
             }
-            return true;
+            voltar true;
         }
-
         if (id == R.id.action_event) {
             // Get tracker.
             Tracker t = ((GoogleAnalyticsApplication) getApplication()).getDefaultTracker();
@@ -308,7 +347,7 @@ public class MainActivity extends AppCompatActivity
                     .setLabel(getString(R.string.labelId))
                     .build());
 
-            return true;
+            voltar true;
         }
         if (id == R.id.action_exception) {
             Exception e = null;
@@ -324,11 +363,10 @@ public class MainActivity extends AppCompatActivity
                         .setDescription(new StandardExceptionParser(MainActivity.this, null).getDescription(Thread.currentThread().getName(), e))
                         .setFatal(false)
                         .build());
-
             }
-            return true;
+            voltar true;
         }
-
+        */
         return super.onOptionsItemSelected(item);
     }
 
@@ -382,9 +420,9 @@ public class MainActivity extends AppCompatActivity
                     = (TextView) viewHolder.itemView.findViewById(R.id.textViewDs);
             String selectedName = (String) textViewName.getText();
             int selectedItemId = -1;
-            for (int i = 0; i < Apontamento.getArrayDs().length; i++) {
-                if (selectedName.equals(Apontamento.getArrayDs()[i])) {
-                    selectedItemId = Apontamento.getArrayId()[i];
+            for (int i = 0; i < ApontamentoResponse.getArrayDs().length; i++) {
+                if (selectedName.equals(ApontamentoResponse.getArrayDs()[i])) {
+                    selectedItemId = ApontamentoResponse.getArrayId()[i];
                 }
             }
             removedItems.add(selectedItemId);
@@ -488,13 +526,13 @@ public class MainActivity extends AppCompatActivity
             dataTime = objectA.getString(getApplicationContext().getString(R.string.prefDataTime_userLogado));
             listView=(ListView)findViewById(R.id.myList);
             dataModels= new ArrayList<>();
-            dataModels.add(new Apontamento("Data", "26-1-17 - 13:34:08", peso + " - " + altura,"September 23, 2008"));
+            dataModels.add(new ApontamentoResponse("Data", "26-1-17 - 13:34:08", peso + " - " + altura,"September 23, 2008"));
             adapter= new CustomAdapter(dataModels,getApplicationContext());
             listView.setAdapter(adapter);
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Apontamento dataModel= dataModels.get(position);
+                    ApontamentoResponse dataModel= dataModels.get(position);
 
                     Snackbar.make(view, dataModel.getName()+"\n"+dataModel.getType()+" API: "+dataModel.getVersion_number(), Snackbar.LENGTH_LONG)
                             .setAction("No action", null).show();
@@ -670,5 +708,98 @@ public class MainActivity extends AppCompatActivity
                 // some stuff that will happen if there's no result
             }
         }
+    }
+
+
+    /*
+  Método que solicita os filmes
+   */
+    public boolean  getRequisicaoApontamentos(){
+        try{
+            Movie movie = new Movie();
+            getApontamentos.execute(movie, this);
+            return true;
+        }catch (Exception e){
+            DialogHelper.showErrorDialog(getApplicationContext(),error, e.getMessage().toString());
+        }
+        return false;
+    }
+
+    @Override
+    public void onSuccess(Response<MoviesResponse> output) {
+        if(output !=null){
+            List<Movie> movies = output.body().getResults();
+            String pathPictute = "";
+            for(int m=0;m<movies.size(); m++){
+                pathPictute = String.valueOf(Constants.Headers.URL_IMG_COMPLETO + movies.get(m).getBackdropPath());
+                System.out.print("Path image load: " + pathPictute.toString());
+                Movie movie = movies.get(m);
+                System.out.print("Path image load: " + movie.backdropPath.toString());
+            }
+
+            if(movies.size()>0){
+                progressDialog.dismiss();
+            }
+        }
+    }
+
+    @Override
+    public void onError(ApplicationServiceError error) {
+        try{
+            DialogHelper.showErrorDialog(this, error.getCode(), error.getMessage());
+            progressDialog.dismiss();
+        }catch (Exception e){
+            e.getMessage().toString();
+        }
+    }
+
+
+    private void iniciaProgress() {
+        progDialog = new ProgressDialog(MainActivity.this);
+        progDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_SEARCH) {
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        progDialog.setTitle(getApplicationContext().getResources().getString(R.string.str_tl_sgit_splash_loading));
+        progDialog.setMessage(getApplicationContext().getResources().getString(R.string.str_tl_sgit_splash_inicia_busca));
+        progDialog.show();
+        thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Message msg = new Message();
+                try {
+                    msg.arg1 = 0;
+                    if (getRequisicaoApontamentos()) {
+                        msg.arg1 = 1;
+                    }
+                } catch (Exception e) {
+                    msg.arg1 = 1;
+                    msg.what = 1;
+                    msg.obj = e.getMessage();
+                } finally {
+                    progDialog.dismiss();
+                    hdl.sendMessage(msg);
+                }
+            }
+        });
+
+        thread.start();
+
+        hdl = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                if(msg.arg1 == 1){
+                    Toast.makeText(getApplicationContext(), "Suave", Toast.LENGTH_LONG).show();
+                }else{
+                    DialogHelper.showErrorDialog(getApplicationContext(),error, msg.obj.toString().toString());
+                }
+            }
+        };
     }
 }
