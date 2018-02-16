@@ -9,4 +9,11 @@
     <color name="button_normal">#929392</color>
     <color name="button_pressed">#c0c1c0</color>
     <color name="dialog_divider">@android:color/black</color>
+
+
+
+    <color name="accent">#FF5722</color>
+    <color name="primary">#009688</color>
+    <color name="secondary_text">#727272</color>
+
 </resources>
