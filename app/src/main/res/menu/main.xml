@@ -1,40 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/add_apontamento"
-        android:orderInCategory="100"
-        android:title="@string/add_apontamento"
-        app:showAsAction="never" />
+        android:id="@+id/menu_opcao1"
+        android:title="Opção 1"
+        app:showAsAction="always|withText"
+        android:icon="@drawable/menu_opcao"
+        android:orderInCategory="1"
+        >
+        <!-- Starting the text color sub menu which have three items-->
+        <menu>
+            <item
+                android:id="@+id/opcao1.1"
+                android:title="Opção 1.1"
+                android:icon="@drawable/seta_right"
+                android:enabled="false"
+                />
+            <item
+                android:id="@+id/opcao1.2"
+                android:title="Opção 1.2"
+                android:icon="@drawable/seta_right"
+                android:enabled="false"
+                />
+            <item
+                android:id="@+id/opcao1.3"
+                android:title="Opção 1.3"
+                android:icon="@drawable/seta_right"
+                android:enabled="false"
+                />
+        </menu>
+    </item>
 
     <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never" />
+        android:id="@+id/menu_opcao2"
+        android:title="Opção 2"
+        app:showAsAction="ifRoom|withText"
+        android:orderInCategory="2"
+        android:icon="@drawable/star"
+        />
+    <!-- never|withText -->
+
+    <item
+        android:id="@+id/menu_opcao_informar"
+        android:title="@string/str_informar"
+        app:showAsAction="never|withText"
+            android:orderInCategory="3"
+        >
+        <!-- Starting the text color sub menu which have three items-->
+        <menu>
+            <item
+                android:id="@+id/add_apontamento"
+                android:title="@string/add_apontamento"
+                app:showAsAction="never|withText"
+                android:icon="@drawable/balance"
+                />
+            <item
+                android:id="@+id/action_settings"
+                android:title="@string/action_settings"
+                app:showAsAction="never|withText"
+                android:icon="@drawable/clock"
+                />
+
+        </menu>
+    </item>
+
 
     <item
         android:id="@+id/action_cleanpreferences"
-        android:orderInCategory="100"
-        android:title="@string/action_cleanPreferences"
-        app:showAsAction="never"
-        android:icon="@drawable/clean16x16"/>
+        android:title= "@string/action_cleanPreferences"
+        app:showAsAction="never|withText"
+        android:orderInCategory="4"
+        android:icon="@drawable/voltar"
+        />
+    <!--
+        <item
+            android:id="@+id/add_apontamento"
+            android:checkable="false"
+            android:icon="@drawaclean_166x16"
+            android:orderInCategory="100"
+            android:title="@string/add_apontamento"
+            android:visible="true" />
 
-    <item
-        android:id="@+id/action_fragment"
-        android:orderInCategory="100"
-        android:title="@string/action_fragment"
-        app:showAsAction="never" />
+        <item
+            android:id="@+id/action_settings"
+            android:orderInCategory="100"
+            android:title="@string/action_settings"
+            app:showAsAction="never"
+            android:icon="@drawaclean_166x16"/>
 
-    <item
-        android:id="@+id/action_event"
-        android:orderInCategory="100"
-        android:title="@string/action_event"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/action_exception"
-        android:orderInCategory="100"
-        android:title="@string/action_exception"
-        app:showAsAction="never" />
+        <item
+            android:id="@+id/action_cleanpreferences"
+            android:orderInCategory="100"
+            android:title="@string/action_cleanPreferences"
+            app:showAsAction="never"
+            android:icon="@drawaclean_166x16"/>
 
+        <item
+            android:id="@+id/action_fragment"
+            android:orderInCategory="100"
+            android:title="@string/action_fragment"
+            app:showAsAction="never" />
+
+        <item
+            android:id="@+id/action_event"
+            android:orderInCategory="100"
+            android:title="@string/action_event"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/action_exception"
+            android:orderInCategory="100"
+            android:title="@string/action_exception"
+            app:showAsAction="never" />
+        -->
 </menu>
