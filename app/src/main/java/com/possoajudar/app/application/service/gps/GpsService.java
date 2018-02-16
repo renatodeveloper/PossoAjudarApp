@@ -139,7 +139,7 @@ public class GpsService extends Service implements LocationListener {
             latitude = location.getLatitude();
         }
 
-        // return latitude
+        // voltar latitude
         return latitude;
     }
 
@@ -152,7 +152,7 @@ public class GpsService extends Service implements LocationListener {
             longitude = location.getLongitude();
         }
 
-        // return longitude
+        // voltar longitude
         return longitude;
     }
     /**
@@ -164,7 +164,7 @@ public class GpsService extends Service implements LocationListener {
             altitude = location.getAltitude();
         }
 
-        // return latitude
+        // voltar latitude
         return altitude;
     }
 
@@ -177,7 +177,7 @@ public class GpsService extends Service implements LocationListener {
             speed = location.getSpeed();
         }
 
-        // return longitude
+        // voltar longitude
         return speed;
     }
 
