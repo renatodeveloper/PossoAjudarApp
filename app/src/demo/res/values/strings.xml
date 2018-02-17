@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">App DEMO</string>
+    <string name="app_name">Posso ajudar?</string>
     <string name="app_title_login">Bem vindo ao conversa com bla! DEMO</string>
+    <string name="titlelogo">3rDeveloper by demo</string>
 </resources>
