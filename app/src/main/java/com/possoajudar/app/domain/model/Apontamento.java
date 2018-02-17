@@ -124,7 +124,7 @@ public class Apontamento {
     public static Integer[]  getArrayImgStatus() {
         Integer[] arrayImgGrupoMock = null;
         try{
-            arrayImgGrupoMock = new Integer[]{R.drawable.clean16x16, R.drawable.clean16x16, R.drawable.clean16x16, R.drawable.clean16x16, R.drawable.clean16x16, R.drawable.clean16x16, R.drawable.clean16x16, R.drawable.clean16x16, R.drawable.clean16x16, R.drawable.clean16x16, R.drawable.clean16x16, R.drawable.clean16x16};
+            arrayImgGrupoMock = new Integer[]{R.drawable.clean, R.drawable.clean, R.drawable.clean, R.drawable.clean, R.drawable.clean, R.drawable.clean, R.drawable.clean, R.drawable.clean, R.drawable.clean, R.drawable.clean, R.drawable.clean, R.drawable.clean};
             return  arrayImgGrupoMock;
         }catch (Exception e){
             e.getMessage().toString();

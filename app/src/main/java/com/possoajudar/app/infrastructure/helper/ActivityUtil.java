@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.Settings;
@@ -546,7 +547,7 @@ Guarda status do apontamento do usuário
         return result;
     }
 
-    //LIMPA Apontamento
+    //LIMPA ApontamentoResponse
     public void limpaPrefUserLogadoApontamento(Context context) {
         try{
             SharedPreferences mPrefs = context.getSharedPreferences(context.getString(R.string.prefArq_userLogadoApontamento), context.MODE_PRIVATE);
@@ -559,7 +560,7 @@ Guarda status do apontamento do usuário
             e.getMessage().toString();
         }
     }
-    //VERIFICA Apontamento
+    //VERIFICA ApontamentoResponse
     public boolean verificaPrefUserLogadoApontamento(Context context){
         try{
             SharedPreferences mPrefs = context.getSharedPreferences(context.getString(R.string.prefArq_userLogadoApontamento), Context.MODE_PRIVATE);
@@ -582,19 +583,19 @@ Guarda status do apontamento do usuário
         try{
             switch (idServico) {
                 case 1 :  DS_INTERVAL = "Alldays";
-                    INTERVAL = 1 * 60 * 1000; //1 minutos
+                    INTERVAL = 1440 * 60 * 1000; //1 dia
                     break;
                 case 2:  DS_INTERVAL = "Allweek";
-                    INTERVAL = 1 * 120 * 1000; //2 minutos
+                    INTERVAL = 10080 * 120 * 1000;
                     break;
                 case 3:  DS_INTERVAL = "Allweekend";
-                    INTERVAL = 1 * 180 * 1000; //3 minutos
+                    INTERVAL = 1 * 180 * 1000; //ajustar
                     break;
                 case 4:  DS_INTERVAL = "15days";
-                    INTERVAL = 1 * 240 * 1000; //4 minutos
+                    INTERVAL = 21600 * 240 * 1000;
                     break;
                 case 5:  DS_INTERVAL = "Allmonth";
-                    INTERVAL = 1 * 300 * 1000; //5 minutos
+                    INTERVAL = 43200 * 300 * 1000;
                     break;
             }
             SharedPreferences mPrefs = context.getSharedPreferences(context.getString(R.string.prefArqValueConfServ), Context.MODE_PRIVATE);
@@ -649,6 +650,18 @@ Guarda status do apontamento do usuário
             //activityUtil.limpaPrefFlagInfoMedidas(context);
         }catch (Exception e){
             e.getMessage().toString();
+        }
+    }
+
+    public void determineScreenSize(Context context) {
+        if((context.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_LARGE) {
+            Toast.makeText(context, "Large screen",Toast.LENGTH_LONG).show();
+        }else if ((context.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_NORMAL) {
+            Toast.makeText(context, "Normal sized screen" , Toast.LENGTH_LONG).show();
+        }else if ((context.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_SMALL) {
+            Toast.makeText(context, "Small sized screen" , Toast.LENGTH_LONG).show();
+        }else {
+            Toast.makeText(context, "Screen size is neither large, normal or small" , Toast.LENGTH_LONG).show();
         }
     }
 }
