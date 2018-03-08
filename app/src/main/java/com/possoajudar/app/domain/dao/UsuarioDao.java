@@ -27,7 +27,7 @@ public class UsuarioDao extends Usuario implements DAO<Usuario> {
     private DaoModelPresenter daoModelPresenter;
     private IDaoModel viewIDaoModel;
 
-    private long _id = 0;
+    public long _id = 0;
     public static final String TABLE_NAME_USER = "USUARIO";
 
     Context context;
@@ -39,6 +39,27 @@ public class UsuarioDao extends Usuario implements DAO<Usuario> {
         this.context = context;
     }
     public long getId() {
+        SQLiteDatabase db = null;
+        try{
+            db = this.daoModelPresenter.getInternalDB();
+            if(db!= null){
+                String[] args = { this.dsLogin, this.dsSenha};
+                Cursor cursor = db.query(this.context.getString(R.string.dsNameTblUser), null, "dsLogin=? AND dsSenha=?", args, null,null,null);
+                if(cursor.getCount()>0){
+                    cursor.moveToFirst();
+                    _id = cursor.getInt(cursor.getColumnIndex(context.getString(R.string.idTblUser)));
+                    String dsLogin = cursor.getString(cursor.getColumnIndex(context.getString(R.string.dsLoginTblUser)));
+                    String dsSenha = cursor.getString(cursor.getColumnIndex(context.getString(R.string.dsSenhaTblUser)));
+                    if(_id > 0 && dsLogin.length()>0 && dsSenha.length()>0){
+                        return  this._id;
+                    }
+                }else{
+                    return 0;
+                }
+            }
+        }catch (Exception e){
+            e.getMessage().toString();
+        }
         return _id;
     }
 
@@ -96,7 +117,7 @@ public class UsuarioDao extends Usuario implements DAO<Usuario> {
                 if (_id < 1) {
                     _id = db.insert(TABLE_NAME_USER, "", values);
                 } else {
-                    db.update(TABLE_NAME_USER, values, "_id=" + _id, null);
+                    db.update(TABLE_NAME_USER, values, "idUsuario=" + _id, null);
                 }
                 result = true;
             } catch (SQLiteException e){
