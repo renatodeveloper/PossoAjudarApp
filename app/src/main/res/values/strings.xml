@@ -129,6 +129,13 @@
     <string name="dsSenhaTblUser">dsSenha</string>
     <string name="idTblUser">idUsuario</string>
 
+    <!-- tabelas -->
+    <string name="dsNameTblServico">Usuario</string>
+    <string name="sqlAlterTblServico">ALTER TABLE Servico ADD COLUMN Obs TEXT</string>
+    <string name="idTblServico">idServico</string>
+    <string name="dsServico">dsServico</string>
+
+
     <!-- ... generic keys ... -->
     <string name="dsGeneric_A">dsGeneric_A</string>
     <string name="dsGeneric_B">dsGeneric_B</string>
