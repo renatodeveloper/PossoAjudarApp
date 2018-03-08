@@ -6,6 +6,7 @@ import android.os.Environment;
 
 import com.possoajudar.app.R;
 import com.possoajudar.app.domain.dao.MySQLiteOpenHelper;
+import com.possoajudar.app.domain.dao.UsuarioDao;
 import com.possoajudar.app.infrastructure.helper.ActivityUtil;
 
 import java.io.File;
@@ -18,11 +19,14 @@ import java.nio.channels.FileChannel;
  * Created by Renato on 20/11/2017.
  */
 
+/*
+    ATENÇÃO: SÓ CRIA, FECHA E DEVOLVE REFERENCIA DO BANCO
+ */
+
 public class DaoModelService {
     Context context;
     private MySQLiteOpenHelper openHelper;
     SQLiteDatabase db;
-
 
     DaoModelService (Context context){
         this.context = context;
@@ -40,7 +44,7 @@ public class DaoModelService {
             }
             String bla = db.getPath().toString();
             if (openHelper.flCreate) {
-                openHelper.flCreate = false;
+                openHelper.flCreate = false;//flag só entra a primeira vez, ao criar
                 openHelper.startdb(db);
             }else if (openHelper.flUpgrade) {
                 openHelper.flUpgrade = false;
@@ -76,7 +80,7 @@ public class DaoModelService {
                 }
                 String bla = db.getPath().toString();
                 if (openHelper.flCreate) {
-                    openHelper.flCreate = false;
+                    openHelper.flCreate = false;//flag só entra a primeira vez, ao criar
                     openHelper.startdb(db);
                 }else if (openHelper.flUpgrade) {
                     openHelper.flUpgrade = false;
@@ -100,14 +104,6 @@ public class DaoModelService {
             if(db == null){
                 return null;
             }
-            String bla = db.getPath().toString();
-            if (openHelper.flCreate) {
-                openHelper.flCreate = false;
-                openHelper.startdb(db);
-            }else if (openHelper.flUpgrade) {
-                openHelper.flUpgrade = false;
-                openHelper.onUpgrade(db, openHelper.oldVersion, openHelper.newVersion);
-            }
             return  db;
         }catch (Exception e){
             e.getMessage().toString();
@@ -126,14 +122,6 @@ public class DaoModelService {
             if(db == null){
                 return null;
             }
-            String bla = db.getPath().toString();
-            if (openHelper.flCreate) {
-                openHelper.flCreate = false;
-                openHelper.startdb(db);
-            }else if (openHelper.flUpgrade) {
-                openHelper.flUpgrade = false;
-                openHelper.onUpgrade(db, openHelper.oldVersion, openHelper.newVersion);
-            }
             return  db;
         }catch (Exception e){
             e.getMessage().toString();
@@ -148,16 +136,8 @@ public class DaoModelService {
                     return null;
                 }
                 db = openHelper.getWritableDatabase();
-                if(db == null){
+                if(db == null) {
                     return null;
-                }
-                String bla = db.getPath().toString();
-                if (openHelper.flCreate) {
-                    openHelper.flCreate = false;
-                    openHelper.startdb(db);
-                }else if (openHelper.flUpgrade) {
-                    openHelper.flUpgrade = false;
-                    openHelper.onUpgrade(db, openHelper.oldVersion, openHelper.newVersion);
                 }
                 return db;
         }catch (Exception e){
@@ -203,9 +183,21 @@ public class DaoModelService {
                 }
                 //* após a copia ele só aparece no fileExplore, não aparece no sdCard, acesse via app fileExplore
             }
+            return true;
         }catch (Exception e){
             e.getMessage().toString();
         }
         return false;
+    }
+    public void closeDb(SQLiteDatabase db){
+        try{
+            if(db == null){
+                if(db.isOpen()){
+                    db.close();
+                }
+            }
+        }catch (Exception e){
+            e.getMessage().toString();
+        }
     }
 }
