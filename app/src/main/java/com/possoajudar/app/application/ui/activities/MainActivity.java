@@ -3,11 +3,13 @@ package com.possoajudar.app.application.ui.activities;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
@@ -16,7 +18,6 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,7 +30,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.StandardExceptionParser;
 import com.google.android.gms.analytics.Tracker;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
@@ -48,7 +48,6 @@ import com.possoajudar.app.application.ui.adapter.CustomAdapter;
 import com.possoajudar.app.domain.model.Apontamento;
 import com.possoajudar.app.domain.model.Movie;
 import com.possoajudar.app.domain.model.MoviesResponse;
-import com.possoajudar.app.domain.model.Usuario;
 import com.possoajudar.app.infrastructure.Constants;
 import com.possoajudar.app.infrastructure.helper.ActivityUtil;
 import com.possoajudar.app.infrastructure.helper.BaseActivity;
@@ -60,12 +59,12 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimerTask;
 
 import butterknife.BindString;
 import retrofit.Response;
 
-public class MainActivity extends BaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener, ICadApontamentoView, ApplicationServiceCallback<MoviesResponse> {
+public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, ICadApontamentoView, ApplicationServiceCallback<MoviesResponse> {
 
     public ActivityUtil activityUtil;
     GpsService gps;
@@ -92,7 +91,6 @@ public class MainActivity extends BaseActivity
 
     ProgressDialog progressDialog;
     private CadApontamentoPresenter cadApontamentoPresenter;
-    private CadApontamentoService cadApontamentoService;
 
     EditText editTextAltura = null;
     EditText editTextPeso = null;
@@ -112,14 +110,19 @@ public class MainActivity extends BaseActivity
     String strErro = "";
     ProgressDialog progDialog;
 
+    //propaganda on line
+    static List<Movie> movies;
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         try{
+            /*
+            new ServicoApontamento().stopService();
+             */
+
             //limpa todas as preferences
             activityUtil.cleanAllPreferences(getApplicationContext());
-            new ServicoApontamento().stopService();
         }catch (Exception e){
             e.getMessage().toString();
         }
@@ -131,12 +134,10 @@ public class MainActivity extends BaseActivity
         mTracker.setScreenName("Main Screen");
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
 
-        //Toast.makeText(getApplicationContext(), "onResume", Toast.LENGTH_LONG).show();
-
         /*
             Método que executa após o serviço ter seu tempo ocioso atingido
-         */
-        JSONObject object = activityUtil.recuperaPrefFlagInfoMedidas(getApplicationContext());
+
+        JSONObject object = activityUtil.recuperaPrefFlagInfoMedidas(getApplicationContext());//referente ao ServicoApontamento inicializado
         if(object != null && object.length()>0){
             try {
                 if(object.getBoolean(getApplicationContext().getString(R.string.prefArqInfoMedidasVal))){
@@ -147,8 +148,8 @@ public class MainActivity extends BaseActivity
                 e.printStackTrace();
             }
         }
+        */
     }
-
 
     @Override
     protected int getContentView() {
@@ -157,9 +158,11 @@ public class MainActivity extends BaseActivity
 
     private Tracker mTracker;
     Dialog customDialog = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         //setContentView(R.layout.activity_main);
         //menu ***
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -207,74 +210,76 @@ public class MainActivity extends BaseActivity
 
         /**
          *
-        myOnClickListener = new MyOnClickListener(this);
-        recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
-        recyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
+         myOnClickListener = new MyOnClickListener(this);
+         recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+         recyclerView.setHasFixedSize(true);
+         layoutManager = new LinearLayoutManager(this);
+         recyclerView.setLayoutManager(layoutManager);
+         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        data = new ArrayList<ApontamentoResponse>();
-        for (int i = 0; i < ApontamentoResponse.getArrayDs().length; i++) {
-            data.add(new ApontamentoResponse(
-                    ApontamentoResponse.getArrayDs()[i],
-                    ApontamentoResponse.getArraySubDs()[i],
-                    ApontamentoResponse.getArrayId()[i],
-                    ApontamentoResponse.getArrayImgStatus()[i]
-            ));
-        }
-        removedItems = new ArrayList<Integer>();
+         data = new ArrayList<ApontamentoResponse>();
+         for (int i = 0; i < ApontamentoResponse.getArrayDs().length; i++) {
+         data.add(new ApontamentoResponse(
+         ApontamentoResponse.getArrayDs()[i],
+         ApontamentoResponse.getArraySubDs()[i],
+         ApontamentoResponse.getArrayId()[i],
+         ApontamentoResponse.getArrayImgStatus()[i]
+         ));
+         }
+         removedItems = new ArrayList<Integer>();
 
-        adapter = new MyRecyclerViewAdapter(data);
-        recyclerView.setAdapter(adapter);
-            */
+         adapter = new MyRecyclerViewAdapter(data);
+         recyclerView.setAdapter(adapter);
+         */
 
-        try{
+        cadApontamentoPresenter = new CadApontamentoPresenter(this, this);
+        activityUtil = new ActivityUtil();
 
-            cadApontamentoPresenter = new CadApontamentoPresenter(this, cadApontamentoService, getApplicationContext());
-            progressDialog = new ProgressDialog(this);
-
-            activityUtil = new ActivityUtil();
-            if(activityUtil.verificaPrefUserLogado(getApplicationContext())){
-                JSONObject objectU = activityUtil.recuperaPrefUserLogado(getApplicationContext());
+        if(activityUtil.verificaPrefUserLogado(MainActivity.this)){
+            try{
+                //1: exibir dados do usuário logado
+                JSONObject objectU = activityUtil.recuperaPrefUserLogado(MainActivity.this);
                 String senha  = objectU.getString(getString(R.string.dsSenhaTblUser));
                 textViewNavNome.setText(objectU.getString(getString(R.string.dsLoginTblUser)));
                 textViewNavEmail.setText(objectU.getString(getString(R.string.dsLoginTblUser)));
 
-                //se já tem apontamento para este usuário
-                if(activityUtil.verificaPrefUserLogadoApontamento(getApplicationContext())|| cadApontamentoPresenter.existApontamento(getApplicationContext()) ){
+                //2: verifica se este usuário já possui apontamento(s)
+                if(activityUtil.verificaPrefUserLogadoApontamento(MainActivity.this)|| cadApontamentoPresenter.existApontamento() ){
                     //JSONObject objectA = activityUtil.recuperaPrefUserLogadoApontamento(getApplicationContext());
                     //montaListApontamentoMock(objectA);
                     try{
-                        cadApontamentoPresenter.getArrayApontamentoUser(getApplicationContext());
+                        cadApontamentoPresenter.getArrayApontamentoUser();
                     }catch (Exception e){
                         e.getMessage().toString();
                     }
                 }else{
                     exibeDialogApontamento();
                 }
+            }catch (Exception e){
+                e.getMessage().toString();
             }
-        }catch (Exception e){
-            e.getMessage().toString();
         }
+
 
         //Analytics Integration
         // Obtain the shared Tracker instance.
         GoogleAnalyticsApplication application = (GoogleAnalyticsApplication) getApplication();
         mTracker = application.getDefaultTracker();
 
+        /*
+        new ServicoApontamento().stopService();
         activityUtil.definePrefConfServico(getApplicationContext(), 1);
         startService(new Intent(getApplicationContext(), ServicoApontamento.class));
+         */
 
+        /*
+            Teste de cn line usando ApiClient Retrofit
+         */
 
-
-        //ciclo on
-        try{
-            iniciaProgress();
-        }catch (Exception e){
-            e.getMessage().toString();
-        }
+        Movie movie = new Movie();
+        getApontamentos.execute(movie, this); // referente a essa interface: ApplicationServiceCallback<MoviesResponse> cai no onSuccess ou onError
     }
+
 
     @Override
     public void onBackPressed() {
@@ -286,13 +291,13 @@ public class MainActivity extends BaseActivity
         }
     }
 
+    //****************************************************** Menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -319,8 +324,12 @@ public class MainActivity extends BaseActivity
         }
         if (id == R.id.action_cleanpreferences) {
             try{
+                /*
+                new ServicoApontamento().stopService();
+                 */
+
                 activityUtil.cleanAllPreferences(getApplicationContext());
-                startActivity(new Intent(this, Splash.class));
+                startActivity(new Intent(this, ViewSplash.class));
             }catch (Exception e){
                 e.getMessage().toString();
             }
@@ -370,9 +379,9 @@ public class MainActivity extends BaseActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
+    //****************************************************** OnNavigationItemSelectedListener
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
@@ -395,10 +404,8 @@ public class MainActivity extends BaseActivity
         return true;
     }
 
-/**
- *
-
-//*** - Implementação RecyclerView
+    //****************************************************** Implementação RecyclerView
+    /*
     private static class MyOnClickListener implements View.OnClickListener {
 
         private final Context context;
@@ -430,8 +437,132 @@ public class MainActivity extends BaseActivity
             adapter.notifyItemRemoved(selectedItemPosition);
         }
     }
- */
+    */
 
+    //****************************************************** ICadApontamentoView
+    @Override
+    public String getCadApontamentoAltura() {
+        return editTextAltura.getText().toString();
+    }
+
+    @Override
+    public String getCadApontamentoPeso() {
+        return editTextPeso.getText().toString();
+    }
+
+    @Override
+    public String getCadApontamentoDsDataTime() {
+        return ActivityUtil.getDataHora(System.currentTimeMillis());
+    }
+
+    @Override
+    public long getCadApontamentoDataTime() {
+        return System.currentTimeMillis();
+    }
+
+    @Override
+    public JSONArray montaListaApondatamento(JSONArray jsonArray) {
+        try{
+            final ArrayList<String> urlPropaganda;
+            final ArrayList<Apontamento> myDataModels;
+            listView=(ListView)findViewById(R.id.myList);
+            myDataModels= new ArrayList<>();
+            //urlPropaganda = new ArrayList<>(movies.size());
+            for(int x= 0; x<jsonArray.length(); x++){
+                JSONObject object = (JSONObject) jsonArray.get(x);
+                int    idApontamento =  object.getInt(getString(R.string.idTblUserAptmento));
+                int    dataHora      =  object.getInt(getString(R.string.dataTimeTblUserAptmento));
+                String dataAapontamento    =  object.getString(getString(R.string.dsDataTimeTblUserAptmento));
+                String dsAltura      = object.getString(getString(R.string.dsAlturaTblUserAptmento));
+                String dsPeso        = object.getString(getString(R.string.dsPesoTblUserAptmento));
+                int    idUsuario     = object.getInt(getString(R.string.idTblUser));
+                String apontamento = "Peso: " + dsPeso + " - Altura: " + dsAltura;
+                String status = "No peso";
+
+                    /*
+                     myDataModels.add(new Apontamento(apontamento, dataAapontamento, status, "dsfeature"));
+
+                    do{
+                        urlPropaganda.add(movies.get(x).getBackdropPath().toLowerCase());
+                    }
+                    while (movies.size()>0);
+                     */
+
+                myDataModels.add(new Apontamento(apontamento, dataAapontamento, status, "dsfeature"));
+            }
+            //adapter = new CustomAdapter(myDataModels,urlPropaganda, getApplicationContext());
+            adapter = new CustomAdapter(myDataModels, getApplicationContext());
+            listView.setAdapter(adapter);
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Apontamento dataModel= myDataModels.get(position);
+                    Snackbar.make(view, dataModel.getName()+"\n"+dataModel.getType()+" API: "+dataModel.getVersion_number(), Snackbar.LENGTH_LONG)
+                            .setAction("No action", null).show();
+                }
+            });
+
+            //movies.clear();
+        }catch (Exception e){
+            e.getMessage().toString();
+        }
+        //Toast.makeText(this, "Total da lista de itens a ser exibido: " + String.valueOf(jsonArray.length()), Toast.LENGTH_LONG).show();
+        return null;
+    }
+
+    @Override
+    public void showCadApontamentoAlturaError(int resId) {
+        editTextAltura.setError(getString(resId));
+    }
+
+    @Override
+    public void showCadApontamentoPesoError(int resId) {
+        editTextPeso.setError(getString(resId));
+    }
+
+    @Override
+    public void showCadApontamentoDataTimeError(int resId) {
+        Toast.makeText(getApplicationContext(), getString(resId), Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void showCadApontamentoError(int resId) {
+        Toast.makeText(this, getString(resId), Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void showMontaListaApontamentoError(int resId) {
+        Toast.makeText(this, getString(resId), Toast.LENGTH_LONG).show();
+    }
+
+
+
+    //****************************************************** ApplicationServiceCallback do processo on line
+
+    @Override
+    public void onSuccess(Response<MoviesResponse> output) {
+        if(output !=null){
+            movies = output.body().getResults();
+            String pathPictute = "";
+            for(int m=0;m<movies.size(); m++){
+                pathPictute = String.valueOf(Constants.Headers.URL_IMG_COMPLETO + movies.get(m).getBackdropPath());
+                System.out.print("Path image load: " + pathPictute.toString());
+                Movie movie = movies.get(m);
+                System.out.print("Path image load: " + movie.backdropPath.toString());
+            }
+        }
+    }
+
+    @Override
+    public void onError(ApplicationServiceError error) {
+        try{
+            DialogHelper.showErrorDialog(this, error.getCode(), error.getMessage());
+        }catch (Exception e){
+            e.getMessage().toString();
+        }
+    }
+
+    //****************************************************** dialog de exibição para o usuário informar suas medidas
     public void exibeDialogApontamento(){
         try{
             // con este tema personalizado evitamos los bordes por defecto
@@ -453,19 +584,19 @@ public class MainActivity extends BaseActivity
 
             //*** get conteúdo já apontando
 
-             try{
-                 JSONObject objectA = activityUtil.recuperaPrefUserLogadoApontamento(getApplicationContext());
-                    if(objectA != null && objectA.length()>0){
-                        if(objectA.getString(getApplicationContext().getString(R.string.dsAlturaTblUserAptmento)).toString().length()>0){
-                            editTextAltura.setText(objectA.getString(getApplicationContext().getString(R.string.dsAlturaTblUserAptmento)));
-                            editTextPeso.requestFocus();
-                            //altura = objectA.getString(getApplicationContext().getString(R.string.dsAlturaTblUserAptmento));
-                            //peso   = objectA.getString(getApplicationContext().getString(R.string.dsPesoTblUserAptmento));
-                        }
+            try{
+                JSONObject objectA = activityUtil.recuperaPrefUserLogadoApontamento(MainActivity.this);
+                if(objectA != null && objectA.length()>0){
+                    if(objectA.getString(getApplicationContext().getString(R.string.dsAlturaTblUserAptmento)).toString().length()>0){
+                        editTextAltura.setText(objectA.getString(getApplicationContext().getString(R.string.dsAlturaTblUserAptmento)));
+                        editTextPeso.requestFocus();
+                        //altura = objectA.getString(getApplicationContext().getString(R.string.dsAlturaTblUserAptmento));
+                        //peso   = objectA.getString(getApplicationContext().getString(R.string.dsPesoTblUserAptmento));
                     }
-                    }catch (Exception e){
-                        e.getMessage().toString();
-             }
+                }
+            }catch (Exception e){
+                e.getMessage().toString();
+            }
 
             ((Button) customDialog.findViewById(R.id.start)).setOnClickListener(new View.OnClickListener() {
 
@@ -518,8 +649,84 @@ public class MainActivity extends BaseActivity
             e.getMessage().toString();
         }
     }
+
+    //****************************************************** onActivityResult
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Check which request we're responding to
+        if (requestCode == REQUEST_SERVER) {
+            // Make sure the request was successful
+            if (resultCode == RESULT_OK) {
+                /*
+                String  id = data.getExtras().getString("id");
+                if(id.length()>0){
+                    JSONObject obj = activityUtil.recuperaPrefConfServico(getApplicationContext());
+                    if (obj != null) {
+                        String idServico = getString(R.string.idConfServico);
+                        String dsServico = getString(R.string.dsConfServicoDefault);
+                        new ServicoApontamento().onDestroy();
+
+                    }
+                }
+                 */
+            }else if (resultCode == Activity.RESULT_CANCELED) {
+                // some stuff that will happen if there's no result
+            }
+        }
+    }
+
+    //****************************************************** onKeyDown
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+
+
+
+
+//****************************************************** online
+
+    // Métodos que solicita os filmes ( nosso exemplo ) o retorno cai em onSuccess ou onError
+    public boolean  getRequisicaoApontamentos(){
+        try{
+            Movie movie = new Movie();
+            getApontamentos.execute(movie, this);
+            return true;
+        }catch (Exception e){
+            DialogHelper.showErrorDialog(getApplicationContext(),error, e.getMessage().toString());
+        }
+        return false;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /*
-    public void montaListApontamento(JSONObject objectA){
+     Método older
+     public void montaListApontamento(JSONObject objectA){
         try{
             altura = objectA.getString(getApplicationContext().getString(R.string.dsAlturaTblUserAptmento));
             peso   = objectA.getString(getApplicationContext().getString(R.string.dsPesoTblUserAptmento));
@@ -542,7 +749,22 @@ public class MainActivity extends BaseActivity
             e.getMessage().toString();
         }
     }
-*/
+
+      @Override
+    public void startMainListActivity() {
+        try{
+            gps = new GpsService(getApplicationContext());
+            JSONObject value = activityUtil.getValeuJson(getApplicationContext(),this.getCadApontamentoAltura(), this.getCadApontamentoPeso());
+            activityUtil.definePrefUserLogadoApontamento(getApplicationContext(), gps, value);
+            JSONObject objectA = activityUtil.recuperaPrefUserLogadoApontamento(this);
+            montaListApontamento(objectA);
+        }catch (Exception e){
+            e.getMessage().toString();
+        }
+    }
+     */
+
+    //Montagem de lista mockado
     public void montaListApontamentoMock(JSONObject objectA){
         try{
             altura = objectA.getString(getApplicationContext().getString(R.string.dsAlturaTblUserAptmento));
@@ -566,7 +788,7 @@ public class MainActivity extends BaseActivity
             dataModels.add(new Apontamento("Lollipop","Android 5.0","21","November 12, 2014"));
             dataModels.add(new Apontamento("Marshmallow", "Android 6.0", "23","October 5, 2015"));
 
-            adapter= new CustomAdapter(dataModels,getApplicationContext());
+            adapter= new CustomAdapter(dataModels,null, getApplicationContext());//array da propaganda
 
             listView.setAdapter(adapter);
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -582,224 +804,5 @@ public class MainActivity extends BaseActivity
         }catch (Exception e){
             e.getMessage().toString();
         }
-    }
-
-    @Override
-    public String getCadApontamentoAltura() {
-        return editTextAltura.getText().toString();
-    }
-
-    @Override
-    public String getCadApontamentoPeso() {
-        return editTextPeso.getText().toString();
-    }
-    @Override
-    public String getCadApontamentoDsDataTime() {
-        return ActivityUtil.getDataHora(System.currentTimeMillis());
-    }
-    @Override
-    public long getCadApontamentoDataTime() {
-        return System.currentTimeMillis();
-    }
-
-    @Override
-    public JSONArray montaListaApondatamento(JSONArray jsonArray) {
-            try{
-                final ArrayList<Apontamento> myDataModels;
-                listView=(ListView)findViewById(R.id.myList);
-                myDataModels= new ArrayList<>();
-                for(int x= 0; x<jsonArray.length(); x++){
-                    JSONObject object = (JSONObject) jsonArray.get(x);
-                    int    idApontamento =  object.getInt(getString(R.string.idTblUserAptmento));
-                    int    dataHora      =  object.getInt(getString(R.string.dataTimeTblUserAptmento));
-                    String dataAapontamento    =  object.getString(getString(R.string.dsDataTimeTblUserAptmento));
-                    String dsAltura      = object.getString(getString(R.string.dsAlturaTblUserAptmento));
-                    String dsPeso        = object.getString(getString(R.string.dsPesoTblUserAptmento));
-                    int    idUsuario     = object.getInt(getString(R.string.idTblUser));
-                    String apontamento = "Peso: " + dsPeso + " - Altura: " + dsAltura;
-                    String status = "No peso";
-
-                    myDataModels.add(new Apontamento(apontamento, dataAapontamento, status, "dsfeature"));
-                }
-                adapter = new CustomAdapter(myDataModels,getApplicationContext());
-                listView.setAdapter(adapter);
-                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Apontamento dataModel= myDataModels.get(position);
-                        Snackbar.make(view, dataModel.getName()+"\n"+dataModel.getType()+" API: "+dataModel.getVersion_number(), Snackbar.LENGTH_LONG)
-                                .setAction("No action", null).show();
-                    }
-                });
-            }catch (Exception e){
-                e.getMessage().toString();
-            }
-            //Toast.makeText(this, "Total da lista de itens a ser exibido: " + String.valueOf(jsonArray.length()), Toast.LENGTH_LONG).show();
-        return null;
-    }
-
-    @Override
-    public void showCadApontamentoAlturaError(int resId) {
-        editTextAltura.setError(getString(resId));
-    }
-
-    @Override
-    public void showCadApontamentoPesoError(int resId) {
-        editTextPeso.setError(getString(resId));
-    }
-
-    @Override
-    public void showCadApontamentoDataTimeError(int resId) {
-        Toast.makeText(getApplicationContext(), getString(resId), Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void showCadApontamentoError(int resId) {
-        Toast.makeText(this, getString(resId), Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void showMontaListaApontamentoError(int resId) {
-        Toast.makeText(this, getString(resId), Toast.LENGTH_LONG).show();
-    }
-
-    /*
-    @Override
-    public void startMainListActivity() {
-        try{
-            gps = new GpsService(getApplicationContext());
-            JSONObject value = activityUtil.getValeuJson(getApplicationContext(),this.getCadApontamentoAltura(), this.getCadApontamentoPeso());
-            activityUtil.definePrefUserLogadoApontamento(getApplicationContext(), gps, value);
-            JSONObject objectA = activityUtil.recuperaPrefUserLogadoApontamento(this);
-            montaListApontamento(objectA);
-        }catch (Exception e){
-            e.getMessage().toString();
-        }
-    }
- */
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
-    }
-
-
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // Check which request we're responding to
-        if (requestCode == REQUEST_SERVER) {
-            // Make sure the request was successful
-            if (resultCode == RESULT_OK) {
-
-              String  id = data.getExtras().getString("id");
-              if(id.length()>0){
-                  JSONObject obj = activityUtil.recuperaPrefConfServico(getApplicationContext());
-                  if (obj != null) {
-                      String idServico = getString(R.string.idConfServico);
-                      String dsServico = getString(R.string.dsConfServicoDefault);
-                      new ServicoApontamento().onDestroy();
-
-                  }
-              }
-            }else if (resultCode == Activity.RESULT_CANCELED) {
-                // some stuff that will happen if there's no result
-            }
-        }
-    }
-
-
-    /*
-  Método que solicita os filmes
-   */
-    public boolean  getRequisicaoApontamentos(){
-        try{
-            Movie movie = new Movie();
-            getApontamentos.execute(movie, this);
-            return true;
-        }catch (Exception e){
-            DialogHelper.showErrorDialog(getApplicationContext(),error, e.getMessage().toString());
-        }
-        return false;
-    }
-
-    @Override
-    public void onSuccess(Response<MoviesResponse> output) {
-        if(output !=null){
-            List<Movie> movies = output.body().getResults();
-            String pathPictute = "";
-            for(int m=0;m<movies.size(); m++){
-                pathPictute = String.valueOf(Constants.Headers.URL_IMG_COMPLETO + movies.get(m).getBackdropPath());
-                System.out.print("Path image load: " + pathPictute.toString());
-                Movie movie = movies.get(m);
-                System.out.print("Path image load: " + movie.backdropPath.toString());
-            }
-
-            if(movies.size()>0){
-                progressDialog.dismiss();
-            }
-        }
-    }
-
-    @Override
-    public void onError(ApplicationServiceError error) {
-        try{
-            DialogHelper.showErrorDialog(this, error.getCode(), error.getMessage());
-            progressDialog.dismiss();
-        }catch (Exception e){
-            e.getMessage().toString();
-        }
-    }
-
-
-    private void iniciaProgress() {
-        progDialog = new ProgressDialog(MainActivity.this);
-        progDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
-            @Override
-            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_SEARCH) {
-                    return true;
-                }
-                return false;
-            }
-        });
-
-        progDialog.setTitle(getApplicationContext().getResources().getString(R.string.str_tl_sgit_splash_loading));
-        progDialog.setMessage(getApplicationContext().getResources().getString(R.string.str_tl_sgit_splash_inicia_busca));
-        progDialog.show();
-        thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Message msg = new Message();
-                try {
-                    msg.arg1 = 0;
-                    if (getRequisicaoApontamentos()) {
-                        msg.arg1 = 1;
-                    }
-                } catch (Exception e) {
-                    msg.arg1 = 1;
-                    msg.what = 1;
-                    msg.obj = e.getMessage();
-                } finally {
-                    progDialog.dismiss();
-                    hdl.sendMessage(msg);
-                }
-            }
-        });
-
-        thread.start();
-
-        hdl = new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                if(msg.arg1 == 1){
-                    Toast.makeText(getApplicationContext(), "Suave", Toast.LENGTH_LONG).show();
-                }else{
-                    DialogHelper.showErrorDialog(getApplicationContext(),error, msg.obj.toString().toString());
-                }
-            }
-        };
     }
 }
