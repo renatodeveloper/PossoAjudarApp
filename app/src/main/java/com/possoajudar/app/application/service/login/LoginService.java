@@ -5,16 +5,42 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.possoajudar.app.R;
+import com.possoajudar.app.application.service.ILoginView;
 import com.possoajudar.app.application.service.dao.DaoModelService;
+import com.possoajudar.app.domain.dao.UsuarioDao;
 
 import org.json.JSONObject;
+
+import javax.xml.transform.sax.TemplatesHandler;
 
 /**
  * Created by renato on 06/07/2017.
  */
 
 public class LoginService {
-    DaoModelService daoModelService;
+    private Context context;
+    private ILoginView view;
+    private UsuarioDao usuarioDao;
+
+    private DaoModelService daoModelService;
+
+    public LoginService(Context context, ILoginView view){
+        this.context = context;
+        this.view = view;
+    }
+
+    public boolean login(JSONObject jsonValueLogin){
+        try{
+            usuarioDao = new UsuarioDao(this.context);
+
+            return  usuarioDao.check(jsonValueLogin);
+        }catch (Exception e){
+            e.getMessage().toString();
+        }
+        return  false;
+    }
+
+/*
 
     public boolean login(JSONObject jsonValueLogin, Context context){
         try{
@@ -37,4 +63,6 @@ public class LoginService {
         }
         return  false;
     }
+ */
+
 }
