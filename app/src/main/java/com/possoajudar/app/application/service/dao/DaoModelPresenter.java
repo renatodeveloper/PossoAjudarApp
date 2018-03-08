@@ -14,46 +14,100 @@ import com.possoajudar.app.infrastructure.helper.ActivityUtil;
 /**
  * Created by Renato on 29/09/2017.
  */
+/*
+    SÓ CRIA, FECHA E DEVOLVE REFERENCIA DO BANCO
+ */
 
 public class DaoModelPresenter {
-    private IDaoModel view;
+    private IDaoModel viewIDaoModel;
     private DaoModelService service;
 
+    public DaoModelPresenter(Context contex){
+        this.service = new DaoModelService(contex);
+    }
 
-    public DaoModelPresenter(IDaoModel view, Context context){
-        this.view = view;
-        service = new DaoModelService(context);
+    public DaoModelPresenter(Context context, IDaoModel view ){
+        this.service = new DaoModelService(context);
+        this.viewIDaoModel = view;
+    }
+
+    public SQLiteDatabase getInternalDB(){
+        SQLiteDatabase database = null;
+        try{
+            database =  this.service.getdbInterno();
+        }catch (Exception e){
+            e.getMessage().toString();
+        }
+        return database;
+    }
+
+
+    public void closeInternalDB(SQLiteDatabase database){
+        try{
+            this.service.closeDb(database);
+        }catch (Exception e){
+            e.getMessage().toString();
+        }
+    }
+
+    public SQLiteDatabase getExternalDB(){
+        SQLiteDatabase database = null;
+        try{
+            database =  this.service.getdbExterno();
+        }catch (Exception e){
+            e.getMessage().toString();
+        }
+        return database;
+    }
+    public void closeExternallDB(SQLiteDatabase database){
+        try{
+            this.service.closeDb(database);
+        }catch (Exception e){
+            e.getMessage().toString();
+        }
     }
 
     public void createdbInterno(){
         try{
-                if(service.createdbInterno()){
-                    service.exportInternoToExternoDB();
-                    view.showSucessInternoDB();
+            if( this.service.createdbInterno()){
+                if( this.service.getdbInterno() != null){
+                    if( this.service.exportInternoToExternoDB()){
+                        if( this.service.getdbExterno() != null){
+                            this.viewIDaoModel.showSucessInternoDB();
+                        }else{
+                            this.viewIDaoModel.showErrorExternoDB(R.string.errorDbCreateMemoriaExterna);
+                        }
+                    }else{
+                        this.viewIDaoModel.showErrorInternoDB(R.string.errorDbCreateMemoriaInterna);
+                    }
                 }else{
-                    view.showErrorInternoDB(R.string.errorDbCreateMemoriaInterna);
+                    this.viewIDaoModel.showErrorInternoDB(R.string.errorDbCreateMemoriaInterna);
                 }
+                this.viewIDaoModel.showSucessInternoDB();
+            }else{
+                this.viewIDaoModel.showErrorInternoDB(R.string.errorDbCreateMemoriaInterna);
+            }
 
         }catch (Exception e){
-            view.showErrorInternoDB(R.string.errorDbCreateMemoriaInterna);
+            this.viewIDaoModel.showErrorInternoDB(R.string.errorDbCreateMemoriaInterna);
             e.getMessage().toString();
         }
     }
 
     public void createdbExterno(){
         try{
-                if(service.createFolder()){
-                    if(service.createdbExterno()){
-                        view.showSucessExternoDB();
-                    }else{
-                        view.showErrorExternoDB(R.string.errorDbCreateMemoriaExterna);
-                    }
+            if(this.service.createFolder()){
+                if(this.service.createdbExterno()){
+                    this.viewIDaoModel.showSucessExternoDB();
                 }else{
-                    view.showErrorExternoDB(R.string.errorCreateFolderExterna);
+                    this.viewIDaoModel.showErrorExternoDB(R.string.errorDbCreateMemoriaExterna);
                 }
+            }else{
+                this.viewIDaoModel.showErrorExternoDB(R.string.errorCreateFolderExterna);
+            }
 
         }catch (Exception e){
-            view.showErrorExternoDB(R.string.errorDbCreateMemoriaExterna);
+            this.viewIDaoModel.showErrorExternoDB(R.string.errorDbCreateMemoriaExterna);
             e.getMessage().toString();
         }
     }
@@ -71,11 +125,4 @@ public class DaoModelPresenter {
         }
     }
 
-    public void checkExistDbExterno(){
-        try{
-
-        }catch (Exception e){
-            e.getMessage().toString();
-        }
-    }
 }
