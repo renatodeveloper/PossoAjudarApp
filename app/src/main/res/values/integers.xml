@@ -2,8 +2,8 @@
 <!-- IDs configuração de serviço -->
 <resources>
     <integer name="idCadastroDeConfServOptionAllDays">1</integer>
-    <integer name="idCadastroDeConfServOptionAllWeek">2</integer>
-    <integer name="idCadastroDeConfServOptionAllWeekend">3</integer>
-    <integer name="idCadastroDeConfServOption15Days">4</integer>
-    <integer name="idCadastroDeConfServOptionAllMonth">5</integer>
+    <integer name="idCadastroDeConfServOption5Dias">2</integer>
+    <integer name="idCadastroDeConfServOption10Dias">3</integer>
+    <integer name="idCadastroDeConfServOption15Dias">4</integer>
+    <integer name="idCadastroDeConfServOption20Dias">5</integer>
 </resources>
