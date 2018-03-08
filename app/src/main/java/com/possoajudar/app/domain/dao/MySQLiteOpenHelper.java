@@ -71,6 +71,8 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
         }
     }
 
+
+
     /**
      * Inicia as tabalas padrões
      * @param db A base de dados onde os comandos serão executados
