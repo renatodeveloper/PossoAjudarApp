@@ -4,22 +4,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.view.View;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
 import com.possoajudar.app.R;
 import com.possoajudar.app.application.service.IDaoModel;
 import com.possoajudar.app.application.service.dao.DaoModelPresenter;
-import com.possoajudar.app.domain.dao.MySQLiteOpenHelper;
 import com.possoajudar.app.infrastructure.helper.ActivityUtil;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import io.fabric.sdk.android.Fabric;
 
@@ -28,7 +22,7 @@ import io.fabric.sdk.android.Fabric;
  * Created by renato on 11/07/2017.
  */
 
-public class Splash extends Activity implements IDaoModel {
+public class ViewSplash extends Activity implements IDaoModel {
 
     public ActivityUtil activityUtil;
     private DaoModelPresenter daoModelPresenter;
@@ -40,17 +34,17 @@ public class Splash extends Activity implements IDaoModel {
         try {
             activityUtil = new ActivityUtil();
 
-            activityUtil.verifyStoragePermissionsAll(Splash.this);
-            //activityUtil.verifyStoragePermissions(Splash.this);
+            activityUtil.verifyStoragePermissionsAll(ViewSplash.this);
+            //activityUtil.verifyStoragePermissions(ViewSplash.this);
             /*
-            if(activityUtil.checkVersaoSDK(Splash.this)){
+            if(activityUtil.checkVersaoSDK(ViewSplash.this)){
                 checkUserLogado();
             }
              */
             /*
                 Cria banco na memória interna e exporta esse mesmo banco para a memoria externa
              */
-            daoModelPresenter = new DaoModelPresenter(this, getApplicationContext());
+            daoModelPresenter = new DaoModelPresenter(this, this);
             daoModelPresenter.createdbInterno();
 
             //daoModelPresenter.createdbExterno();
@@ -80,10 +74,10 @@ public class Splash extends Activity implements IDaoModel {
                                     // user rejected the permission - PERMISSION_DENIED is '-1' | ACCEPT is 0
                                     boolean checkNaoPetube = ActivityCompat.shouldShowRequestPermissionRationale(this, permissions[i].toString());//devolve false quando selecionado
                                     if(!checkNaoPetube){
-                                        activityUtil.showDialogPermissionsSystem(Splash.this);
+                                        activityUtil.showDialogPermissionsSystem(ViewSplash.this);
                                     }else {
                                         if (ActivityCompat.shouldShowRequestPermissionRationale(this, permissions[i].toString())) {
-                                            activityUtil.showDialogPermissions(Splash.this, permissions[i].toString());
+                                            activityUtil.showDialogPermissions(ViewSplash.this, permissions[i].toString());
                                         }
                                     }
                                 }
@@ -124,18 +118,29 @@ public class Splash extends Activity implements IDaoModel {
 
     @Override
     public void showErrorInternoDB(int resId) {
-        Toast.makeText(this, getString(resId), Toast.LENGTH_LONG).show();
+        Toast.makeText(this, getString(resId), Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void showErrorExternoDB(int resId) {
-        Toast.makeText(this, getString(resId), Toast.LENGTH_LONG).show();
+        Toast.makeText(this, getString(resId), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void sucess(String dsPackage) {
+        Toast.makeText(this, dsPackage, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void error(int resId) {
+        Toast.makeText(this, getString(resId), Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void showSucessInternoDB() {
         try{
-            Toast.makeText(this, R.string.sucessDbInterno, Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(R.string.sucessDbInterno), Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this, Login.class));
         }catch (Exception e){
             e.getMessage().toString();
         }
@@ -143,6 +148,6 @@ public class Splash extends Activity implements IDaoModel {
 
     @Override
     public void showSucessExternoDB() {
-        Toast.makeText(this, R.string.sucessDbExterno, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, R.string.sucessDbExterno, Toast.LENGTH_SHORT).show();
     }
 }
