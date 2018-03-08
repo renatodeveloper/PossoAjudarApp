@@ -190,4 +190,8 @@
     <string name="str_tl_sgit_splash_inicia_busca">Buscando os dados...</string>
     <string name="text_close">FECHAR</string>
 
+
+
+    <string name="strThreadError">Erro no processo da Thread...</string>
+
 </resources>
