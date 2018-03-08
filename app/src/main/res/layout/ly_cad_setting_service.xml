@@ -40,22 +40,22 @@
                     android:layout_height="wrap_content"
                     android:text="@string/strLyCadastroDeConfServOptionAllDays"
                     android:checked="true"/>
-                <RadioButton android:id="@+id/radio_allweek"
+                <RadioButton android:id="@+id/radio_5dias"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/strLyCadastroDeConfServOptionAllWeek" />
-                <RadioButton android:id="@+id/radio_allweekend"
+                    android:text="@string/strLyCadastroDeConfServOption_5" />
+                <RadioButton android:id="@+id/radio_10dias"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/strLyCadastroDeConfServOptionAllWeekend" />
-                <RadioButton android:id="@+id/radio_15days"
+                    android:text="@string/strLyCadastroDeConfServOption_10" />
+                <RadioButton android:id="@+id/radio_15dias"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/strLyCadastroDeConfServOption15Days" />
-                <RadioButton android:id="@+id/radio_allmonth"
+                    android:text="@string/strLyCadastroDeConfServOption_15" />
+                <RadioButton android:id="@+id/radio_20dias"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/strLyCadastroDeConfServOptionAllMonth" />
+                    android:text="@string/strLyCadastroDeConfServOption_20" />
             </RadioGroup>
 
         </LinearLayout>
