@@ -44,7 +44,6 @@ public class CadUsuario extends RoboActivity implements ICadUserView {
     ProgressDialog progressDialog;
     public ActivityUtil activityUtil;
     private CadUserPresenter cadUserPresenter;
-    private CadUserService cadUserService;
 
     GpsService gps;
 
@@ -74,7 +73,7 @@ public class CadUsuario extends RoboActivity implements ICadUserView {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        cadUserPresenter = new CadUserPresenter(this, cadUserService, getApplicationContext());
+        cadUserPresenter = new CadUserPresenter(this, this);
 
         progressDialog = new ProgressDialog(this);
 
@@ -122,6 +121,7 @@ public class CadUsuario extends RoboActivity implements ICadUserView {
 
     @Override
     public void showCadUserEmailError(int resId) {
+
         userEmail.setError(getString(resId));
     }
 
