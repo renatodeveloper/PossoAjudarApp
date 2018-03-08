@@ -19,14 +19,14 @@ public class CadConfServPresenter {
     private CadConfServService service;
     ActivityUtil util;
 
-    public CadConfServPresenter(ICadConfServView view, CadConfServService service, Context context){
+    public CadConfServPresenter(Context context, ICadConfServView view){
         this.context = context;
-        util = new ActivityUtil();
-        service = new CadConfServService();
+        service = new CadConfServService(context, view);
         this.view = view;
+
+        util = new ActivityUtil();
         this.service = service;
     }
-
     public void registerConfServ(){
         try{
             int valRadio = view.getCadConfServRadioOption();
@@ -37,8 +37,12 @@ public class CadConfServPresenter {
 
             JSONObject result = util.recuperaPrefUserLogado(this.context);
             String dsLogin = result.getString(context.getString(R.string.dsLoginTblUser));
-            boolean registerSucceeded = service.registerConfServ(util.getValeuJson(this.context, String.valueOf(valRadio), dsLogin), this.context);
+            String dsSenha = result.getString(context.getString(R.string.dsSenhaTblUser));
+
+            boolean registerSucceeded = service.registerConfServ(dsLogin, dsSenha, String.valueOf(valRadio));
             if(registerSucceeded){
+                util.definePrefConfServico(context, Integer.valueOf(valRadio));
+
                 view.startMainActivity();
             }else{
                 view.showCadConfServError(R.string.strLyCadastroConfServfailed);
