@@ -18,6 +18,10 @@ public class Apontamento {
     String status;
     String feature;
 
+    public Apontamento(){
+
+    }
+
     public Apontamento(String apontamento, String dataApontamento, String status, String feature ) {
         this.apontamento=apontamento;
         this.dataApontamento=dataApontamento;
@@ -25,6 +29,7 @@ public class Apontamento {
         this.feature=feature;
 
     }
+
 
     public String getName() {
         return apontamento;
