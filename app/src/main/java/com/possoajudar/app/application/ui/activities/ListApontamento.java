@@ -45,7 +45,7 @@ public class ListApontamento extends Activity {
         dataModels.add(new Apontamento("Lollipop","Android 5.0","21","November 12, 2014"));
         dataModels.add(new Apontamento("Marshmallow", "Android 6.0", "23","October 5, 2015"));
 
-        adapter= new CustomAdapter(dataModels,getApplicationContext());
+        adapter= new CustomAdapter(dataModels,null, getApplicationContext());//array da propaganda
 
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
