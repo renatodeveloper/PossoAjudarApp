@@ -5,8 +5,9 @@ package com.possoajudar.app.domain.model;
  */
 
 public class Usuario {
-    int idUsuario;
-    String dsLogin;
-    String dsSenha;
-    int idRedeSocial;
+    public int idUsuario;
+    public String dsLogin;
+    public String dsSenha;
+    public int idRedeSocial;
+    public int idServico;
 }
