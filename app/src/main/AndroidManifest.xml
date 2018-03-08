@@ -39,7 +39,7 @@
             android:value="com.possoajudar.app.application.module.retrofit.ApplicationModule" />
 
         <activity
-            android:name=".application.ui.activities.Splash"
+            android:name=".application.ui.activities.ViewSplash"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
