@@ -576,28 +576,34 @@ Guarda status do apontamento do usuário
         long INTERVAL = 0L;
         String DS_INTERVAL = "";
         try{
+            //http://convertlive.com/pt/u/converter/dias/em/milissegundos#1
             switch (idServico) {
-                case 1 :  DS_INTERVAL = "Alldays";
-                    //INTERVAL = 1440 * 60 * 1000; //1 dia
-                    INTERVAL = 300000; //5 Minutos = 300000 Milissegundos
+                case 1 :  DS_INTERVAL = "Todo dia";
+                    INTERVAL = 86400000;
                     break;
-                case 2:  DS_INTERVAL = "Allweek";
-                    INTERVAL = 10080 * 120 * 1000;
+                case 2:  DS_INTERVAL = "A cada 5 dias";
+                    INTERVAL = 432000000;
                     break;
-                case 3:  DS_INTERVAL = "Allweekend";
-                    INTERVAL = 1 * 180 * 1000; //ajustar
+                case 3:  DS_INTERVAL = "A cada 10 dias";
+                    INTERVAL = 864000000;
                     break;
-                case 4:  DS_INTERVAL = "15days";
-                    INTERVAL = 21600 * 240 * 1000;
+                case 4:  DS_INTERVAL = "A cada 15 dias";
+                    INTERVAL = 1296000000;
                     break;
-                case 5:  DS_INTERVAL = "Allmonth";
-                    INTERVAL = 43200 * 300 * 1000;
+                case 5:  DS_INTERVAL = "A cada 20 dias";
+                    INTERVAL = 1728000000;
                     break;
             }
+
+            long dataLimit = System.currentTimeMillis() + INTERVAL;
             SharedPreferences mPrefs = context.getSharedPreferences(context.getString(R.string.prefArqValueConfServ), Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = mPrefs.edit();
             editor.putInt(context.getString(R.string.idConfServico), idServico);
-            editor.putLong(context.getString(R.string.dsConfServicoDefault), System.currentTimeMillis() + INTERVAL);
+            editor.putLong(context.getString(R.string.dsConfServicoDefault), dataLimit);
+
+            Date x = new Date(dataLimit);
+            String dsValue = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(x);
+
             editor.commit();
 
         }catch (Exception e) {
