@@ -1,6 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fitsSystemWindows="true">
 
-</LinearLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/dimen56dp"
+        android:paddingLeft="@dimen/dimen24dp"
+        android:paddingRight="@dimen/dimen24dp"
+        >
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/titlelogo"
+            android:fontFamily="@string/font_family_light"
+            android:layout_gravity="center"
+            android:textSize="@dimen/dimen16dip"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_marginTop="@dimen/dimen72dp"
+            />
+
+
+        <!--  Email Label -->
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen8dp"
+            android:layout_marginBottom="@dimen/dimen8dp">
+            <EditText android:id="@+id/input_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:hint="@string/strLyLoginHintInputEmail" />
+        </android.support.design.widget.TextInputLayout>
+
+        <!--  Password Label -->
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen8dp"
+            android:layout_marginBottom="@dimen/dimen8dp">
+            <EditText android:id="@+id/input_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:hint="@string/strLyLoginHintInputPassword"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btn_login"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dimen24dp"
+            android:layout_marginTop="@dimen/dimen40dp"
+            android:onClick="onLoginClick"
+            android:padding="@dimen/dimen12dp"
+            android:text="@string/strLyLoginButtonLogin"
+            android:background="@drawable/button_customizado"
+            />
+
+        <TextView android:id="@+id/newcount"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dimen24dp"
+            android:text="@string/strLyLoginTextViewAccount"
+            android:textColor="@color/color_red"
+            android:gravity="center"
+            android:textSize="@dimen/dimen16dip"
+            />
+
+
+        <TextView android:id="@+id/sucessologin"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dimen24dp"
+            android:text="STATUS"
+            android:gravity="center"
+            android:textSize="@dimen/dimen16dip"
+            />
+
+    </LinearLayout>
+</ScrollView>
