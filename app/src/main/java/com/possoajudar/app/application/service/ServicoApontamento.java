@@ -43,7 +43,7 @@ public class ServicoApontamento extends Service {
     public static Context context;
     int idConfServico;
     long dsConfServicoDefault;
-    long INTERVAL = 1440 * 60 * 1000; // Intervalo verificador de tempo ocioso
+    long INTERVAL = 1 * 60 * 1000; // INTERVALO NO QUAL O SERVICE VERIFICA O TEMPO OCIOSO
     private Timer timer = new Timer();
     static Message message;
     static Bundle bundlee;
