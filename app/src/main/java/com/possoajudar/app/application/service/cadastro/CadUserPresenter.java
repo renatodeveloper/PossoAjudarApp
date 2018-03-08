@@ -15,12 +15,12 @@ public class CadUserPresenter {
     private ICadUserView view;
     private CadUserService service;
     ActivityUtil util;
-    public CadUserPresenter(ICadUserView view, CadUserService service, Context context){
+    public CadUserPresenter(Context context, ICadUserView view){
         this.context = context;
-        util = new ActivityUtil();
-
-        service = new CadUserService();
+        service = new CadUserService(context, view);
         this.view = view;
+
+        util = new ActivityUtil();
         this.service = service;
     }
 
@@ -37,7 +37,7 @@ public class CadUserPresenter {
                 return;
             }
 
-            boolean registerSucceeded = service.registerNewUser(util.getValeuJson(this.context, cadEmailUser, cadSenhaUser), this.context);
+            boolean registerSucceeded = service.registerNewUser(util.getValeuJson(this.context, cadEmailUser, cadSenhaUser));
             if(registerSucceeded){
                 view.startMainActivity();
             }else{
