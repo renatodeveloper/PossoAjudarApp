@@ -42,19 +42,16 @@ public class CadConfServ extends RoboActivity implements ICadConfServView{
     @InjectView(R.id.radio_allmonth)
     RadioButton radioAllmonth;
 
-    ProgressDialog progressDialog;
     public ActivityUtil activityUtil;
     private CadConfServPresenter cadConfServPresenter;
-    private CadConfServService cadConfServService;
 
     int optionConfServ = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ly_cad_setting_service);
-        progressDialog = new ProgressDialog(this);
 
-        cadConfServPresenter = new CadConfServPresenter(this,cadConfServService, getApplicationContext());
+        cadConfServPresenter = new CadConfServPresenter(this, this);
 
         cadConfServ.setOnClickListener(new View.OnClickListener() {
             @Override
