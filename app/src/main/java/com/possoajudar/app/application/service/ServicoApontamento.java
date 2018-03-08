@@ -70,6 +70,7 @@ public class ServicoApontamento extends Service {
     public void onDestroy() {
         super.onDestroy();
         if (timer != null) {
+            timerTaskGen.cancel();
             timer.cancel();
         }
     }
@@ -77,6 +78,7 @@ public class ServicoApontamento extends Service {
     public void stopService(){
         stopSelf();
         if (timer != null) {
+            timerTaskGen.cancel();
             timer.cancel();
         }
     }
