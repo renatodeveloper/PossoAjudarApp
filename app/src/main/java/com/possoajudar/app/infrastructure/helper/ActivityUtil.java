@@ -7,9 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.content.res.Configuration;
-import android.os.Build;
 import android.os.Environment;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
@@ -18,9 +16,7 @@ import android.widget.Toast;
 
 import com.possoajudar.app.R;
 import com.possoajudar.app.application.service.gps.GpsService;
-import com.possoajudar.app.application.ui.activities.Login;
 import com.possoajudar.app.application.ui.activities.MainActivity;
-import com.possoajudar.app.application.ui.activities.Splash;
 
 import org.json.JSONObject;
 
@@ -31,7 +27,6 @@ import java.io.IOException;
 import java.nio.channels.FileChannel;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by renato on 06/07/2017.
@@ -647,6 +642,7 @@ Guarda status do apontamento do usuário
             activityUtil.limpaPrefUserLogadoApontamento(context);
             activityUtil.limpaPrefFormLogin(context);
             activityUtil.limpaPrefConfServ(context);
+
             //activityUtil.limpaPrefFlagInfoMedidas(context);
         }catch (Exception e){
             e.getMessage().toString();
