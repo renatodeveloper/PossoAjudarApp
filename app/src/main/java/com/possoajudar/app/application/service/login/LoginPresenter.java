@@ -13,15 +13,16 @@ import com.possoajudar.app.infrastructure.helper.ActivityUtil;
 public class LoginPresenter {
     Context context;
     ActivityUtil util;
+
     private ILoginView view;
     private LoginService service;
 
-    public LoginPresenter(ILoginView view, LoginService service, Context context){
+    public LoginPresenter(Context context, ILoginView view){
         this.context = context;
-        util = new ActivityUtil();
-        service = new LoginService();
+        this.service = new LoginService(context, view);
         this.view = view;
-        this.service = service;
+
+        util = new ActivityUtil();
     }
 
 
@@ -39,7 +40,7 @@ public class LoginPresenter {
                 return;
             }
 
-            boolean loginSucceeded = service.login(util.getValeuJson(this.context, username, password), this.context);
+            boolean loginSucceeded = service.login(util.getValeuJson(this.context, username, password));
             if(loginSucceeded){
                 view.startMainActivity();
             }else{
