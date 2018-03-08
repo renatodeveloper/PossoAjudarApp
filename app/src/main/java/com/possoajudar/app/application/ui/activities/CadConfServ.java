@@ -33,14 +33,14 @@ public class CadConfServ extends RoboActivity implements ICadConfServView{
 
     @InjectView(R.id.radio_alldays)
     RadioButton radioAlldays;
-    @InjectView(R.id.radio_allweek)
-    RadioButton radioAllweek;
-    @InjectView(R.id.radio_allweekend)
-    RadioButton radioAllweekend;
-    @InjectView(R.id.radio_15days)
-    RadioButton radioAll15days;
-    @InjectView(R.id.radio_allmonth)
-    RadioButton radioAllmonth;
+    @InjectView(R.id.radio_5dias)
+    RadioButton radiol5;
+    @InjectView(R.id.radio_10dias)
+    RadioButton radio10;
+    @InjectView(R.id.radio_15dias)
+    RadioButton radio15;
+    @InjectView(R.id.radio_20dias)
+    RadioButton radio20;
 
     public ActivityUtil activityUtil;
     private CadConfServPresenter cadConfServPresenter;
@@ -84,28 +84,28 @@ public class CadConfServ extends RoboActivity implements ICadConfServView{
                 optionConfServ = getApplicationContext().getResources().getInteger(R.integer.idCadastroDeConfServOptionAllDays);
             }
         });
-        radioAllweek.setOnClickListener(new View.OnClickListener() {
+        radiol5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                optionConfServ = getApplicationContext().getResources().getInteger(R.integer.idCadastroDeConfServOptionAllWeek);
+                optionConfServ = getApplicationContext().getResources().getInteger(R.integer.idCadastroDeConfServOption5Dias);
             }
         });
-        radioAllweekend.setOnClickListener(new View.OnClickListener() {
+        radio10.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                optionConfServ =  getApplicationContext().getResources().getInteger(R.integer.idCadastroDeConfServOptionAllWeekend);
+                optionConfServ =  getApplicationContext().getResources().getInteger(R.integer.idCadastroDeConfServOption10Dias);
             }
         });
-        radioAll15days.setOnClickListener(new View.OnClickListener() {
+        radio15.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                optionConfServ =  getApplicationContext().getResources().getInteger(R.integer.idCadastroDeConfServOption15Days);
+                optionConfServ =  getApplicationContext().getResources().getInteger(R.integer.idCadastroDeConfServOption15Dias);
             }
         });
-        radioAllmonth.setOnClickListener(new View.OnClickListener() {
+        radio20.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                optionConfServ =  getApplicationContext().getResources().getInteger(R.integer.idCadastroDeConfServOptionAllMonth);
+                optionConfServ =  getApplicationContext().getResources().getInteger(R.integer.idCadastroDeConfServOption20Dias);
             }
         });
     }
