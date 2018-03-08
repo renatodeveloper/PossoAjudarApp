@@ -7,6 +7,9 @@ import android.database.sqlite.SQLiteDatabase;
  */
 
 public interface IDaoModel {
+    void sucess(String dsPackage);
+    void error(int resId);
+
     void showSucessInternoDB();
     void showErrorInternoDB(int resId);
 
