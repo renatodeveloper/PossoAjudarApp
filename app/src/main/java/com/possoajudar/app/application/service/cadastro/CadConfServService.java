@@ -7,8 +7,15 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.possoajudar.app.R;
+import com.possoajudar.app.application.service.ICadConfServView;
+import com.possoajudar.app.application.service.ICadUserView;
+import com.possoajudar.app.application.service.ILoginView;
 import com.possoajudar.app.application.service.ServicoApontamento;
 import com.possoajudar.app.application.service.dao.DaoModelService;
+import com.possoajudar.app.domain.dao.ServicoDao;
+import com.possoajudar.app.domain.dao.UsuarioDao;
+import com.possoajudar.app.domain.model.Servico;
+import com.possoajudar.app.domain.model.Usuario;
 import com.possoajudar.app.infrastructure.helper.ActivityUtil;
 
 import org.json.JSONException;
@@ -19,58 +26,39 @@ import org.json.JSONObject;
  */
 
 public class CadConfServService {
-    ActivityUtil activityUtil;
-    public boolean registerConfServ(JSONObject jsonValue, Context context){
-        DaoModelService daoModelService = null;
-        try{
-            SQLiteDatabase database =  daoModelService.getdbInterno(context);
-            if(database!= null && jsonValue != null && jsonValue.length()>0){
-                ContentValues values = new ContentValues();
-                values.put(context.getString(R.string.idConfServico), jsonValue.getString(context.getString(R.string.dsGeneric_A)));
-                values.put(context.getString(R.string.dsLoginTblUser), jsonValue.getString(context.getString(R.string.dsGeneric_B)));
-                //String[] args = { jsonValue.getString(context.getString(R.string.dsGeneric_A)), jsonValue.getString(context.getString(R.string.dsGeneric_B))};
-                String[] args = { jsonValue.getString(context.getString(R.string.dsGeneric_B))};
 
-                //String[] args = { "first string", "second@string.com" };
-                //Cursor cursor = db.query("TABLE_NAME", null, "name=? AND email=?", args, null,null,null);
+    Context context;
+    private ServicoDao servicoDao;
+    private UsuarioDao usuarioDao;
+    private ICadConfServView iCadConfServView;
 
-                Cursor cursor = database.query(context.getString(R.string.dsNameTblUser), null, "dsLogin=?", args, null,null,null);
-                if(cursor.getCount()>0){
-                    cursor.moveToFirst();
-                    int idServico = cursor.getInt(cursor.getColumnIndex(context.getString(R.string.idConfServico)));
-                    String dsLogin = cursor.getString(cursor.getColumnIndex(context.getString(R.string.dsLoginTblUser)));
-                    int idUser = cursor.getInt(cursor.getColumnIndex(context.getString(R.string.idTblUser)));
 
-                    if(dsLogin.length()>0 && idServico>0){
-                        values.clear();
-                        values = new ContentValues();
-                        values.put(context.getString(R.string.idConfServico), jsonValue.getString(context.getString(R.string.dsGeneric_A)));
-                        int result = 0;
-                        activityUtil = new ActivityUtil();
-                        result = database.update(context.getString(R.string.dsNameTblUser), values, "dsLogin=?", args);
-                        values.clear();;
-                        if(result>0){
-                            activityUtil.definePrefConfServico(context, Integer.valueOf(jsonValue.getString(context.getString(R.string.dsGeneric_A))));
-                            JSONObject obj = activityUtil.recuperaPrefConfServico(context);
-                            if (obj != null) {
-                                String[] argsId= {String.valueOf(idUser)};
-                                cursor = database.query(context.getString(R.string.dsNameTblUserAptmento), null, "idUsuario=?", argsId, null,null,null);
-                                if(cursor.getCount()>0){
-                                    cursor.moveToLast();
-                                    int idApontamento = cursor.getInt(cursor.getColumnIndex(context.getString(R.string.idTblUserAptmento)));
-                                    long dataHoraUltimoApontamento = cursor.getLong(cursor.getColumnIndex(context.getString(R.string.dataTimeTblUserAptmento)));
-                                }
-                                return true;
-                            }
-                        }
-                    }
-                }else{
-                    return false;
-                }
-            }
-        }catch (Exception e){
+    public CadConfServService(Context context, ICadConfServView view){
+        this.context = context;
+        this.iCadConfServView = view;
+    }
+
+
+    public boolean registerConfServ(String ... params) {
+        try {
+            usuarioDao = new UsuarioDao(this.context);
+
+
+            usuarioDao.dsLogin =   params[0].toString();
+            usuarioDao.dsSenha =   params[1].toString();
+            usuarioDao.idServico = Integer.valueOf(params[2].toString());
+            usuarioDao.setId(usuarioDao.getId());
+
+            ContentValues   values = new ContentValues();
+                            values.put(this.context.getString(R.string.idTblUser), usuarioDao._id);
+                            values.put(this.context.getString(R.string.dsLoginTblUser), usuarioDao.dsLogin);
+                            values.put(this.context.getString(R.string.dsSenhaTblUser), usuarioDao.dsSenha);
+                            values.put(this.context.getString(R.string.idTblServico),usuarioDao.idServico );
+            return usuarioDao.save(values);
+        } catch (Exception e) {
             e.getMessage().toString();
         }
-        return  true;
+        return false;
     }
+
 }
