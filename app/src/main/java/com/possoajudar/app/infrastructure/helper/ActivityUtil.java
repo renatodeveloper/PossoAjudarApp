@@ -578,7 +578,8 @@ Guarda status do apontamento do usuário
         try{
             switch (idServico) {
                 case 1 :  DS_INTERVAL = "Alldays";
-                    INTERVAL = 1440 * 60 * 1000; //1 dia
+                    //INTERVAL = 1440 * 60 * 1000; //1 dia
+                    INTERVAL = 300000; //5 Minutos = 300000 Milissegundos
                     break;
                 case 2:  DS_INTERVAL = "Allweek";
                     INTERVAL = 10080 * 120 * 1000;
