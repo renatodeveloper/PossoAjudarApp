@@ -59,6 +59,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
 import java.util.TimerTask;
 
 import butterknife.BindString;
@@ -117,9 +118,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     protected void onDestroy() {
         super.onDestroy();
         try{
-            /*
-            new ServicoApontamento().stopService();
-             */
+
+            stopService(new Intent(getApplicationContext(), ServicoApontamento.class));
+
 
             //limpa todas as preferences
             activityUtil.cleanAllPreferences(getApplicationContext());
@@ -266,11 +267,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         GoogleAnalyticsApplication application = (GoogleAnalyticsApplication) getApplication();
         mTracker = application.getDefaultTracker();
 
-        /*
-        new ServicoApontamento().stopService();
+
+        stopService(new Intent(getApplicationContext(), ServicoApontamento.class));
         activityUtil.definePrefConfServico(getApplicationContext(), 1);
         startService(new Intent(getApplicationContext(), ServicoApontamento.class));
-         */
+
 
         /*
             Teste de cn line usando ApiClient Retrofit
@@ -324,9 +325,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
         if (id == R.id.action_cleanpreferences) {
             try{
-                /*
-                new ServicoApontamento().stopService();
-                 */
+
+                stopService(new Intent(getApplicationContext(), ServicoApontamento.class));
+
 
                 activityUtil.cleanAllPreferences(getApplicationContext());
                 startActivity(new Intent(this, ViewSplash.class));
@@ -657,7 +658,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         if (requestCode == REQUEST_SERVER) {
             // Make sure the request was successful
             if (resultCode == RESULT_OK) {
-                /*
+
                 String  id = data.getExtras().getString("id");
                 if(id.length()>0){
                     JSONObject obj = activityUtil.recuperaPrefConfServico(getApplicationContext());
@@ -668,7 +669,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
                     }
                 }
-                 */
+
             }else if (resultCode == Activity.RESULT_CANCELED) {
                 // some stuff that will happen if there's no result
             }
