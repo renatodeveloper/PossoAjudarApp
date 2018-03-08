@@ -49,7 +49,6 @@ public class Login extends Activity implements ILoginView {
     TextView newcountView;
 
     private LoginPresenter loginPresenter;
-    private LoginService loginService;
     public ActivityUtil activityUtil;
     GpsService gps;
 
@@ -84,7 +83,7 @@ public class Login extends Activity implements ILoginView {
         sucessologin = (TextView) findViewById(R.id.sucessologin);
         newcountView = (TextView) findViewById(R.id.newcount);
 
-        loginPresenter = new LoginPresenter(this, loginService, getApplicationContext());
+        loginPresenter = new LoginPresenter(this, this);
 
         newcountView.setOnClickListener(new View.OnClickListener() {
             @Override
