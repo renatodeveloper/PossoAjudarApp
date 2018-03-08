@@ -18,12 +18,12 @@ public class CadApontamentoPresenter {
     private CadApontamentoService service;
     ActivityUtil util;
 
-    public CadApontamentoPresenter(ICadApontamentoView view, CadApontamentoService service, Context context){
+    public CadApontamentoPresenter(Context context, ICadApontamentoView view){
         this.context = context;
-        util = new ActivityUtil();
-
+        this.service =  new CadApontamentoService(context, view);
         this.view = view;
-        this.service =  new CadApontamentoService();
+
+        util = new ActivityUtil();
     }
     public void registerApontamentoUser(){
         try{
@@ -49,10 +49,10 @@ public class CadApontamentoPresenter {
                 return;
             }
 
-            boolean registerSucceeded = service.registerNewApontamento(util.getValeuJson(this.context, altura, peso, String.valueOf(dataTime), dsDataTime), this.context);
+            boolean registerSucceeded = service.registreNewApontamento(util.getValeuJson(this.context, altura, peso, String.valueOf(dataTime), dsDataTime));
             JSONArray jsonArray;
             if(registerSucceeded){
-                jsonArray = service.getJSONArrayApontamentoUser(context);
+                jsonArray = service.getJSONArrayApontamentoUser();
                 if(jsonArray != null && jsonArray.length()>0){
                     view.montaListaApondatamento(jsonArray);
                 }else{
@@ -66,10 +66,10 @@ public class CadApontamentoPresenter {
         }
     }
 
-    public void getArrayApontamentoUser(Context context){
+    public void getArrayApontamentoUser(){
         JSONArray jsonArray;
         try{
-            jsonArray = service.getJSONArrayApontamentoUser(context);
+            jsonArray = service.getJSONArrayApontamentoUser();
             if(jsonArray != null && jsonArray.length()>0){
                 view.montaListaApondatamento(jsonArray);
             }else{
@@ -80,9 +80,9 @@ public class CadApontamentoPresenter {
         }
     }
 
-    public boolean existApontamento(Context context){
+    public boolean existApontamento(){
         try{
-            return  service.ifExistApontamento(context);
+            return  service.ifExistApontamento();
         }catch (Exception e){
             e.getMessage().toString();
         }
