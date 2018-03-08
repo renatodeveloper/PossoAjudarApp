@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 
 import com.possoajudar.app.R;
-import com.possoajudar.app.application.ui.activities.Splash;
+import com.possoajudar.app.application.ui.activities.ViewSplash;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -36,7 +36,7 @@ import static org.hamcrest.Matchers.allOf;
 public class SplashTest {
 
     @Rule
-    public ActivityTestRule<Splash> mActivityTestRule = new ActivityTestRule<>(Splash.class);
+    public ActivityTestRule<ViewSplash> mActivityTestRule = new ActivityTestRule<>(ViewSplash.class);
 
     @Test
     public void splashTest() {
