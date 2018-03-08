@@ -59,10 +59,10 @@
     <!-- layout screen cadastrar configuração de serviço -->
     <string name="strLyCadastroDeConfServTitle">Cadastro de Configuração de Serviço</string>
     <string name="strLyCadastroDeConfServOptionAllDays">Todos os Dias</string>
-    <string name="strLyCadastroDeConfServOptionAllWeek">Toda Semana</string>
-    <string name="strLyCadastroDeConfServOptionAllWeekend">Todo Fim Semana</string>
-    <string name="strLyCadastroDeConfServOption15Days">Intervalo de 15 dias</string>
-    <string name="strLyCadastroDeConfServOptionAllMonth">Todo Mês</string>
+    <string name="strLyCadastroDeConfServOption_5">A cada 5 dias</string>
+    <string name="strLyCadastroDeConfServOption_10">A cada 10 dias</string>
+    <string name="strLyCadastroDeConfServOption_15">A cada 15 dias</string>
+    <string name="strLyCadastroDeConfServOption_20">A cada 20 dias</string>
 
 
     <string name="strLyCadastroDeConfServRadioOption">Selecione uma opção</string>
