@@ -6,7 +6,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.possoajudar.app.R;
+import com.possoajudar.app.application.service.ICadUserView;
+import com.possoajudar.app.application.service.ILoginView;
 import com.possoajudar.app.application.service.dao.DaoModelService;
+import com.possoajudar.app.domain.dao.UsuarioDao;
 
 import org.json.JSONObject;
 
@@ -15,65 +18,34 @@ import org.json.JSONObject;
  */
 
 public class CadUserService {
-    DaoModelService daoModelService;
+    Context context;
+    private UsuarioDao usuarioDao;
+    private ILoginView loginView;
+    private ICadUserView cadUserView;
 
-    public boolean registerNewUser(JSONObject jsonValueLogin, Context context){
-        try{
-            if(!checkUserExist(jsonValueLogin, context)){
-                SQLiteDatabase database =  daoModelService.getdbInterno(context);
-                if(database!= null && jsonValueLogin != null && jsonValueLogin.length()>0){
-                    ContentValues values = new ContentValues();
-                    values.put(context.getString(R.string.dsLoginTblUser), jsonValueLogin.getString(context.getString(R.string.dsGeneric_A)));
-                    values.put(context.getString(R.string.dsSenhaTblUser), jsonValueLogin.getString(context.getString(R.string.dsGeneric_B)));
-                    values.put(context.getString(R.string.idConfServico), context.getString(R.string.dsConfServicoDefaultAlldays));
-                    long result  = database.insert(context.getString(R.string.dsNameTblUser), null, values);
-                    if(result >0){
-                        //check insert select... fazer com o valida user
-                        String[] args = { jsonValueLogin.getString(context.getString(R.string.dsGeneric_A)), jsonValueLogin.getString(context.getString(R.string.dsGeneric_B))};
-                        Cursor cursor = database.query(context.getString(R.string.dsNameTblUser), null, "dsLogin=? AND dsSenha=?", args, null,null,null);
-                        if(cursor.getCount()>0){
-                            cursor.moveToFirst();
-                            String dsLogin = cursor.getString(cursor.getColumnIndex(context.getString(R.string.dsLoginTblUser)));
-                            String dsSenha = cursor.getString(cursor.getColumnIndex(context.getString(R.string.dsSenhaTblUser)));
-                            if(dsLogin.length()>0 && dsSenha.length()>0){
-                                return  true;
-                            }
-                        }
-
-                        //String[] args = { "first string", "second@string.com" };
-                        //Cursor cursor = db.query("TABLE_NAME", null, "name=? AND email=?", args, null,null,null);
-                    }
-                }
-            }else{
-                return false;
-            }
-        }catch (Exception e){
-            e.getMessage().toString();
-        }
-        return  false;
+    public CadUserService(Context context, ILoginView loginView){
+        this.context = context;
+        this.loginView = loginView;
     }
 
-    public static boolean checkUserExist(JSONObject jsonValueLogin, Context context){
-        DaoModelService daoModelService = null;
-        try{
-            SQLiteDatabase database =  daoModelService.getdbInterno(context);
-            if(database!= null && jsonValueLogin != null && jsonValueLogin.length()>0){
+    public CadUserService(Context context, ICadUserView cadUserView){
+        this.context = context;
+        this.cadUserView = cadUserView;
+    }
+
+    public boolean registerNewUser(JSONObject jsonValueLogin) {
+        try {
+            usuarioDao = new UsuarioDao(this.context);
+            if(! usuarioDao.check(jsonValueLogin)){
+
                 ContentValues values = new ContentValues();
                 values.put(context.getString(R.string.dsLoginTblUser), jsonValueLogin.getString(context.getString(R.string.dsGeneric_A)));
-                //values.put(context.getString(R.string.dsSenhaTblUser), jsonValueLogin.getString(context.getString(R.string.dsGeneric_B)));
-                //String[] args = { jsonValueLogin.getString(context.getString(R.string.dsGeneric_A)), jsonValueLogin.getString(context.getString(R.string.dsGeneric_B))};
-                String[] args = { jsonValueLogin.getString(context.getString(R.string.dsGeneric_A))};
-                Cursor cursor = database.query(context.getString(R.string.dsNameTblUser), null, "dsLogin=?", args, null,null,null);
-                if(cursor.getCount()>0){
-                    cursor.moveToFirst();
-                    String dsLogin = cursor.getString(cursor.getColumnIndex(context.getString(R.string.dsLoginTblUser)));
-                    String dsSenha = cursor.getString(cursor.getColumnIndex(context.getString(R.string.dsSenhaTblUser)));
-                    if(dsLogin.length()>0 && dsSenha.length()>0){
-                        return  true;
-                    }
-                }
+                values.put(context.getString(R.string.dsSenhaTblUser), jsonValueLogin.getString(context.getString(R.string.dsGeneric_B)));
+                values.put(context.getString(R.string.idConfServico), context.getString(R.string.dsConfServicoDefaultAlldays));
+
+               return usuarioDao.save(values);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.getMessage().toString();
         }
         return false;
