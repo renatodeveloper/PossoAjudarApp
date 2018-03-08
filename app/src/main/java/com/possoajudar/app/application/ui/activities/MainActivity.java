@@ -137,7 +137,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         /*
             Método que executa após o serviço ter seu tempo ocioso atingido
-
+        */
         JSONObject object = activityUtil.recuperaPrefFlagInfoMedidas(getApplicationContext());//referente ao ServicoApontamento inicializado
         if(object != null && object.length()>0){
             try {
@@ -149,7 +149,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 e.printStackTrace();
             }
         }
-        */
+
     }
 
     @Override
@@ -269,7 +269,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
 
         stopService(new Intent(getApplicationContext(), ServicoApontamento.class));
-        activityUtil.definePrefConfServico(getApplicationContext(), 1);
+        activityUtil.definePrefConfServico(getApplicationContext(), 1);//DEFINE O TEMPO EM QUE O SISTEMA DEVE SOLICITAR AS MEDIDAS
         startService(new Intent(getApplicationContext(), ServicoApontamento.class));
 
 
@@ -549,7 +549,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 pathPictute = String.valueOf(Constants.Headers.URL_IMG_COMPLETO + movies.get(m).getBackdropPath());
                 System.out.print("Path image load: " + pathPictute.toString());
                 Movie movie = movies.get(m);
-                System.out.print("Path image load: " + movie.backdropPath.toString());
+                //System.out.print("Path image load: " + movie.backdropPath.toString());
             }
         }
     }
@@ -611,7 +611,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                             gps = new GpsService(getApplicationContext());
                             JSONObject value = activityUtil.getValeuJson(getApplicationContext(),editTextAltura.getText().toString(), editTextPeso.getText().toString());
                             activityUtil.definePrefUserLogadoApontamento(getApplicationContext(), gps, value);
-
                             try{
                                 JSONObject objectA = activityUtil.recuperaPrefUserLogadoApontamento(getApplicationContext());
                                 if(objectA != null){}
