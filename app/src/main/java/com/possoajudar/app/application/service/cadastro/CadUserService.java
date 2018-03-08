@@ -33,15 +33,14 @@ public class CadUserService {
         this.cadUserView = cadUserView;
     }
 
-    public boolean registerNewUser(JSONObject jsonValueLogin) {
+    public boolean registerNewUser(JSONObject jsonValue) {
         try {
             usuarioDao = new UsuarioDao(this.context);
-            if(! usuarioDao.check(jsonValueLogin)){
+            if(! usuarioDao.check(jsonValue)){
 
                 ContentValues values = new ContentValues();
-                values.put(context.getString(R.string.dsLoginTblUser), jsonValueLogin.getString(context.getString(R.string.dsGeneric_A)));
-                values.put(context.getString(R.string.dsSenhaTblUser), jsonValueLogin.getString(context.getString(R.string.dsGeneric_B)));
-                values.put(context.getString(R.string.idConfServico), context.getString(R.string.dsConfServicoDefaultAlldays));
+                values.put(context.getString(R.string.idConfServico), jsonValue.getString(context.getString(R.string.dsGeneric_A)));
+                values.put(context.getString(R.string.dsLoginTblUser), jsonValue.getString(context.getString(R.string.dsGeneric_B)));
 
                return usuarioDao.save(values);
             }
