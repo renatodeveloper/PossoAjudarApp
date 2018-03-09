@@ -13,7 +13,7 @@ public class Apontamento {
     public int image;
 
     //**************************************************************************************
-    String apontamento;
+    public String apontamento;
     String dataApontamento;
     String status;
     String feature;
