@@ -1,6 +1,8 @@
 package com.possoajudar.app.application.ui.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
 import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +33,7 @@ public class CustomAdapter  extends ArrayAdapter<Apontamento> implements View.On
         TextView txtApontamento;
         TextView txtDataApontamento;
         TextView txtStatus;
+        ImageView imgStatus;
         ImageView propaganda;
     }
 
@@ -64,6 +67,7 @@ public class CustomAdapter  extends ArrayAdapter<Apontamento> implements View.On
 
     private int lastPosition = -1;
 
+    @SuppressLint("ResourceType")
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // Get the data item for this position
@@ -79,6 +83,7 @@ public class CustomAdapter  extends ArrayAdapter<Apontamento> implements View.On
             viewHolder.txtApontamento = (TextView) convertView.findViewById(R.id.textViewApontamento);
             viewHolder.txtDataApontamento = (TextView) convertView.findViewById(R.id.textViewDataApontamento);
             viewHolder.txtStatus = (TextView) convertView.findViewById(R.id.textViewStatus);
+            viewHolder.imgStatus = (ImageView) convertView.findViewById(R.id.imageViewStatus);
             viewHolder.propaganda = (ImageView) convertView.findViewById(R.id.img_propaganda);
 
             result=convertView;
@@ -96,7 +101,19 @@ public class CustomAdapter  extends ArrayAdapter<Apontamento> implements View.On
         viewHolder.txtApontamento.setText(dataModel.getName());
         viewHolder.txtDataApontamento.setText(dataModel.getType());
         viewHolder.txtStatus.setText(dataModel.getVersion_number());
-        //viewHolder.propaganda.setImageIcon(?);
+
+        if(dataModel.apontamento.length()== 22){//Peso: 66 - Altura: 179
+            viewHolder.propaganda.setImageResource(R.drawable.balance);
+            viewHolder.txtStatus.setTextColor(Color.GRAY);
+            viewHolder.txtStatus.setText("Leia-me");
+            viewHolder.imgStatus.setImageResource(R.drawable.message_alert);
+        }else{
+            viewHolder.propaganda.setImageResource(R.drawable.clean);
+            viewHolder.txtStatus.setTextColor(Color.GREEN);
+            viewHolder.txtStatus.setText("No peso");
+            viewHolder.imgStatus.setImageResource(R.drawable.clock);
+        }
+
         viewHolder.propaganda.setOnClickListener(this);
         viewHolder.propaganda.setTag(position);
         // Return the completed view to render on screen
