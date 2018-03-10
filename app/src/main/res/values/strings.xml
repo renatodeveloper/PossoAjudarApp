@@ -201,4 +201,15 @@
 
     <string name="strThreadError">Erro no processo da Thread...</string>
 
+
+    <!-- calculando o IMC -->
+    <string name="text_result">Seu IMC é de: </string>
+    <string name="text_result_morbido">, sua situação na tabela é de Obesidade Mórbida. Procure um médico!</string>
+    <string name="text_result_severo">, sua situação na tabela é de Obesidade Severa. Procure um médico!</string>
+    <string name="text_result_obesidade">, sua situação na tabela é de Obesidade. Procure um médico!</string>
+    <string name="text_result_acima">, sua situação na tabela é acima do peso. Prátique exercícios físicos.</string>
+    <string name="text_result_normal">, sua situação na tabela é normal.</string>
+    <string name="text_result_abaixo">, sua situação na tabela é abaixo do normal.</string>
+    <string name="text_result_abaixo_normal">, sua situação na tabela é muito abaixo do normal.</string>
+
 </resources>
