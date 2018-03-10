@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Environment;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
@@ -666,5 +667,45 @@ Guarda status do apontamento do usuário
         }else {
             Toast.makeText(context, "Screen size is neither large, normal or small" , Toast.LENGTH_LONG).show();
         }
+    }
+    /*
+        Calcula o Índice de massa corporal (IMC)
+     */
+    public String getIMC(Context context, int altura, int peso){
+        Resources res = context.getResources();
+        int immc = 0;
+        String result = "não encontrado...";
+        try{
+            immc = peso * (altura * altura);
+            if(immc >= 40){
+                result = res.getString(R.string.text_result) + String.valueOf(immc) + res.getString(R.string.text_result_morbido);
+            }else
+            if(immc >= 35){
+                result = res.getString(R.string.text_result)  + String.valueOf(immc) + res.getString(R.string.text_result_severo);
+            }
+            else
+            if(immc >= 30){
+                result = res.getString(R.string.text_result)  + String.valueOf(immc) + res.getString(R.string.text_result_obesidade);
+            }
+            else
+            if(immc >= 25){
+                result = res.getString(R.string.text_result)  + String.valueOf(immc) + res.getString(R.string.text_result_acima);
+            }
+            else
+            if(immc >= 18.5){
+                result = res.getString(R.string.text_result)  + String.valueOf(immc) + res.getString(R.string.text_result_normal);
+            }
+            else
+            if(immc >= 17){
+                result = res.getString(R.string.text_result)  + String.valueOf(immc) + res.getString(R.string.text_result_abaixo);
+            }
+            else
+            if(immc < 17 ){
+                result = res.getString(R.string.text_result)  + String.valueOf(immc) + res.getString(R.string.text_result_abaixo_normal);
+            }
+        }catch (Exception e){
+            e.getMessage().toString();
+        }
+        return result;
     }
 }
