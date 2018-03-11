@@ -42,10 +42,6 @@ public class ApontamentoDao extends Apontamento implements DAO<Apontamento>{
         this.context = context;
     }
 
-    public ApontamentoDao(String apontamento, String dataApontamento, String status, String feature) {
-        super(apontamento, dataApontamento, status, feature);
-    }
-
     public long getIdDao() {
         return _id;
     }
@@ -218,6 +214,7 @@ public class ApontamentoDao extends Apontamento implements DAO<Apontamento>{
             db = this.daoModelPresenter.getInternalDB();
             String[] args = { login, senha};
             Cursor cursor = db.query(context.getString(R.string.dsNameTblUser), null, "dsLogin=? AND dsSenha=?"  , args, null,null,null);
+            int qtde = cursor.getCount();
             if(cursor.getCount()>0){
                 cursor.moveToFirst();
                 String dsLogin = cursor.getString(cursor.getColumnIndex(context.getString(R.string.dsLoginTblUser)));
@@ -242,6 +239,7 @@ public class ApontamentoDao extends Apontamento implements DAO<Apontamento>{
             db = this.daoModelPresenter.getInternalDB();
             String[] args = { String.valueOf(idUsuarioLogado)};
             Cursor cursor = db.query(context.getString(R.string.dsNameTblUserAptmento), null, "idUsuario=?"  , args, null,null,"idApontamento desc");
+            int qtde = cursor.getCount();
             if(cursor.getCount()>0){
                 cursor.moveToFirst();
                 arrayReturn = new JSONArray(){};
@@ -254,6 +252,8 @@ public class ApontamentoDao extends Apontamento implements DAO<Apontamento>{
                     String dsDataHora = cursor.getString(cursor.getColumnIndex(context.getString(R.string.dsDataTimeTblUserAptmento)));
                     String dsAltura = cursor.getString(cursor.getColumnIndex(context.getString(R.string.dsAlturaTblUserAptmento)));
                     String dsPeso = cursor.getString(cursor.getColumnIndex(context.getString(R.string.dsPesoTblUserAptmento)));
+                    int imc = cursor.getInt(cursor.getColumnIndex(context.getString(R.string.imcTblUserAptmento)));
+                    String dsStatus = cursor.getString(cursor.getColumnIndex(context.getString(R.string.dsStatusTblUserAptmento)));
                     int idUsuario  = cursor.getInt(cursor.getColumnIndex(context.getString(R.string.idTblUser)));
 
                     jsonObject.put("idApontamento",cursor.getInt(cursor.getColumnIndex(context.getString(R.string.idTblUserAptmento))));
@@ -261,6 +261,8 @@ public class ApontamentoDao extends Apontamento implements DAO<Apontamento>{
                     jsonObject.put("dsDataHora",cursor.getString(cursor.getColumnIndex(context.getString(R.string.dsDataTimeTblUserAptmento))));
                     jsonObject.put("vlAltura",cursor.getString(cursor.getColumnIndex(context.getString(R.string.dsAlturaTblUserAptmento))));
                     jsonObject.put("vlPeso",cursor.getString(cursor.getColumnIndex(context.getString(R.string.dsPesoTblUserAptmento))));
+                    jsonObject.put("imc",cursor.getString(cursor.getColumnIndex(context.getString(R.string.imcTblUserAptmento))));
+                    jsonObject.put("dsStatus",cursor.getString(cursor.getColumnIndex(context.getString(R.string.dsStatusTblUserAptmento))));
                     jsonObject.put("idUsuario",cursor.getInt(cursor.getColumnIndex(context.getString(R.string.idTblUser))));
                     cursor.moveToNext();
                     arrayReturn.put(jsonObject);

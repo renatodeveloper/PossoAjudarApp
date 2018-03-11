@@ -33,7 +33,6 @@ public class UsuarioDao extends Usuario implements DAO<Usuario> {
     Context context;
 
     //default construction
-
     public UsuarioDao(Context context){
         this.daoModelPresenter = new DaoModelPresenter(context);
         this.context = context;
@@ -147,6 +146,7 @@ public class UsuarioDao extends Usuario implements DAO<Usuario> {
             if(db!= null && object != null && object.length()>0){
                 String[] args = { object.getString(this.context.getString(R.string.dsGeneric_A)), object.getString(context.getString(R.string.dsGeneric_B))};
                 Cursor cursor = db.query(this.context.getString(R.string.dsNameTblUser), null, "dsLogin=? AND dsSenha=?", args, null,null,null);
+                int qtde = cursor.getCount();
                 if(cursor.getCount()>0){
                     cursor.moveToFirst();
                     String dsLogin = cursor.getString(cursor.getColumnIndex(context.getString(R.string.dsLoginTblUser)));

@@ -83,6 +83,7 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
                                     contexto.getString(R.string.sqlCreateTableUsuario),
                                     contexto.getString(R.string.sqlCreateTableApontamento),
 
+                contexto.getString(R.string.sqlCargaRedeSocialPossoAjudar),
                 contexto.getString(R.string.sqlCargaRedeSocialFacebook),
                 contexto.getString(R.string.sqlCargaRedeSocialInstagram),
                 contexto.getString(R.string.sqlCargaRedeSocialLinkedIn),

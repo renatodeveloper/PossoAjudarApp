@@ -7,86 +7,74 @@ import com.possoajudar.app.R;
  */
 
 public class Apontamento {
-    public String ds;
-    public String subDs;
-    public int id;
-    public int image;
+    int idApontamento;
+    int dataHora;
+    String dsDataHora;
+    String vlPeso;
+    String vlAltura;
+    float imc;
+    String dsStatus;
+    int idUsuario;
 
-    //**************************************************************************************
-    public String apontamento;
-    String dataApontamento;
-    String status;
-    String feature;
-
+    public Apontamento(int idApontamento, int dataHora, String dsDataHora, String vlPeso, String vlAltura, float imc, String dsStatus, int idUsuario){
+        this.idApontamento = idApontamento;
+        this.dataHora = dataHora;
+        this.dsDataHora = dsDataHora;
+        this.vlPeso = vlPeso;
+        this.vlAltura = vlAltura;
+        this.imc = imc;
+        this.dsStatus = dsStatus;
+        this.idUsuario = idUsuario;
+    }
     public Apontamento(){
 
     }
 
-    public Apontamento(String apontamento, String dataApontamento, String status, String feature ) {
-        this.apontamento=apontamento;
-        this.dataApontamento=dataApontamento;
-        this.status=status;
-        this.feature=feature;
-
+    public int getDataHora() {
+        return dataHora;
     }
 
-
-    public String getName() {
-        return apontamento;
+    public void setDataHora(int dataHora) {
+        this.dataHora = dataHora;
     }
 
-
-    public String getType() {
-        return dataApontamento;
+    public String getDsDataHora() {
+        return dsDataHora;
     }
 
-
-    public String getVersion_number() {
-        return status;
+    public void setDsDataHora(String dsDataHora) {
+        this.dsDataHora = dsDataHora;
     }
 
-
-    public String getFeature() {
-        return feature;
+    public String getVlPeso() {
+        return vlPeso;
     }
 
-    //**************************************************************************************
-
-
-    public Apontamento(String ds, String subDs, int id, int image) {
-        this.ds = ds;
-        this.subDs = subDs;
-        this.id = id;
-        this.image=image;
+    public void setVlPeso(String vlPeso) {
+        this.vlPeso = vlPeso;
     }
 
-    public Apontamento(String ds, String subDs){
-        this.ds = ds;
-        this.subDs = subDs;
+    public String getVlAltura() {
+        return vlAltura;
     }
 
-    public String getDs() {
-        return ds;
+    public void setVlAltura(String vlAltura) {
+        this.vlAltura = vlAltura;
+    }
+    public float getImc() {
+        return imc;
+    }
+    public void setImc(float imc) {
+        this.imc = imc;
     }
 
-    public String getSubDs() {
-        return subDs;
+    public String getDsStatus() {
+        return dsStatus;
     }
 
-    public int getImage() {
-        return image;
+    public void setDsStatus(String dsStatus) {
+        this.dsStatus = dsStatus;
     }
-
-    public int getId() {
-        return id;
-    }
-
-
-    @Override
-    public String toString() {
-        return  ds + " - " + subDs;
-    }
-
 
     /*
     Metodos mock para Implementação RecyclerView
