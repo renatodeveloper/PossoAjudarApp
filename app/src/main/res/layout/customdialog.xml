@@ -51,7 +51,8 @@
                 android:textSize="@dimen/dimen12dp"
                 android:hint="@string/dsAltura"
                 android:inputType="numberDecimal"
-                android:layout_marginRight="@dimen/dimen15dip"/>
+                android:layout_marginRight="@dimen/dimen15dip"
+                android:maxLength="4"/>
 
 
             <EditText
@@ -64,7 +65,8 @@
                 android:textSize="@dimen/dimen12dp"
                 android:hint="@string/dsPeso"
                 android:inputType="numberDecimal"
-                android:layout_marginRight="@dimen/dimen15dip"/>
+                android:layout_marginRight="@dimen/dimen15dip"
+                android:maxLength="3"/>
 
         </LinearLayout>
 

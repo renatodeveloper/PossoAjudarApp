@@ -95,7 +95,7 @@
     </string>
 
     <string name="sqlCreateTableApontamento">
-        CREATE TABLE Apontamento (idApontamento INTEGER PRIMARY KEY AUTOINCREMENT, dataHora INTEGER, dsDataHora TEXT, vlPeso FLOAT, vlAltura FLOAT, idUsuario INTEGER, FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario));
+        CREATE TABLE Apontamento (idApontamento INTEGER PRIMARY KEY AUTOINCREMENT, dataHora INTEGER, dsDataHora TEXT, vlPeso FLOAT, vlAltura FLOAT, imc FLOAT, dsStatus TEXT, dsGPS TEXT, latitude TEXT, longitude TEXT, idUsuario INTEGER, FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario));
     </string>
 
     <string name="sqlInsertTableConfService">
@@ -103,6 +103,9 @@
     </string>
 
     <!-- carga rede social-->
+
+    <string name="idTblRedeSocial">idRedeSocial</string>
+    <string name="sqlCargaRedeSocialPossoAjudar">INSERT INTO RedeSocial(dsRedeSocial) values  ("'"PossoAjudar?"'");</string>
     <string name="sqlCargaRedeSocialFacebook">INSERT INTO RedeSocial(dsRedeSocial) values  ("'"Facebook"'");</string>
     <string name="sqlCargaRedeSocialInstagram">INSERT INTO RedeSocial(dsRedeSocial) values ("'"Instagram"'");</string>
     <string name="sqlCargaRedeSocialLinkedIn">INSERT INTO RedeSocial(dsRedeSocial) values ("'"LinkedIn"'");</string>
@@ -141,6 +144,8 @@
     <string name="dsGeneric_B">dsGeneric_B</string>
     <string name="dsGeneric_C">dsGeneric_C</string>
     <string name="dsGeneric_D">dsGeneric_D</string>
+    <string name="dsGeneric_E">dsGeneric_E</string>
+    <string name="dsGeneric_F">dsGeneric_F</string>
 
     <!-- tabelas -->
     <string name="idTblUserAptmento">idApontamento</string>
@@ -148,8 +153,12 @@
     <string name="dsAlturaTblUserAptmento">vlAltura</string>
     <string name="dsPesoTblUserAptmento">vlPeso</string>
     <string name="dsDataTimeTblUserAptmento">dsDataHora</string>
+    <string name="imcTblUserAptmento">imc</string>
+    <string name="dsStatusTblUserAptmento">dsStatus</string>
     <string name="dataTimeTblUserAptmento">dataHora</string>
-
+    <string name="dsGPD">dsGPS</string>
+    <string name="dsLatitude">latitude</string>
+    <string name="dsLongitude">longitude</string>
 
     <string name="errorDbCreateMemoriaInterna">NÃO FOI POSSÍVEL CRIAR O BANCO NA MEMÓRIA INTERNA. Error em: MySQLiteOpenHelper</string>
     <string name="errorDbWriteMemoriaInterna">NÃO FOI POSSÍVEL ESCREVER O BANCO NA MEMÓRIA INTERNA. Error em: getWritableDatabase</string>
@@ -203,7 +212,7 @@
 
 
     <!-- calculando o IMC -->
-    <string name="text_result">Seu IMC é de: </string>
+    <string name="text_result">IMC é de : </string>
     <string name="text_result_morbido">, sua situação na tabela é de Obesidade Mórbida. Procure um médico!</string>
     <string name="text_result_severo">, sua situação na tabela é de Obesidade Severa. Procure um médico!</string>
     <string name="text_result_obesidade">, sua situação na tabela é de Obesidade. Procure um médico!</string>
