@@ -254,6 +254,8 @@ public class ActivityUtil {
             result.put(context.getString(R.string.dsGeneric_B), params[1]);
             result.put(context.getString(R.string.dsGeneric_C), params[2]);
             result.put(context.getString(R.string.dsGeneric_D), params[3]);
+            result.put(context.getString(R.string.dsGeneric_E), params[4]);
+            result.put(context.getString(R.string.dsGeneric_F), params[5]);
         }catch (Exception e){
             e.getMessage().toString();
         }
@@ -488,7 +490,7 @@ Guarda status do usuário logado
     /* DEFINE
 Guarda status do apontamento do usuário
 */
-    public void definePrefUserLogadoApontamento(Context context, GpsService gps, JSONObject jsonObject) {
+    public void definePrefUserLogadoApontamentoGPS(Context context, GpsService gps, JSONObject jsonObject) {
         try{
             if(gps.canGetLocation()){
 
@@ -525,16 +527,22 @@ Guarda status do apontamento do usuário
         }
     }
 
-    public JSONObject recuperaPrefUserLogadoApontamento(Context context){
+    public JSONObject recuperaPrefUserLogadoApontamentoGPS(Context context){
         JSONObject result = new JSONObject();
         try{
 
             SharedPreferences mPrefs = context.getSharedPreferences(context.getString(R.string.prefArq_userLogadoApontamento), Context.MODE_PRIVATE);
             String status = mPrefs.getString(context.getString(R.string.prefStatus_userLogadoApontamento), "");
             if(status.equals("true")){
+                result.put(context.getString(R.string.prefJSON_userLogado), mPrefs.getString(context.getString(R.string.prefJSON_userLogado), ""));
                 result.put(context.getString(R.string.dsAlturaTblUserAptmento), mPrefs.getString(context.getString(R.string.dsAlturaTblUserAptmento), ""));
                 result.put(context.getString(R.string.dsPesoTblUserAptmento), mPrefs.getString(context.getString(R.string.dsPesoTblUserAptmento), ""));
+                result.put(context.getString(R.string.prefStatus_userLogadoApontamento), mPrefs.getString(context.getString(R.string.prefStatus_userLogadoApontamento), ""));
                 result.put(context.getString(R.string.prefDataTime_userLogado), mPrefs.getString(context.getString(R.string.prefDataTime_userLogado), ""));
+                result.put(context.getString(R.string.prefLatitude_userLogado), mPrefs.getString(context.getString(R.string.prefLatitude_userLogado), ""));
+                result.put(context.getString(R.string.prefLongitude_userLogado), mPrefs.getString(context.getString(R.string.prefLongitude_userLogado), ""));
+                result.put(context.getString(R.string.prefAltitude_userLogado), mPrefs.getString(context.getString(R.string.prefAltitude_userLogado), ""));
+                result.put(context.getString(R.string.prefSpeed_userLogado), mPrefs.getString(context.getString(R.string.prefSpeed_userLogado), ""));
                 return result;
             }
         }catch (Exception e){
@@ -544,7 +552,7 @@ Guarda status do apontamento do usuário
     }
 
     //LIMPA ApontamentoResponse
-    public void limpaPrefUserLogadoApontamento(Context context) {
+    public void limpaPrefUserLogadoApontamentoGPS(Context context) {
         try{
             SharedPreferences mPrefs = context.getSharedPreferences(context.getString(R.string.prefArq_userLogadoApontamento), context.MODE_PRIVATE);
             SharedPreferences.Editor editor = mPrefs.edit();
@@ -647,7 +655,7 @@ Guarda status do apontamento do usuário
             activityUtil = new ActivityUtil();
 
             activityUtil.limpaPrefUserLogado(context);
-            activityUtil.limpaPrefUserLogadoApontamento(context);
+            activityUtil.limpaPrefUserLogadoApontamentoGPS(context);
             activityUtil.limpaPrefFormLogin(context);
             activityUtil.limpaPrefConfServ(context);
 
@@ -671,37 +679,46 @@ Guarda status do apontamento do usuário
     /*
         Calcula o Índice de massa corporal (IMC)
      */
-    public String getIMC(Context context, int altura, int peso){
-        Resources res = context.getResources();
-        int immc = 0;
-        String result = "não encontrado...";
+    public double  getIMC(double altura, double peso){
+        double  immc = 0;
         try{
-            immc = peso * (altura * altura);
-            if(immc >= 40){
-                result = res.getString(R.string.text_result) + String.valueOf(immc) + res.getString(R.string.text_result_morbido);
+            immc = peso / (altura * altura);
+        }catch (Exception e){
+            e.getMessage().toString();
+        }
+        return immc;
+    }
+
+    public String getDsStatuImc(Context context, double imc){
+        Resources res = context.getResources();
+        String result = "não encontrado...";
+        int imcx = ((int) imc);
+        try{
+            if(imc >= 40){
+                result = res.getString(R.string.text_result) + String.valueOf(((int) imc)) + res.getString(R.string.text_result_morbido);
             }else
-            if(immc >= 35){
-                result = res.getString(R.string.text_result)  + String.valueOf(immc) + res.getString(R.string.text_result_severo);
+            if(imc >= 35){
+                result = res.getString(R.string.text_result)  + String.valueOf(((int) imc)) + res.getString(R.string.text_result_severo);
             }
             else
-            if(immc >= 30){
-                result = res.getString(R.string.text_result)  + String.valueOf(immc) + res.getString(R.string.text_result_obesidade);
+            if(imc >= 30){
+                result = res.getString(R.string.text_result)  + String.valueOf(((int) imc)) + res.getString(R.string.text_result_obesidade);
             }
             else
-            if(immc >= 25){
-                result = res.getString(R.string.text_result)  + String.valueOf(immc) + res.getString(R.string.text_result_acima);
+            if(imc >= 25){
+                result = res.getString(R.string.text_result)  + String.valueOf(((int) imc)) + res.getString(R.string.text_result_acima);
             }
             else
-            if(immc >= 18.5){
-                result = res.getString(R.string.text_result)  + String.valueOf(immc) + res.getString(R.string.text_result_normal);
+            if(imc >= 18.5){
+                result = res.getString(R.string.text_result)  + String.valueOf(((int) imc)) + res.getString(R.string.text_result_normal);
             }
             else
-            if(immc >= 17){
-                result = res.getString(R.string.text_result)  + String.valueOf(immc) + res.getString(R.string.text_result_abaixo);
+            if(imc >= 17){
+                result = res.getString(R.string.text_result)  + String.valueOf(((int) imc)) + res.getString(R.string.text_result_abaixo);
             }
             else
-            if(immc < 17 ){
-                result = res.getString(R.string.text_result)  + String.valueOf(immc) + res.getString(R.string.text_result_abaixo_normal);
+            if(imc < 17 ){
+                result = res.getString(R.string.text_result)  + String.valueOf(((int) imc)) + res.getString(R.string.text_result_abaixo_normal);
             }
         }catch (Exception e){
             e.getMessage().toString();
