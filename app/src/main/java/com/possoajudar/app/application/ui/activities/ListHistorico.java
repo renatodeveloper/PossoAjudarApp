@@ -63,12 +63,14 @@ public class ListHistorico extends Activity {
 
          data = new ArrayList<Apontamento>();
          for (int i = 0; i < Apontamento.getArrayDs().length; i++) {
-         data.add(new Apontamento(
+             /*
+                data.add(new Apontamento(
                  Apontamento.getArrayDs()[i],
                  Apontamento.getArraySubDs()[i],
                  Apontamento.getArrayId()[i],
                  Apontamento.getArrayImgStatus()[i]
          ));
+              */
          }
 
          removedItems = new ArrayList<Integer>();

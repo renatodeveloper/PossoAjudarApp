@@ -139,7 +139,7 @@ public class ViewSplash extends Activity implements IDaoModel {
     @Override
     public void showSucessInternoDB() {
         try{
-            Toast.makeText(this, getString(R.string.sucessDbInterno), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, getString(R.string.sucessDbInterno), Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this, Login.class));
         }catch (Exception e){
             e.getMessage().toString();
@@ -148,6 +148,6 @@ public class ViewSplash extends Activity implements IDaoModel {
 
     @Override
     public void showSucessExternoDB() {
-        Toast.makeText(this, R.string.sucessDbExterno, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, R.string.sucessDbExterno, Toast.LENGTH_SHORT).show();
     }
 }
