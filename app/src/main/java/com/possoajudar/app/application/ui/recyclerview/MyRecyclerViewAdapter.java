@@ -58,9 +58,9 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         TextView textViewVersion = holder.textViewSubDs;
         ImageView imageView = holder.imageViewIcon;
 
-        textViewName.setText(dataGrupoSet.get(listPosition).getDs());
-        textViewVersion.setText(dataGrupoSet.get(listPosition).getSubDs());
-        imageView.setImageResource(dataGrupoSet.get(listPosition).getImage());
+        textViewName.setText(dataGrupoSet.get(listPosition).getVlPeso());
+        textViewVersion.setText(dataGrupoSet.get(listPosition).getVlAltura());
+        imageView.setImageResource(dataGrupoSet.get(listPosition).getDataHora());
     }
 
     @Override

@@ -19,7 +19,7 @@ public class AppModule {
 
     @Provides
     public Apontamento providesApontamento(){
-        return  new Apontamento("27-07-2017 as 14:47:02", "1.70 | 71 kg");
+        return  new Apontamento();
     }
 
 }

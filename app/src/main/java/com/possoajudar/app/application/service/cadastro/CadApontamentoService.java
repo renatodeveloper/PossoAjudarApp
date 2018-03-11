@@ -37,10 +37,15 @@ public class CadApontamentoService {
             apontamentoDao = new ApontamentoDao(this.context);
             if(jsonValueApontamento != null && jsonValueApontamento.length()>0){
                 ContentValues values = new ContentValues();
-                values.put(context.getString(R.string.dsAlturaTblUserAptmento), jsonValueApontamento.getString(context.getString(R.string.dsGeneric_A)));
-                values.put(context.getString(R.string.dsPesoTblUserAptmento), jsonValueApontamento.getString(context.getString(R.string.dsGeneric_B)));
-                values.put(context.getString(R.string.dataTimeTblUserAptmento), jsonValueApontamento.getString(context.getString(R.string.dsGeneric_C)));
-                values.put(context.getString(R.string.dsDataTimeTblUserAptmento),   jsonValueApontamento.getString(context.getString(R.string.dsGeneric_D)));
+                values.put(context.getString(R.string.dsAlturaTblUserAptmento), jsonValueApontamento.getString(context.getString(R.string.dsAlturaTblUserAptmento)));
+                values.put(context.getString(R.string.dsPesoTblUserAptmento), jsonValueApontamento.getString(context.getString(R.string.dsPesoTblUserAptmento)));
+                values.put(context.getString(R.string.dataTimeTblUserAptmento), jsonValueApontamento.getString(context.getString(R.string.dataTimeTblUserAptmento)));
+                values.put(context.getString(R.string.dsDataTimeTblUserAptmento),   jsonValueApontamento.getString(context.getString(R.string.dsDataTimeTblUserAptmento)));
+                values.put(context.getString(R.string.imcTblUserAptmento),   jsonValueApontamento.getString(context.getString(R.string.imcTblUserAptmento)));
+                values.put(context.getString(R.string.dsStatusTblUserAptmento),   jsonValueApontamento.getString(context.getString(R.string.dsStatusTblUserAptmento)));
+                values.put(context.getString(R.string.dsGPD),   jsonValueApontamento.getString(context.getString(R.string.dsGPD)));
+                values.put(context.getString(R.string.dsLatitude),   jsonValueApontamento.getString(context.getString(R.string.dsLatitude)));
+                values.put(context.getString(R.string.dsLongitude),   jsonValueApontamento.getString(context.getString(R.string.dsLongitude)));
 
                 int idUsuario = apontamentoDao.getIdUserPreferences(context);
                 values.put(context.getString(R.string.idTblUser),   idUsuario);

@@ -30,11 +30,12 @@ public class CustomAdapter  extends ArrayAdapter<Apontamento> implements View.On
 
     // View lookup cache
     private static class ViewHolder {
-        TextView txtApontamento;
-        TextView txtDataApontamento;
-        TextView txtStatus;
+        TextView dsAltura;
+        TextView dsPeso;
+        TextView dsHora;
+        TextView dsStatus;
         ImageView imgStatus;
-        ImageView propaganda;
+        ImageView imgPropaganda;
     }
 
     public CustomAdapter(ArrayList<Apontamento> data, Context context) {
@@ -59,7 +60,7 @@ public class CustomAdapter  extends ArrayAdapter<Apontamento> implements View.On
         Apontamento dataModel=(Apontamento)object;
         switch (v.getId()) {
             case R.id.item_info:
-                Snackbar.make(v, "Release date " +dataModel.getFeature(), Snackbar.LENGTH_LONG)
+                Snackbar.make(v, "Release date " +dataModel.getVlPeso(), Snackbar.LENGTH_LONG)
                         .setAction("No action", null).show();
                 break;
         }
@@ -80,11 +81,12 @@ public class CustomAdapter  extends ArrayAdapter<Apontamento> implements View.On
             viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.list_row_apontamento, parent, false);//row_item
-            viewHolder.txtApontamento = (TextView) convertView.findViewById(R.id.textViewApontamento);
-            viewHolder.txtDataApontamento = (TextView) convertView.findViewById(R.id.textViewDataApontamento);
-            viewHolder.txtStatus = (TextView) convertView.findViewById(R.id.textViewStatus);
+            viewHolder.dsAltura = (TextView) convertView.findViewById(R.id.textViewAltura);
+            viewHolder.dsPeso = (TextView) convertView.findViewById(R.id.textViewPeso);
+            viewHolder.dsHora = (TextView) convertView.findViewById(R.id.textViewHora);
+            //viewHolder.dsStatus = (TextView) convertView.findViewById(R.id.textViewStatus);
             viewHolder.imgStatus = (ImageView) convertView.findViewById(R.id.imageViewStatus);
-            viewHolder.propaganda = (ImageView) convertView.findViewById(R.id.img_propaganda);
+            viewHolder.imgPropaganda = (ImageView) convertView.findViewById(R.id.imageViewPropaganda);
 
             result=convertView;
 
@@ -98,24 +100,50 @@ public class CustomAdapter  extends ArrayAdapter<Apontamento> implements View.On
         result.startAnimation(animation);
         lastPosition = position;
 
-        viewHolder.txtApontamento.setText(dataModel.getName());
-        viewHolder.txtDataApontamento.setText(dataModel.getType());
-        viewHolder.txtStatus.setText(dataModel.getVersion_number());
+        viewHolder.dsAltura.setText("Altura: " + dataModel.getVlAltura());
+        viewHolder.dsPeso.setText("Peso: " + dataModel.getVlPeso());
+        viewHolder.dsHora.setText(dataModel.getDsDataHora());
+        //viewHolder.dsStatus.setText(dataModel.getDsStatus());
 
-        if(dataModel.apontamento.length()== 22){//Peso: 66 - Altura: 179
-            viewHolder.propaganda.setImageResource(R.drawable.balance);
-            viewHolder.txtStatus.setTextColor(Color.GRAY);
-            viewHolder.txtStatus.setText("Leia-me");
-            viewHolder.imgStatus.setImageResource(R.drawable.message_alert);
-        }else{
-            viewHolder.propaganda.setImageResource(R.drawable.clean);
-            viewHolder.txtStatus.setTextColor(Color.GREEN);
-            viewHolder.txtStatus.setText("No peso");
-            viewHolder.imgStatus.setImageResource(R.drawable.clock);
+        if(dataModel.getImc() >= 40){
+                viewHolder.imgStatus.setImageResource(R.mipmap.flag_red);
+                viewHolder.dsPeso.setTextColor(R.color.color_red);
+        }else
+        if(dataModel.getImc() >= 35){
+            viewHolder.imgStatus.setImageResource(R.mipmap.flag_red);
+            viewHolder.dsPeso.setTextColor(R.color.color_red);
+        }
+        else
+        if(dataModel.getImc() >= 30){
+            viewHolder.imgStatus.setImageResource(R.mipmap.flag_red);
+            viewHolder.dsPeso.setTextColor(R.color.color_red);
+        }
+        else
+        if(dataModel.getImc() >= 25){
+            viewHolder.imgStatus.setImageResource(R.mipmap.flag_orange);
+        }
+        else
+        if(dataModel.getImc() >= 18.5){
+            viewHolder.imgStatus.setImageResource(R.mipmap.flag_green);
+        }
+        else
+        if(dataModel.getImc() >= 17){
+            viewHolder.imgStatus.setImageResource(R.mipmap.flag_red);
+            viewHolder.dsPeso.setTextColor(R.color.color_red);
+        }
+        else
+        if(dataModel.getImc() < 17 ){
+            viewHolder.imgStatus.setImageResource(R.mipmap.flag_red);
+            viewHolder.dsPeso.setTextColor(R.color.color_red);
         }
 
-        viewHolder.propaganda.setOnClickListener(this);
-        viewHolder.propaganda.setTag(position);
+        viewHolder.imgPropaganda.setImageResource(R.mipmap.shopping);
+        viewHolder.imgPropaganda.setOnClickListener(this);
+        viewHolder.imgPropaganda.setTag(position);
+
+        viewHolder.imgStatus.setOnClickListener(this);
+        viewHolder.imgStatus.setTag(position);
+
         // Return the completed view to render on screen
         return convertView;
     }

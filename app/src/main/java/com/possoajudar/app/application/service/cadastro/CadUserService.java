@@ -39,8 +39,10 @@ public class CadUserService {
             if(! usuarioDao.check(jsonValue)){
 
                 ContentValues values = new ContentValues();
-                values.put(context.getString(R.string.idConfServico), jsonValue.getString(context.getString(R.string.dsGeneric_A)));
-                values.put(context.getString(R.string.dsLoginTblUser), jsonValue.getString(context.getString(R.string.dsGeneric_B)));
+                values.put(context.getString(R.string.dsLoginTblUser), jsonValue.getString(context.getString(R.string.dsGeneric_A)));
+                values.put(context.getString(R.string.dsSenhaTblUser), jsonValue.getString(context.getString(R.string.dsGeneric_B)));
+                values.put(context.getString(R.string.idTblServico), 1);
+                values.put(context.getString(R.string.idTblRedeSocial), 1);
 
                return usuarioDao.save(values);
             }
