@@ -620,8 +620,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 public void onClick(View view) {
                     try{
                         if (editTextAltura.getText().toString().length()>0 && editTextPeso.getText().toString().length()>0) {
-
-                            //define preferences apontamento com dados da altura, peso e GPS
+                            /*
+                            define preferences apontamento com dados da altura, peso e GPS
+                            COLAR NO CAMPO PESQUISA google maps: 40.7876165, -73.9531382   * OBEDECER A SEQUENCIA
+                             */
                             gps = new GpsService(getApplicationContext());
                             JSONObject value = activityUtil.getValeuJson(getApplicationContext(),editTextAltura.getText().toString(), editTextPeso.getText().toString());
                             activityUtil.definePrefUserLogadoApontamentoGPS(getApplicationContext(), gps, value);
@@ -645,6 +647,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 public void onClick(View view)
                 {
                     editTextAltura.setText("");
+                    editTextAltura.setFocusable(true);
                     editTextPeso.setText("");
                     //customDialog.dismiss();
                     //Toast.makeText(MainActivity.this, R.string.clean, Toast.LENGTH_SHORT).show();
