@@ -72,11 +72,11 @@ public class DaoModelPresenter {
             if( this.service.createdbInterno()){
                 if( this.service.getdbInterno() != null){
                     if( this.service.exportInternoToExternoDB()){
-                        if( this.service.getdbExterno() != null){
+                        //if( this.service.getdbExterno() != null){//cria db externo
                             this.viewIDaoModel.showSucessInternoDB();
-                        }else{
-                            this.viewIDaoModel.showErrorExternoDB(R.string.errorDbCreateMemoriaExterna);
-                        }
+                        //}else{
+                            //this.viewIDaoModel.showErrorExternoDB(R.string.errorDbCreateMemoriaExterna);
+                        //}
                     }else{
                         this.viewIDaoModel.showErrorInternoDB(R.string.errorDbCreateMemoriaInterna);
                     }
