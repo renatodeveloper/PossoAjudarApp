@@ -166,7 +166,7 @@ public class DaoModelService {
                 FileChannel destino = null;
 
                 //String dbPath = "/user/0/com.possoajudar.app.debug/databases/AJUDAR.db"; //check this path!!!
-                String dbPath_backup = "AJUDAR_db.db";
+                String dbPath_backup = "Copy_AJUDAR.db";
 
                 //File current_db = new File(data, dbPath);
                 File current_db = new File(realPath);
