@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -27,6 +28,7 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,9 +44,11 @@ import com.possoajudar.app.application.service.ApplicationService;
 import com.possoajudar.app.application.service.ApplicationServiceCallback;
 import com.possoajudar.app.application.service.ApplicationServiceError;
 import com.possoajudar.app.application.service.ICadApontamentoView;
+import com.possoajudar.app.application.service.ICadUserView;
 import com.possoajudar.app.application.service.ServicoApontamento;
 import com.possoajudar.app.application.service.cadastro.CadApontamentoPresenter;
 import com.possoajudar.app.application.service.cadastro.CadApontamentoService;
+import com.possoajudar.app.application.service.cadastro.CadUserPresenter;
 import com.possoajudar.app.application.service.gps.GpsService;
 import com.possoajudar.app.application.ui.adapter.CustomAdapter;
 import com.possoajudar.app.domain.model.Apontamento;
@@ -67,7 +71,7 @@ import java.util.TimerTask;
 import butterknife.BindString;
 import retrofit.Response;
 
-public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, ICadApontamentoView, ApplicationServiceCallback<MoviesResponse> {
+public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, ICadUserView, ICadApontamentoView, ApplicationServiceCallback<MoviesResponse> {
 
     public ActivityUtil activityUtil;
     GpsService gps;
@@ -85,6 +89,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     ListView listView;
     private static CustomAdapter adapter;
 
+    ImageView imageViewNavPhoto;
     TextView textViewNavNome;
     TextView textViewNavEmail;
 
@@ -94,6 +99,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     ProgressDialog progressDialog;
     private CadApontamentoPresenter cadApontamentoPresenter;
+
+    private CadUserPresenter cadUserPresenter;
 
     EditText editTextAltura = null;
     EditText editTextPeso = null;
@@ -182,6 +189,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         View header= navigationView.getHeaderView(0);
+        imageViewNavPhoto  = (ImageView) header.findViewById(R.id.imageViewNavPhoto);
         textViewNavNome  = (TextView)header.findViewById(R.id.textViewNavNome);
         textViewNavEmail = (TextView)header.findViewById(R.id.textViewNavEmail);
 
@@ -242,7 +250,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             try{
                 //1: exibir dados do usuário logado
                 JSONObject objectU = activityUtil.recuperaPrefUserLogado(MainActivity.this);
-                String senha  = objectU.getString(getString(R.string.dsSenhaTblUser));
+                cadUserPresenter = new CadUserPresenter(this, this);
+
+                cadUserPresenter.getByteArrayPhoto();
+
                 textViewNavNome.setText(objectU.getString(getString(R.string.dsLoginTblUser)));
                 textViewNavEmail.setText(objectU.getString(getString(R.string.dsLoginTblUser)));
 
@@ -715,28 +726,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         return false;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     /*
      Método older
      public void montaListApontamento(JSONObject objectA){
@@ -804,5 +793,59 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }catch (Exception e){
             e.getMessage().toString();
         }
+    }
+
+    @Override
+    public String getCadUserEmail() {
+        return null;
+    }
+
+    @Override
+    public String getCadUserSenha() {
+        return null;
+    }
+
+    @Override
+    public byte[] getByteArrayPhoto() {
+        return new byte[0];
+    }
+
+    @Override
+    public void setByteArrayPhoto(byte[] byteArray) {
+            try{
+                imageViewNavPhoto.setImageBitmap(BitmapFactory.decodeByteArray( byteArray,
+                        0,byteArray.length));
+            }catch (Exception e){
+                e.getMessage().toString();
+            }
+    }
+
+    @Override
+    public void nonePhoto() {
+        try{
+            imageViewNavPhoto.setImageResource(R.mipmap.person);
+        }catch (Exception e){
+            e.getMessage().toString();
+        }
+    }
+
+    @Override
+    public void showCadUserEmailError(int resId) {
+
+    }
+
+    @Override
+    public void showCadUserPasswordError(int resId) {
+
+    }
+
+    @Override
+    public void showCadUserError(int resId) {
+
+    }
+
+    @Override
+    public void startMainActivity() {
+
     }
 }
