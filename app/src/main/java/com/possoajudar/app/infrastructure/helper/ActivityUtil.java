@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.os.Environment;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
@@ -658,7 +659,6 @@ Guarda status do apontamento do usuário
             activityUtil.limpaPrefUserLogadoApontamentoGPS(context);
             activityUtil.limpaPrefFormLogin(context);
             activityUtil.limpaPrefConfServ(context);
-
             //activityUtil.limpaPrefFlagInfoMedidas(context);
         }catch (Exception e){
             e.getMessage().toString();
