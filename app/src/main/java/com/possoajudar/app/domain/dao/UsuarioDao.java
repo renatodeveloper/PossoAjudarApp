@@ -133,6 +133,33 @@ public class UsuarioDao extends Usuario implements DAO<Usuario> {
         return false;
     }
 
+
+
+    public byte[] getBytePhoto(JSONObject object) throws Exception {
+        SQLiteDatabase db = null;
+        try {
+            db = this.daoModelPresenter.getInternalDB();
+            if(db!= null && object != null && object.length()>0){
+                String[] args = { object.getString(this.context.getString(R.string.dsLoginTblUser))};
+                Cursor cursor = db.query(this.context.getString(R.string.dsNameTblUser), null, "dsLogin=?", args, null,null,null);
+                int qtde = cursor.getCount();
+                if(cursor.getCount()>0){
+                    cursor.moveToFirst();
+
+                    byte[] bytePhoto = cursor.getBlob(cursor.getColumnIndex(context.getString(R.string.bytePhoto)));
+                    if(bytePhoto != null && bytePhoto.length>0){
+                        return  bytePhoto;
+                    }
+                }else{
+                    return null;
+                }
+            }
+        }catch (Exception e){
+            e.getMessage().toString();
+        }
+        return null;
+    }
+
     @Override
     public boolean remove() throws Exception {
         return false;
