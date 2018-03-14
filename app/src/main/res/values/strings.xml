@@ -41,6 +41,9 @@
     <string name="prefArq_userLogadoApontamento">prefArq_userLogadoApontamento</string>
     <string name="prefStatus_userLogadoApontamento">status</string>
 
+
+
+
     <!-- mensagens -->
     <string name="str_SimpleDateFormat">MMM dd,yyyy HH:mm</string>
     <string name="str_atencao">Atenção</string>
@@ -55,6 +58,9 @@
     <string name="strLyCadastroDeUsuarioTextViewSenha">Senha:</string>
     <string name="strLyCadastroDeUsuarioEditTextHintSenha">Entre com a senha</string>
     <string name="strLyCadastrofailed">Falha no cadastro do novo usuário!</string>
+    <string name="strLyCadastroDeUsuarioTextViewFoto">Foto:</string>
+
+
 
     <!-- layout screen cadastrar configuração de serviço -->
     <string name="strLyCadastroDeConfServTitle">Cadastro de Configuração de Serviço</string>
@@ -75,7 +81,7 @@
     <string name="prefArqInfoMedidasVal">prefArqInfoMedidasVal</string>
 
     <!-- parametros DAO -->
-    <string name="folder">"/POSSO/"</string>
+    <string name="folder">"/POSSO_DESENV/"</string>
     <string name="folderError">Folder POSSO indisponível</string>
 
     <!-- banco de dados -->
@@ -88,7 +94,7 @@
     </string>
 
     <string name="sqlCreateTableUsuario">
-        CREATE TABLE Usuario (idUsuario INTEGER PRIMARY KEY AUTOINCREMENT, dsLogin TEXT, dsSenha TEXT,
+        CREATE TABLE Usuario (idUsuario INTEGER PRIMARY KEY AUTOINCREMENT, dsLogin TEXT, dsSenha TEXT, namePhoto TEXT, bytePhoto Blob,
        idRedeSocial INTEGER, idServico    INTEGER,
        FOREIGN KEY (idRedeSocial) REFERENCES RedeSocial(idRedeSocial),
        FOREIGN KEY (idServico) REFERENCES Servico(idServico));
@@ -131,6 +137,9 @@
     <string name="dsLoginTblUser">dsLogin</string>
     <string name="dsSenhaTblUser">dsSenha</string>
     <string name="idTblUser">idUsuario</string>
+    <string name="namePhoto">namePhoto</string>
+    <string name="bytePhoto">bytePhoto</string>
+
 
     <!-- tabelas -->
     <string name="dsNameTblServico">Usuario</string>
