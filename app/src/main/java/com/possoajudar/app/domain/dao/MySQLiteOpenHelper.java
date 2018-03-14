@@ -20,6 +20,7 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
     /** Mantém rastreamento do contexto para que possamos carregar SQL */
     private Context contexto = null;
     private static final String DB_NAME = "AJUDAR.db";
+    private static final String DB_NAME_DESENV = "AJUDAR_DESENV.db";
     private static final int DB_VERSION = 1;
     public boolean flCreate = false;
     public boolean flUpgrade = false;
@@ -39,7 +40,7 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
     public MySQLiteOpenHelper(Context context, String FILE_DIR) {
         super(context, Environment.getExternalStorageDirectory()
                 + File.separator + FILE_DIR
-                + File.separator + DB_NAME, null, DB_VERSION);
+                + File.separator + DB_NAME_DESENV, null, DB_VERSION);
         this.contexto = context;
     }
 
