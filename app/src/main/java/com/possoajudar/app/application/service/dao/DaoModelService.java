@@ -151,7 +151,7 @@ public class DaoModelService {
             SQLiteDatabase database = getdbInterno();
             String realPath =  database.getPath().toString();
 
-            String path = Environment.getExternalStorageDirectory().toString() + "/POSSO/";
+            String path = Environment.getExternalStorageDirectory().toString() + "/POSSO_DESENV/";
             File direct = new File(path);
             if (!direct.exists()) {
                 if (!direct.mkdirs()) {
@@ -159,14 +159,14 @@ public class DaoModelService {
                 }
             }
             if(direct.isDirectory()){
-                File sd = new File(Environment.getExternalStorageDirectory(), "/POSSO/");
+                File sd = new File(Environment.getExternalStorageDirectory(), "/POSSO_DESENV/");
                 File data = Environment.getDataDirectory();
 
                 FileChannel origem = null;
                 FileChannel destino = null;
 
                 //String dbPath = "/user/0/com.possoajudar.app.debug/databases/AJUDAR.db"; //check this path!!!
-                String dbPath_backup = "Copy_AJUDAR.db";
+                String dbPath_backup = "AJUDAR_DESENV.db";
 
                 //File current_db = new File(data, dbPath);
                 File current_db = new File(realPath);
