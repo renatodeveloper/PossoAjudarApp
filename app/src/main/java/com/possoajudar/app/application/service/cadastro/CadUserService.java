@@ -1,5 +1,6 @@
 package com.possoajudar.app.application.service.cadastro;
 
+import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -9,7 +10,9 @@ import com.possoajudar.app.R;
 import com.possoajudar.app.application.service.ICadUserView;
 import com.possoajudar.app.application.service.ILoginView;
 import com.possoajudar.app.application.service.dao.DaoModelService;
+import com.possoajudar.app.application.ui.activities.MainActivity;
 import com.possoajudar.app.domain.dao.UsuarioDao;
+import com.possoajudar.app.infrastructure.helper.ActivityUtil;
 
 import org.json.JSONObject;
 
@@ -39,10 +42,12 @@ public class CadUserService {
             if(! usuarioDao.check(jsonValue)){
 
                 ContentValues values = new ContentValues();
-                values.put(context.getString(R.string.dsLoginTblUser), jsonValue.getString(context.getString(R.string.dsGeneric_A)));
-                values.put(context.getString(R.string.dsSenhaTblUser), jsonValue.getString(context.getString(R.string.dsGeneric_B)));
-                values.put(context.getString(R.string.idTblServico), 1);
-                values.put(context.getString(R.string.idTblRedeSocial), 1);
+                values.put(context.getString(R.string.dsLoginTblUser), jsonValue.getString(context.getString(R.string.dsLoginTblUser)));
+                values.put(context.getString(R.string.dsSenhaTblUser), jsonValue.getString(context.getString(R.string.dsSenhaTblUser)));
+                values.put(context.getString(R.string.idTblServico), jsonValue.getString(context.getString(R.string.idTblServico)));
+                values.put(context.getString(R.string.idTblRedeSocial), jsonValue.getString(context.getString(R.string.idTblRedeSocial)));
+                values.put(context.getString(R.string.namePhoto), this.cadUserView.getCadUserEmail()+ "-" + System.currentTimeMillis());
+                values.put(context.getString(R.string.bytePhoto), this.cadUserView.getByteArrayPhoto());
 
                return usuarioDao.save(values);
             }
@@ -50,5 +55,20 @@ public class CadUserService {
             e.getMessage().toString();
         }
         return false;
+    }
+
+    public  byte[] getBytePhoto(){
+        byte[] bytePhoto = null;
+        ActivityUtil util;
+        try{
+            util = new ActivityUtil();
+            JSONObject objectU = util.recuperaPrefUserLogado(this.context);
+
+            usuarioDao = new UsuarioDao(this.context);
+            return usuarioDao.getBytePhoto(objectU);
+        }catch (Exception e){
+            e.getMessage().toString();
+        }
+        return bytePhoto;
     }
 }
