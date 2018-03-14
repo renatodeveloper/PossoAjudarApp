@@ -8,6 +8,11 @@ public interface ICadUserView {
     String getCadUserEmail();
     String getCadUserSenha();
 
+    byte[] getByteArrayPhoto();
+
+    void setByteArrayPhoto(byte[] byteArray);
+    void nonePhoto();
+
     void showCadUserEmailError(int resId);
     void showCadUserPasswordError(int resId);
     void showCadUserError(int resId);
