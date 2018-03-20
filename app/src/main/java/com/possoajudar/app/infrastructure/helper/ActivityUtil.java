@@ -198,12 +198,18 @@ public class ActivityUtil {
     }
 
     public void deleteDatabase(Context context) {
+        ///data/data/com.possoajudar.app.demo.debug/databases/AJUDAR.db
         File data = Environment.getDataDirectory();
-        String dbPath = "/user/0/com.possoajudar.app.debug/databases/AJUDAR.db";
+        String dbPath = "/data/com.possoajudar.app.demo.debug/databases/AJUDAR.db";
+        String dsPathExtra = "/user/0/com.possoajudar.app.demo.debug/databases/AJUDAR.db";//mysmartphone
         File current_db = new File(data, dbPath);
+        File current_dbII = new File(data, dsPathExtra);
         try {
             if(current_db.exists()){
                 current_db.delete();
+            }
+            if(current_dbII.exists()){
+                current_dbII.delete();
             }
         } catch (Exception e) {
             e.getMessage().toString();
@@ -332,8 +338,8 @@ public class ActivityUtil {
             if(gps.canGetLocation()){
 
                 JSONObject json = new JSONObject();
-                json.put(context.getString(R.string.dsLoginTblUser), jsonObject.getString(context.getString(R.string.dsGeneric_A)));
-                json.put(context.getString(R.string.dsSenhaTblUser), jsonObject.getString(context.getString(R.string.dsGeneric_B)));
+                json.put(context.getString(R.string.dsLoginTblUser), jsonObject.getString(context.getString(R.string.dsLoginTblUser)));
+                json.put(context.getString(R.string.dsSenhaTblUser), jsonObject.getString(context.getString(R.string.dsSenhaTblUser)));
                 json.put(context.getString(R.string.prefStatus_userLogado),true);
                 json.put(context.getString(R.string.prefDataTime_userLogado), getDateTime(context));
                 json.put(context.getString(R.string.prefLatitude_userLogado), gps.getLatitude());
@@ -496,8 +502,8 @@ Guarda status do apontamento do usuário
             if(gps.canGetLocation()){
 
                 JSONObject json = new JSONObject();
-                json.put(context.getString(R.string.dsAlturaTblUserAptmento), jsonObject.getString(context.getString(R.string.dsGeneric_A)));
-                json.put(context.getString(R.string.dsPesoTblUserAptmento), jsonObject.getString(context.getString(R.string.dsGeneric_B)));
+                json.put(context.getString(R.string.dsAlturaTblUserAptmento), jsonObject.getString(context.getString(R.string.dsAlturaTblUserAptmento)));
+                json.put(context.getString(R.string.dsPesoTblUserAptmento), jsonObject.getString(context.getString(R.string.dsPesoTblUserAptmento)));
                 json.put(context.getString(R.string.prefStatus_userLogadoApontamento),true);
                 json.put(context.getString(R.string.prefDataTime_userLogado), getDateTime(context));
                 json.put(context.getString(R.string.prefLatitude_userLogado), gps.getLatitude());
