@@ -35,14 +35,26 @@ public class ViewSplash extends Activity implements IDaoModel {
         try {
             activityUtil = new ActivityUtil();
 
+            //activityUtil.deleteDatabase(getApplicationContext());
+
             if (android.os.Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP_MR1) {
-                System.exit(1);
+                //System.exit(1);
                 /*
                 int L = Build.VERSION_CODES.LOLLIPOP; //21
                 String ANDROID_OS = Build.VERSION.RELEASE; //5.1.1
                 int SDK_INT = android.os.Build.VERSION.SDK_INT;  //22
                 int L_M = Build.VERSION_CODES.LOLLIPOP_MR1; //22
                  */
+                daoModelPresenter = new DaoModelPresenter(this, this);
+                        /*
+                Cria banco na memória interna e exporta esse mesmo banco para a memoria externa
+             */
+                daoModelPresenter.createdbInterno();
+                //daoModelPresenter.createdbExterno();
+                //activityUtil.deleteDatabase(getApplicationContext());
+
+                checkUserLogado();
+
             }else{
                 activityUtil.verifyStoragePermissionsAll(ViewSplash.this);
             }
