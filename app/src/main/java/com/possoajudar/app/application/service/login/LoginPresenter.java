@@ -6,6 +6,8 @@ import com.possoajudar.app.R;
 import com.possoajudar.app.application.service.ILoginView;
 import com.possoajudar.app.infrastructure.helper.ActivityUtil;
 
+import org.json.JSONObject;
+
 /**
  * Created by renato on 06/07/2017.
  */
@@ -39,8 +41,11 @@ public class LoginPresenter {
                 view.showPasswordError(R.string.strLyLoginPassword_error);
                 return;
             }
+            JSONObject userJson = new JSONObject();
+            userJson.put(context.getString(R.string.dsLoginTblUser),username);
+            userJson.put(context.getString(R.string.dsSenhaTblUser), password);
 
-            boolean loginSucceeded = service.login(util.getValeuJson(this.context, username, password));
+            boolean loginSucceeded = service.login(userJson);
             if(loginSucceeded){
                 view.startMainActivity();
             }else{
