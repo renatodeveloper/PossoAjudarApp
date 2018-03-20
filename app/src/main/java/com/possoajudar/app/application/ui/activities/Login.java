@@ -19,6 +19,8 @@ import com.possoajudar.app.application.service.login.LoginService;
 import com.possoajudar.app.domain.model.Apontamento;
 import com.possoajudar.app.infrastructure.helper.ActivityUtil;
 
+import org.json.JSONObject;
+
 import javax.inject.Inject;
 
 
@@ -93,7 +95,10 @@ public class Login extends Activity implements ILoginView {
                     gps = new GpsService(getApplicationContext());
                     if(gps.canGetLocation()){
                         if(usernameView.getText().toString().length()>0 || passwordView.getText().toString().length()>0){
-                            activityUtil.definePrefFormLogin(getApplicationContext(), gps, activityUtil.getValeuJson(getApplicationContext(), usernameView.getText().toString(), passwordView.getText().toString()));
+                            JSONObject userJson = new JSONObject();
+                            userJson.put(getString(R.string.dsLoginTblUser), usernameView.getText().toString());
+                            userJson.put(getString(R.string.dsSenhaTblUser), passwordView.getText().toString());
+                            activityUtil.definePrefFormLogin(getApplicationContext(), gps, userJson);
                             startActivity(new Intent(Login.this, CadUsuario.class));
                         }else{
                             startActivity(new Intent(Login.this, CadUsuario.class));
