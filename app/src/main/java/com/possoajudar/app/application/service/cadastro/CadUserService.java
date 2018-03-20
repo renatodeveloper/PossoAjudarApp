@@ -40,13 +40,13 @@ public class CadUserService {
         try {
             usuarioDao = new UsuarioDao(this.context);
             if(! usuarioDao.check(jsonValue)){
-
+                //String s = (this.cadUserView.getByteArrayPhoto() != null) ? this.cadUserView.getCadUserEmail()+ "-" + System.currentTimeMillis() : "nonephoto";
                 ContentValues values = new ContentValues();
                 values.put(context.getString(R.string.dsLoginTblUser), jsonValue.getString(context.getString(R.string.dsLoginTblUser)));
                 values.put(context.getString(R.string.dsSenhaTblUser), jsonValue.getString(context.getString(R.string.dsSenhaTblUser)));
                 values.put(context.getString(R.string.idTblServico), jsonValue.getString(context.getString(R.string.idTblServico)));
                 values.put(context.getString(R.string.idTblRedeSocial), jsonValue.getString(context.getString(R.string.idTblRedeSocial)));
-                values.put(context.getString(R.string.namePhoto), this.cadUserView.getCadUserEmail()+ "-" + System.currentTimeMillis());
+                values.put(context.getString(R.string.namePhoto), (this.cadUserView.getByteArrayPhoto() != null) ? this.cadUserView.getCadUserEmail()+ "-" + System.currentTimeMillis() : "nonephoto");
                 values.put(context.getString(R.string.bytePhoto), this.cadUserView.getByteArrayPhoto());
 
                return usuarioDao.save(values);
