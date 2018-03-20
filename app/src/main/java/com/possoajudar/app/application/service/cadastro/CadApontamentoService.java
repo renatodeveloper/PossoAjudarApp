@@ -48,8 +48,12 @@ public class CadApontamentoService {
                 values.put(context.getString(R.string.dsLongitude),   jsonValueApontamento.getString(context.getString(R.string.dsLongitude)));
 
                 int idUsuario = apontamentoDao.getIdUserPreferences(context);
-                values.put(context.getString(R.string.idTblUser),   idUsuario);
-                return  apontamentoDao.save(values);
+                if(idUsuario>0){
+                    values.put(context.getString(R.string.idTblUser),   idUsuario);
+                    return  apontamentoDao.save(values);
+                }else{
+                    return false;
+                }
             }
         }catch (Exception e){
             e.getMessage().toString();
