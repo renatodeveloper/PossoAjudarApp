@@ -171,7 +171,7 @@ public class UsuarioDao extends Usuario implements DAO<Usuario> {
         try {
             db = this.daoModelPresenter.getInternalDB();
             if(db!= null && object != null && object.length()>0){
-                String[] args = { object.getString(this.context.getString(R.string.dsGeneric_A)), object.getString(context.getString(R.string.dsGeneric_B))};
+                String[] args = { object.getString(this.context.getString(R.string.dsLoginTblUser)), object.getString(context.getString(R.string.dsSenhaTblUser))};
                 Cursor cursor = db.query(this.context.getString(R.string.dsNameTblUser), null, "dsLogin=? AND dsSenha=?", args, null,null,null);
                 int qtde = cursor.getCount();
                 if(cursor.getCount()>0){
