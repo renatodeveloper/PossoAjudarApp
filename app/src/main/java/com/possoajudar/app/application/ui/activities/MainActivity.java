@@ -636,8 +636,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                             COLAR NO CAMPO PESQUISA google maps: 40.7876165, -73.9531382   * OBEDECER A SEQUENCIA
                              */
                             gps = new GpsService(getApplicationContext());
-                            JSONObject value = activityUtil.getValeuJson(getApplicationContext(),editTextAltura.getText().toString(), editTextPeso.getText().toString());
-                            activityUtil.definePrefUserLogadoApontamentoGPS(getApplicationContext(), gps, value);
+
+
+                            JSONObject medidasJson = new JSONObject();
+                            medidasJson.put(getString(R.string.dsAlturaTblUserAptmento), editTextAltura.getText().toString());
+                            medidasJson.put(getString(R.string.dsPesoTblUserAptmento), editTextPeso.getText().toString());
+
+                            activityUtil.definePrefUserLogadoApontamentoGPS(getApplicationContext(), gps, medidasJson);
 
                             cadApontamentoPresenter.registerApontamentoUser();
                             customDialog.dismiss();
