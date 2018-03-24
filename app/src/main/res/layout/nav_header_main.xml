@@ -17,42 +17,45 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingLeft="16dp"
-        android:paddingRight="16dp" >
+        android:paddingRight="16dp">
 
         <TextView
             android:id="@+id/textViewNavMsg"
-            android:layout_marginTop="@dimen/dimen5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen5dp"
             android:hint="@string/dsMsg" />
 
         <ImageView
             android:id="@+id/imageViewNavPhoto"
-            android:layout_marginTop="@dimen/dimen5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/textViewNavMsg"
             android:layout_alignParentLeft="true"
-            android:src="@mipmap/person"
-            android:background="@drawable/photo_customizado"/>
+            android:layout_below="@id/textViewNavMsg"
+            android:layout_marginTop="@dimen/dimen5dp"
+            android:background="@drawable/photo_customizado"
+            android:src="@mipmap/person" />
 
         <TextView
             android:id="@+id/textViewNavNome"
-            android:layout_marginTop="@dimen/dimen5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/textViewNavMsg"
-            android:layout_alignParentRight="true"
-            android:hint="@string/dsNameTblUser"/>
+            android:layout_alignLeft="@+id/textViewNavEmail"
+            android:layout_alignStart="@+id/textViewNavEmail"
+            android:layout_alignTop="@+id/imageViewNavPhoto"
+            android:hint="@string/dsNameTblUser" />
 
 
         <TextView
             android:id="@+id/textViewNavEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/textViewNavNome"
-            android:layout_alignParentRight="true"
-            android:hint="@string/dsLoginTblUser"/>
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="19dp"
+            android:layout_marginStart="19dp"
+            android:layout_toEndOf="@+id/imageViewNavPhoto"
+            android:layout_toRightOf="@+id/imageViewNavPhoto"
+            android:hint="@string/dsLoginTblUser" />
 
     </RelativeLayout>
 
