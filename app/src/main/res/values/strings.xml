@@ -140,6 +140,8 @@
     <string name="namePhoto">namePhoto</string>
     <string name="bytePhoto">bytePhoto</string>
 
+    <string name="dsMsg">Olá</string>
+
 
     <!-- tabelas -->
     <string name="dsNameTblServico">Usuario</string>
@@ -229,5 +231,9 @@
     <string name="text_result_normal">, sua situação na tabela é normal.</string>
     <string name="text_result_abaixo">, sua situação na tabela é abaixo do normal.</string>
     <string name="text_result_abaixo_normal">, sua situação na tabela é muito abaixo do normal.</string>
+
+
+    <string name="banner_app_id">ca-app-pub-1286532705255457~2049537672</string>
+    <string name="banner_anuncio_bloco_id">ca-app-pub-1286532705255457/4691388164</string>
 
 </resources>
