@@ -2,6 +2,8 @@ package com.possoajudar.app.application.ui.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
@@ -15,7 +17,9 @@ import android.widget.TextView;
 
 import com.possoajudar.app.R;
 import com.possoajudar.app.domain.model.Apontamento;
+import com.squareup.picasso.Picasso;
 
+import java.net.URL;
 import java.util.ArrayList;
 
 /**
@@ -73,6 +77,11 @@ public class CustomAdapter  extends ArrayAdapter<Apontamento> implements View.On
     public View getView(int position, View convertView, ViewGroup parent) {
         // Get the data item for this position
         Apontamento dataModel = getItem(position);
+        String urlMaster = "";
+        if(dataUrlPropaganda != null && dataUrlPropaganda.size()>0){
+            urlMaster = dataUrlPropaganda.get(position);
+        }
+
         // Check if an existing view is being reused, otherwise inflate the view
         ViewHolder viewHolder; // view lookup cache stored in tag
 
@@ -103,6 +112,7 @@ public class CustomAdapter  extends ArrayAdapter<Apontamento> implements View.On
         viewHolder.dsAltura.setText("Altura: " + dataModel.getVlAltura());
         viewHolder.dsPeso.setText("Peso: " + dataModel.getVlPeso());
         viewHolder.dsHora.setText(dataModel.getDsDataHora());
+
         //viewHolder.dsStatus.setText(dataModel.getDsStatus());
 
         if(dataModel.getImc() >= 40){
@@ -137,9 +147,18 @@ public class CustomAdapter  extends ArrayAdapter<Apontamento> implements View.On
             viewHolder.dsPeso.setTextColor(R.color.color_red);
         }
 
-        viewHolder.imgPropaganda.setImageResource(R.mipmap.shopping);
-        viewHolder.imgPropaganda.setOnClickListener(this);
-        viewHolder.imgPropaganda.setTag(position);
+
+        //for(int p=0; p< dataUrlPropaganda.size(); p++){
+        if((!urlMaster.equals("")) && (urlMaster.length()>0)){
+            Picasso.with(getContext())
+                    .load(urlMaster)
+                    .resize(25,25).into(viewHolder.imgPropaganda);
+        }
+        //}
+
+        //viewHolder.imgPropaganda.setImageResource(R.mipmap.shopping);
+        //viewHolder.imgPropaganda.setOnClickListener(this);
+        //viewHolder.imgPropaganda.setTag(position);
 
         viewHolder.imgStatus.setOnClickListener(this);
         viewHolder.imgStatus.setTag(position);
