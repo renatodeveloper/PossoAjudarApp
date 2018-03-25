@@ -122,4 +122,6 @@ dependencies {
     compile 'com.squareup.okhttp:okhttp:2.5.0'
 
     compile 'com.google.android.gms:play-services-ads:8.1.0'
+
+    compile 'com.squareup.picasso:picasso:2.5.0'
 }
