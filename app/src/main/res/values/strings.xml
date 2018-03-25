@@ -143,6 +143,7 @@
     <string name="dsMsg">Olá</string>
 
 
+
     <!-- tabelas -->
     <string name="dsNameTblServico">Usuario</string>
     <string name="sqlAlterTblServico">ALTER TABLE Servico ADD COLUMN Obs TEXT</string>
@@ -236,4 +237,8 @@
     <string name="banner_app_id">ca-app-pub-1286532705255457~2049537672</string>
     <string name="banner_anuncio_bloco_id">ca-app-pub-1286532705255457/4691388164</string>
 
+
+    <string name="strMensagemProgress">Loading...</string>
+    <string name="strTitleProgress">ProgressDialog</string>
+    <string name="strPropaganda">anúncios</string>
 </resources>
