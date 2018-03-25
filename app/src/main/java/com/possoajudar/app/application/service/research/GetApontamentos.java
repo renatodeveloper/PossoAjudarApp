@@ -47,6 +47,8 @@ public class GetApontamentos  implements ApplicationService<Movie, MoviesRespons
             public void onFailure(Throwable t) {
                 // Log error here since request failed
                 Log.e(TAG, t.toString());
+                ApplicationServiceError error = new ApplicationServiceError("0","fail", null);
+                callback.onError(error);
             }
         });
     }
