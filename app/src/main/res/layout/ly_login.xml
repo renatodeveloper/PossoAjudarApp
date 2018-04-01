@@ -13,12 +13,11 @@
         android:paddingLeft="@dimen/dimen24dp"
         android:paddingRight="@dimen/dimen24dp"
         >
-
         <TextView
             android:id="@+id/textViewSizeScreen"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="layout" />
+            android:text="layout-xlarge" />
 
         <com.google.android.gms.ads.AdView
             android:id="@+id/adView"
@@ -79,7 +78,7 @@
             android:padding="@dimen/dimen12dp"
             android:text="@string/strLyLoginButtonLogin"
             android:background="@drawable/button_customizado"
-           />
+            />
 
         <TextView android:id="@+id/newcount"
             android:layout_width="fill_parent"
@@ -87,6 +86,7 @@
             android:layout_marginBottom="@dimen/dimen24dp"
             android:text="@string/strLyLoginTextViewAccount"
             android:textColor="@color/color_red"
+            android:textStyle="bold"
             android:gravity="center"
             android:textSize="@dimen/dimen16dip"
             />
