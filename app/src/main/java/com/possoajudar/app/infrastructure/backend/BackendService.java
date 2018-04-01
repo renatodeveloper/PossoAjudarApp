@@ -10,9 +10,13 @@ import retrofit.http.Query;
  */
 
 public interface BackendService {
+    /*
+
     @GET("apontamento/day")
     Call<ServiceResponse> getApontamentoDay(@Query("api_key") String apiKey);
 
     @GET("apontamento/{id}")
     Call<ServiceResponse> getApontamentoDetails(@Path("id") int id, @Query("api_key") String apiKey);
+
+     */
 }
