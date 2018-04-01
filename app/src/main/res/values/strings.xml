@@ -18,7 +18,7 @@
     <string name="strLyLoginHintInputEmail">Email</string>
     <string name="strLyLoginHintInputPassword">Password</string>
     <string name="strLyLoginButtonLogin">Login</string>
-    <string name="strLyLoginTextViewAccount">Ainda sem conta? Crie uma</string>
+    <string name="strLyLoginTextViewAccount">Ainda sem conta? Crie uma AQUI!</string>
 
     <string name="strLyLoginUserNameError">Entre com o nome do usuário</string>
     <string name="strLyLoginPassWordError">Entre com a senha do usuário</string>
