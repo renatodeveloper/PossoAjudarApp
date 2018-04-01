@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads = "http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fitsSystemWindows="true">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/grey_300"
+            android:layout_marginRight="@dimen/dimen10dip"
+            android:layout_marginLeft="@dimen/dimen10dip"
+            >
+            <TextView
+                android:id="@+id/lyCadUserTextViewTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/strLyCadastroDeUsuarioTitle"
+                android:textSize="@dimen/dimen16dip"
+                android:textColor="@android:color/black"
+                android:textAlignment="center"
+                android:layout_marginTop="@dimen/dimen5dp"
+                />
+
+            <ImageView
+                android:layout_marginTop="20dp"
+                android:id="@+id/imageViewPhotoDone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/person"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/dimen15dip">
+
+                <TextView
+                    android:id="@+id/lyCadUserTextViewEmail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen10dip"
+                    android:layout_weight="0.18"
+                    android:text="@string/strLyCadastroDeUsuarioTextViewEmail"
+                    android:layout_marginLeft="@dimen/dimen15dip"/>
+
+                <EditText
+                    android:id="@+id/lyCadUserEditTextEmail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen10dip"
+                    android:layout_weight="0.28"
+                    android:ems="10"
+                    android:textSize="@dimen/dimen12dp"
+                    android:hint="@string/strLyCadastroDeUsuarioEditTextHintEmail"
+                    android:inputType="textEmailAddress"
+                    android:layout_marginRight="@dimen/dimen15dip"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="15dp">
+
+                <TextView
+                    android:id="@+id/lyCadUserTextViewSenha"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen10dip"
+                    android:layout_weight="0.18"
+                    android:text="@string/strLyCadastroDeUsuarioTextViewSenha"
+                    android:layout_marginLeft="@dimen/dimen15dip"/>
+
+                <EditText
+                    android:id="@+id/lyCadUserEditTextSenha"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="0.28"
+                    android:ems="10"
+                    android:textSize="@dimen/dimen12dp"
+                    android:hint="@string/strLyCadastroDeUsuarioEditTextHintSenha"
+                    android:inputType="textPassword"
+                    android:layout_marginRight="@dimen/dimen15dip"/>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="15dp">
+
+                <TextView
+                    android:id="@+id/lyCadUserTextViewFoto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen10dip"
+                    android:layout_weight="0.18"
+                    android:text="@string/strLyCadastroDeUsuarioTextViewFoto"
+                    android:layout_marginLeft="@dimen/dimen15dip"/>
+
+                <ImageView
+                    android:layout_marginTop="20dp"
+                    android:id="@+id/imageViewPhoto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/camera"
+                    android:onClick="takePicture"
+                    />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/dimen35dip"
+                android:weightSum="1">
+
+                <ImageView
+                    android:id="@+id/lyCadUserImageViewCadastrar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:src="@drawable/ic_menu_send"
+                    android:foregroundGravity="left"/>
+                <ImageView
+                    android:id="@+id/lyCadUserImageViewLimpar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:src="@drawable/clean"
+                    android:foregroundGravity="left"/>
+
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

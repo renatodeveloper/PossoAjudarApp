@@ -17,7 +17,7 @@
             android:id="@+id/textViewSizeScreen"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="layout-large" />
+            android:text="layout-xlarge" />
 
         <com.google.android.gms.ads.AdView
             android:id="@+id/adView"
@@ -86,6 +86,7 @@
             android:layout_marginBottom="@dimen/dimen24dp"
             android:text="@string/strLyLoginTextViewAccount"
             android:textColor="@color/color_red"
+            android:textStyle="bold"
             android:gravity="center"
             android:textSize="@dimen/dimen16dip"
             />
