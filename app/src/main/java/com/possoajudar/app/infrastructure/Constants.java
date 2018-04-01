@@ -27,5 +27,13 @@ public class Constants {
         public static final String TAMANHO_PADRAO = "w185/";
         public static final String URL_IMG_COMPLETO = URL_IMG + TAMANHO_PADRAO;
 
+        public static final String URL_CORREIO = "http://api.postmon.com.br/v1";
+        public static final String URL_CORREIO_CEP = "http://api.postmon.com.br/v1/cep/";
+        public static final String URL_SPOTIFY = "https://developer.spotify.com/";
+
+
+        //Path JSON PLACE HOLDER
+        public static final String URL_JSON_PLACE_HOLDER = "https://jsonplaceholder.typicode.com/";
+
     }
 }
