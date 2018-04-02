@@ -2,6 +2,7 @@ package com.possoajudar.app.infrastructure.backend;
 
 import com.google.gson.Gson;
 import com.possoajudar.app.domain.model.Cep;
+import com.possoajudar.app.domain.model.ServiceResponse;
 import com.possoajudar.app.domain.model.MoviesResponse;
 import com.possoajudar.app.domain.model.Post;
 
@@ -69,6 +70,9 @@ public interface ApiInterface {
     @GET("/cep/{cep}")
     Call<Cep> getAddress(@Path("cep") String cep);
 
+
+    @GET("/user/auth/{user}/{auth}")
+    Call<ServiceResponse> getAuthMockServer(@Path("user") String user, @Path("auth") String auth);
 
     //http://api.postmon.com.br/v1/cep/21625000
 
