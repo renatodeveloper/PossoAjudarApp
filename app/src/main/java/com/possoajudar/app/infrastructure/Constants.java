@@ -5,7 +5,6 @@ import com.possoajudar.app.BuildConfig;
 /**
  * Created by renato on 13/02/2018.
  */
-
 public class Constants {
     public class Headers {
         public static final String PLATFORM = "platform";
@@ -31,9 +30,10 @@ public class Constants {
         public static final String URL_CORREIO_CEP = "http://api.postmon.com.br/v1/cep/";
         public static final String URL_SPOTIFY = "https://developer.spotify.com/";
 
-
         //Path JSON PLACE HOLDER
         public static final String URL_JSON_PLACE_HOLDER = "https://jsonplaceholder.typicode.com/";
+
+        public static final String URL_JSON_MOCKSERVER = "http://localhost:8043/api";
 
     }
 }
