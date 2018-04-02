@@ -13,6 +13,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.v7.view.ActionMode;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -91,6 +92,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     ArrayList<Apontamento> dataModels;
     ListView listView;
+
+    @Override
+    public void onSupportActionModeStarted(@NonNull ActionMode mode) {
+        super.onSupportActionModeStarted(mode);
+    }
+
     private static CustomAdapter adapter;
 
     ImageView imageViewNavPhoto;
