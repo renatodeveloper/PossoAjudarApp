@@ -32,6 +32,7 @@ import com.possoajudar.app.domain.model.Cep;
 import com.possoajudar.app.domain.model.Movie;
 import com.possoajudar.app.domain.model.MoviesResponse;
 import com.possoajudar.app.domain.model.Post;
+import com.possoajudar.app.domain.model.ServiceResponse;
 import com.possoajudar.app.domain.model.Usuario;
 import com.possoajudar.app.infrastructure.Constants;
 import com.possoajudar.app.infrastructure.backend.ApiClient;
@@ -392,6 +393,23 @@ public class ViewSplash extends Activity implements IDaoModel {
                 //fim retrofit
 
 
+            //*********************************************************************** INICIO TESTE MOCKSERVER Retrofit
+            /*
+            ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+            Call<ServiceResponse> call = apiService.getAuthMockServer("A","B");
+            call.enqueue(new Callback<ServiceResponse>() {
+                @Override
+                public void onResponse(retrofit.Response<ServiceResponse> response, Retrofit retrofit) {
+                    response.body();
+                }
+
+                @Override
+                public void onFailure(Throwable t) {
+                    Log.e(TAG, "Error occured while fetching post.");
+                }
+            });
+
+               */
                     activityUtil = new ActivityUtil();
 
             //activityUtil.deleteDatabase(getApplicationContext());
