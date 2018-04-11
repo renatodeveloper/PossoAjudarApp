@@ -35,5 +35,7 @@ public class Constants {
 
         public static final String URL_JSON_MOCKSERVER = "http://localhost:8043/api";
 
+        public static final String URL_GIT_HUB_API = "https://api.github.com/";
+        public static final String URL_GIT_HUB = "https://github.com/";
     }
 }
