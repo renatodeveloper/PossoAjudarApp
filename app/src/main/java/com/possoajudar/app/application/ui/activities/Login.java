@@ -1,8 +1,12 @@
 package com.possoajudar.app.application.ui.activities;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -12,20 +16,39 @@ import android.widget.Toast;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+
+
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.possoajudar.app.BuildConfig;
 import com.possoajudar.app.R;
 //import com.possoajudar.app.application.module.app.LoginApplication;
 import com.possoajudar.app.application.service.ILoginView;
+import com.possoajudar.app.application.service.gitHub.GitHubClient;
 import com.possoajudar.app.application.service.gps.GpsService;
 import com.possoajudar.app.application.service.login.LoginPresenter;
 import com.possoajudar.app.application.service.login.LoginService;
+import com.possoajudar.app.domain.model.AccessToken;
 import com.possoajudar.app.domain.model.Apontamento;
+import com.possoajudar.app.domain.model.GitHubRepo;
+import com.possoajudar.app.infrastructure.Constants;
+import com.possoajudar.app.infrastructure.backend.ApiClient;
+import com.possoajudar.app.infrastructure.backend.ApiInterface;
 import com.possoajudar.app.infrastructure.helper.ActivityUtil;
 
 import org.json.JSONObject;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
+
+
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.GsonConverterFactory;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 import static android.widget.Toast.LENGTH_SHORT;
 
@@ -60,6 +83,12 @@ public class Login extends Activity implements ILoginView {
 
     private AdView mAdView;
 
+
+    private GoogleApiClient mGoogleApiClient;
+    SignInButton signInButton;
+
+    public static boolean flagGitHub = true;
+
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
@@ -72,6 +101,95 @@ public class Login extends Activity implements ILoginView {
 
     @Inject
     Apontamento apontamento;
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState, PersistableBundle persistentState) {
+        super.onRestoreInstanceState(savedInstanceState, persistentState);
+    }
+
+
+
+    /*
+            TESTE LOGIN GitHub
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //GitHub Retrofit OAuth   2: RECEBE CODE
+        String redirectUri = getApplication().getResources().getString(R.string.redirectUri);
+
+        Uri uri = getIntent().getData();
+        if(uri != null && uri.toString().startsWith(redirectUri)) {
+            String code = uri.getQueryParameter("code");
+            if(code != null) {
+
+                String clientId = getApplication().getResources().getString(R.string.clienteId);
+                String clientSecret = getApplication().getResources().getString(R.string.clienteSecret);
+
+                final SharedPreferences prefs = this.getSharedPreferences(
+                        BuildConfig.APPLICATION_ID, Context.MODE_PRIVATE);
+
+
+                // 3: SOLCITA TOKEN com o code recebido
+                GitHubClient gitHubClient = ApiClient.getClientGitHub().create(GitHubClient.class);
+                Call<AccessToken> callToken = gitHubClient.getAccessToken(clientId, clientSecret,code);
+                callToken.enqueue(new Callback<AccessToken>() {
+                    @Override
+                    public void onResponse(Response<AccessToken> response, Retrofit retrofit) {
+                        int statusCode = response.code();
+                        if(statusCode == 200) {
+                            AccessToken token = response.body();
+                            prefs.edit().putBoolean("oauth.loggedin", true).apply();
+                            prefs.edit().putString("oauth.accesstoken", token.getAccessToken()).apply();
+                            prefs.edit().putString("oauth.refreshtoken", token.getRefreshToken()).apply();
+                            prefs.edit().putString("oauth.tokentype", token.getTokenType()).apply();
+
+                            // TODO Show the user they are logged in
+                        } else {
+                            // TODO Handle errors on a failed response
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Throwable throwable) {
+
+                    }
+                });
+
+                SharedPreferences mPrefs = this.getSharedPreferences(BuildConfig.APPLICATION_ID, Context.MODE_PRIVATE);
+                String oauthAccesstoken = mPrefs.getString("oauth.accesstoken", "");
+
+
+               // Retrofit.Builder builder = new Retrofit.Builder()
+                        //.baseUrl("https://api.github.com/")
+                       // .addConverterFactory(GsonConverterFactory.create());
+               // Retrofit retrofit = builder.build();
+               // GitHubClient clientT = retrofit.create(GitHubClient.class);
+              //  Call<List<GitHubRepo>> callL = clientT.reposForUser("renatodeveloper");
+
+
+
+                GitHubClient client  = ApiClient.getClient().create(GitHubClient.class);
+                Call<List<GitHubRepo>> call = client.reposForUser("renatodeveloper");
+                call.enqueue(new Callback<List<GitHubRepo>>() {
+                    @Override
+                    public void onResponse(Response<List<GitHubRepo>> response, Retrofit retrofit) {
+                        if(response != null){
+                            List<GitHubRepo> repos = response.body();
+                            if(repos!= null){
+
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Throwable throwable) {
+
+                    }
+                });
+            }
+        }
+    }
+ */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -165,7 +283,41 @@ public class Login extends Activity implements ILoginView {
                 //Toast.makeText(getApplicationContext(), "onAdClosed...", Toast.LENGTH_LONG).show();
             }
         });
+
+
+          /*GitHub Retrofit OAuth   1: SOLICITA CODE
+        if(flagGitHub){
+            String client_id = getApplication().getResources().getString(R.string.clienteId);
+            String redirect_uri = getApplication().getResources().getString(R.string.redirectUri);
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/login/oauth/authorize" + "?client_id=" + client_id + "&scope=repo&redirect_uri=" + redirect_uri));
+            startActivity(intent);
+
+            flagGitHub = false;
+        }
+        */
     }
+
+    /*
+      ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+            Call<List<Post>> call = apiService.getAllPosts();
+            call.enqueue(new Callback<List<Post>>() {
+                @Override
+                public void onResponse(Response<List<Post>> response, Retrofit retrofit) {
+                    response.body().get(0);
+                  displayPost(response.body().get(0));
+                }
+
+                @Override
+                public void onFailure(Throwable t) {
+                    Log.e(TAG, "Error occured while fetching post.");
+                }
+            });
+
+     */
+    /*
+
+
+
 
     /* butterknife.OnClick
          @OnClick(R.id.btn_login)
