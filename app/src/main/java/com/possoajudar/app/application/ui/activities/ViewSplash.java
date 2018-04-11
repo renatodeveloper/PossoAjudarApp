@@ -341,19 +341,18 @@ public class ViewSplash extends Activity implements IDaoModel {
                 */
                     //fim OkHttp
             //*********************************************************************** INICIO TESTE Retrofit
-            /*
-
-            ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+ /*
+            ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);//URL_JSON_PLACE_HOLDER
             Call<List<Post>> call = apiService.getAllPosts();
             call.enqueue(new Callback<List<Post>>() {
                 @Override
-                public void onResponse(Response<List<Post>> response, Retrofit retrofit) {
+                public void onResponse(retrofit.Response<List<Post>> response, Retrofit retrofit) {
                     response.body().get(0);
-                  displayPost(response.body().get(0));
+                    //displayPost(response.body().get(0));
                 }
 
                 @Override
-                public void onFailure(Throwable t) {
+                public void onFailure(Throwable throwable) {
                     Log.e(TAG, "Error occured while fetching post.");
                 }
             });
