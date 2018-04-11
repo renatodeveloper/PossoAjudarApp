@@ -7,6 +7,7 @@ repositories {
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.3"
+    flavorDimensions "client", "server"
     defaultConfig {
         applicationId "com.possoajudar.app"
         minSdkVersion 14
@@ -16,7 +17,6 @@ android {
         manifestPlaceholders = [appLabel: "APP (default)"]
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
-
     }
 
     signingConfigs {
@@ -62,6 +62,7 @@ android {
             testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
             versionCode 1
             versionName '1.0'
+            dimension "client"
         }
 
         full {
@@ -71,6 +72,7 @@ android {
             testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
             versionCode 1
             versionName '1.0'
+            dimension "server"
         }
     }
 }
@@ -98,8 +100,8 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.7.0'
 
     //...roboguice
-    compile 'org.roboguice:roboguice:3.+'
-    provided 'org.roboguice:roboblender:3.+'
+    compile 'org.roboguice:roboguice:3.0.1'
+    provided 'org.roboguice:roboblender:3.0.1'
 
     //...dagger
     //annotationProcessor 'com.google.dagger:dagger-compiler:3.1.8'
@@ -122,10 +124,18 @@ dependencies {
     // *******************************************************************************retrofit
     compile 'com.squareup.retrofit:retrofit:2.0.0-beta2'
     compile 'com.squareup.retrofit:converter-gson:2.0.0-beta2'
+    //compile 'com.squareup.retrofit2:retrofit:2.0.0'
+    //compile 'com.squareup.retrofit2:converter-gson:2.0.0'
+
     // *******************************************************************************okhttp
     compile 'com.squareup.okhttp3:okhttp:3.10.0'
     // *******************************************************************************volley
     compile 'com.android.volley:volley:1.0.0'
     // *******************************************************************************picasso
     compile 'com.squareup.picasso:picasso:2.5.0'
+    // *********************************************Google OAuth2 API Client Library for Java
+    //compile 'com.squareup.retrofit2:converter-moshi:2.1.0'
+    //compile 'com.google.apis:google-api-services-oauth2:v1-rev139-1.23.0'
+
+
 }
