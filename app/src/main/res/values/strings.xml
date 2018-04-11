@@ -241,4 +241,14 @@
     <string name="strMensagemProgress">Loading...</string>
     <string name="strTitleProgress">ProgressDialog</string>
     <string name="strPropaganda">anúncios</string>
+
+
+
+    <!--GitHub -->
+    <string name="clienteId">9f3cfbfcf103e64fdd7a</string>
+    <string name="clienteSecret">cf5d0c20a8b8ed70dc9034510b83ea5df14a0413</string>
+    <string name="redirectUri">futurestudio://callback</string>
+    <string name="apiUrl">https://futurestudio</string>
+
+
 </resources>
