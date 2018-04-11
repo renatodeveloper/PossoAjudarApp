@@ -14,7 +14,17 @@ public class ApiClient {
     public static Retrofit getClient() {
         if (retrofit==null) {
             retrofit = new Retrofit.Builder()
-                    .baseUrl(Constants.Headers.URL_JSON_MOCKSERVER)
+                    .baseUrl(Constants.Headers.URL_GIT_HUB_API)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+        }
+        return retrofit;
+    }
+
+    public static Retrofit getClientGitHub() {
+        if (retrofit==null) {
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(Constants.Headers.URL_GIT_HUB)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
