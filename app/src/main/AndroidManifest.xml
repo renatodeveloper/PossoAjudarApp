@@ -49,7 +49,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".application.ui.activities.Login"></activity>
+        <activity android:name=".application.ui.activities.Login">
+            <!-- Github -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:host="callback"
+                    android:scheme="futurestudio"
+                    />
+            </intent-filter>
+        </activity>
         <activity android:name=".application.ui.activities.MainActivity"
             android:theme="@style/AppTheme.NoActionBar" android:screenOrientation="portrait"></activity>
         <activity android:name=".application.ui.activities.ContainerFragmentActivity"
