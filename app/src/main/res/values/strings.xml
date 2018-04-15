@@ -251,4 +251,17 @@
     <string name="apiUrl">https://futurestudio</string>
 
 
+    <!--Google -->
+    <string name="gClienteId">560823489735-msn3ac6tpo6b2d5c943k0mtbnjc0iaa4.apps.googleusercontent.com</string>
+    <string name="gRedirectUri">http://localhost</string>
+
+    <string name="http_code_400">A sintaxe da consulta está errada.</string>
+    <string name="http_code_401">A autenticação é necessária para acessar o recurso</string>
+    <string name="http_code_403">O servidor entendeu o pedido, mas se recusa a executá-lo. Ao contrário do erro 401, a autenticação não fará diferença.
+         Nos servidores em que a autenticação é necessária, isso geralmente significa que a autenticação foi aceita, mas os direitos de acesso não permitem o cliente
+         para acessar o recurso.</string>
+    <string name="http_code_404">Recurso não encontrado.</string>
+    <string name="loginactivity_grantsfails_quit">Ok, o aplicativo não pode funcionar se você não nos conceder as concessões para acessar seu GDrive.</string>
+
+    <!--urn:ietf:wg:oauth:2.0:oob:http://localhost-->
 </resources>
