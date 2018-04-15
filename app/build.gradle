@@ -134,8 +134,7 @@ dependencies {
     // *******************************************************************************picasso
     compile 'com.squareup.picasso:picasso:2.5.0'
     // *********************************************Google OAuth2 API Client Library for Java
-    //compile 'com.squareup.retrofit2:converter-moshi:2.1.0'
-    //compile 'com.google.apis:google-api-services-oauth2:v1-rev139-1.23.0'
+    compile 'com.squareup.retrofit2:converter-moshi:2.1.0'
 
 
 }
