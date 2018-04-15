@@ -37,5 +37,10 @@ public class Constants {
 
         public static final String URL_GIT_HUB_API = "https://api.github.com/";
         public static final String URL_GIT_HUB = "https://github.com/";
+
+        //Google API
+        public static final String URL_GOOGLE_API_OAuth = "https://accounts.google.com/o/oauth2/v2/auth";
+        public static final String URL_GOOGLE_API_SCOPE = "https://www.googleapis.com/auth/drive";
+        public static final String BASE_URL_GOOGLE_API = "https://www.googleapis.com/";
     }
 }
