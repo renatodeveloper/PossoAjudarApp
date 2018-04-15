@@ -12,8 +12,12 @@ import org.json.JSONObject;
 import java.util.List;
 
 import retrofit.Call;
+import retrofit.http.DELETE;
+import retrofit.http.Field;
+import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
 import retrofit.http.POST;
+import retrofit.http.PUT;
 import retrofit.http.Path;
 import retrofit.http.Query;
 import retrofit.http.Url;
@@ -70,11 +74,26 @@ public interface ApiInterface {
     @GET("/cep/{cep}")
     Call<Cep> getAddress(@Path("cep") String cep);
 
-
     @GET("/user/auth/{user}/{auth}")
     Call<ServiceResponse> getAuthMockServer(@Path("user") String user, @Path("auth") String auth);
 
     //http://api.postmon.com.br/v1/cep/21625000
+
+
+    @POST("/posts")
+    @FormUrlEncoded
+    Call<Post> savePost(@Field("title") String title,
+                        @Field("body") String body,
+                        @Field("userId") long userId);
+
+    @PUT("/posts/{id}")
+    @FormUrlEncoded
+    Call<Post> updatePost(@Path("id") long id,
+                          @Field("title") String title,
+                          @Field("body") String body,
+                          @Field("userId") long userId);
+    @DELETE("/posts/{id}")
+    Call<Post> deletePost(@Path("id") long id);
 
 
 }
