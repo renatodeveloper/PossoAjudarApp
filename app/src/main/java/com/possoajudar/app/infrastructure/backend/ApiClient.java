@@ -21,13 +21,17 @@ public class ApiClient {
         return retrofit;
     }
 
-    public static Retrofit getClientGitHub() {
+    /*
+
+
+    public static Retrofit getClientGoogle() {
         if (retrofit==null) {
             retrofit = new Retrofit.Builder()
-                    .baseUrl(Constants.Headers.URL_GIT_HUB)
+                    .baseUrl(Constants.Headers.URL_GOOGLE_API_OAuth)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
         return retrofit;
     }
+      */
 }
