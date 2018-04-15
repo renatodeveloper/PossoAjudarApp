@@ -25,7 +25,7 @@
 
     <!-- quando utilizar Dagger 2  android:name=".application.module.app.LoginApplication" -->
     <!-- quando utilizar GoogleAnalyticsApplication  android:name=".application.module.app.GoogleAnalyticsApplication" -->
-    <!-- quando utilizar Google API  android:name=".application.module.google.MyApplication" -->
+    <!-- quando utilizar Google API  android:name=".application.module.google.MyApplication" + scheme-->
 
     <application
         android:name=".application.module.google.MyApplication"
