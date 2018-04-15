@@ -1,4 +1,4 @@
-package com.possoajudar.app.application.service.gitHub;
+package com.possoajudar.app.infrastructure.backend.gitHub;
 
 import com.possoajudar.app.domain.model.AccessToken;
 import com.possoajudar.app.domain.model.GitHubRepo;
@@ -13,7 +13,7 @@ import retrofit.http.Headers;
 import retrofit.http.POST;
 import retrofit.http.Path;
 
-public interface GitHubClient {
+public interface GitHubInterface {
 
     @Headers("Accept: application/json")
     @POST("login/oauth/access_token")
