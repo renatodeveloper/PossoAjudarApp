@@ -113,7 +113,7 @@ public class ServicoApontamento extends Service {
                 if (msg.what == 10) {
                     bundle = msg.getData();
                     if(bundle.getString("key_gen").equals("_NOK")){
-                        activityUtil.limpaPrefConfServ(context);
+                        //activityUtil.limpaPrefConfServ(context);//02
                         stopSelf();
                         try{
                             activityUtil.definePrefFlagInfoMedidas(context);
