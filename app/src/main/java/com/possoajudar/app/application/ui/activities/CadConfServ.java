@@ -3,6 +3,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -130,8 +131,22 @@ public class CadConfServ extends RoboActivity implements ICadConfServView{
     public void startMainActivity() {
 
         Intent intent = new Intent();
-        intent.putExtra("id", "Some Value Here to voltar");
+        intent.putExtra("status", "sucess");
         setResult(Activity.RESULT_OK, intent);
         finish();
     }
+
+    //****************************************************** onKeyDown
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            Intent intent = new Intent();
+            intent.putExtra("status", "none");
+            setResult(Activity.RESULT_OK, intent);
+            finish();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
 }
