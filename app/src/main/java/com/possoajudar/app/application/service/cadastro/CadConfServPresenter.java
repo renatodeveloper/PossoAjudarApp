@@ -1,9 +1,11 @@
 package com.possoajudar.app.application.service.cadastro;
 
 import android.content.Context;
+import android.content.Intent;
 
 import com.possoajudar.app.R;
 import com.possoajudar.app.application.service.ICadConfServView;
+import com.possoajudar.app.application.service.ServicoApontamento;
 import com.possoajudar.app.application.ui.activities.CadConfServ;
 import com.possoajudar.app.infrastructure.helper.ActivityUtil;
 
@@ -31,8 +33,9 @@ public class CadConfServPresenter {
         try{
             int valRadio = view.getCadConfServRadioOption();
             if(valRadio == 0){
-                view.showCadConfServRadioOptionError(R.string.strLyCadastroDeConfServRadioOption);
-                return;
+                valRadio = 1;
+                //view.showCadConfServRadioOptionError(R.string.strLyCadastroDeConfServRadioOption);
+                //return;
             }
 
             JSONObject result = util.recuperaPrefUserLogado(this.context);
@@ -41,8 +44,12 @@ public class CadConfServPresenter {
 
             boolean registerSucceeded = service.registerConfServ(dsLogin, dsSenha, String.valueOf(valRadio));
             if(registerSucceeded){
-                util.definePrefConfServico(context, Integer.valueOf(valRadio));
-
+                //recupero - limpo e redefino o time do service
+                JSONObject recuperar = util.recuperaPrefConfServico(this.context);
+                String idRecuperado = recuperar.getString(this.context.getResources().getString(R.string.idConfServico));
+                util.limpaPrefConfServ(this.context);
+                util.definePrefConfServico(this.context, valRadio);
+                this.context.startService(new Intent(this.context, ServicoApontamento.class));
                 view.startMainActivity();
             }else{
                 view.showCadConfServError(R.string.strLyCadastroConfServfailed);
