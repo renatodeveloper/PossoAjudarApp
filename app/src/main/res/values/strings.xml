@@ -58,9 +58,9 @@
     <string name="strLyCadastroDeUsuarioTextViewSenha">Senha:</string>
     <string name="strLyCadastroDeUsuarioEditTextHintSenha">Entre com a senha</string>
     <string name="strLyCadastrofailed">Falha no cadastro do novo usuário!</string>
-    <string name="strLyCadastroDeUsuarioTextViewFoto">Foto:</string>
-
-
+    <string name="strLyCadastroDeUsuarioTextViewFoto">Sua foto aqui!</string>
+    <string name="strLyCadastroDeUsuarioTextViewNome">Nome:</string>
+    <string name="strLyCadastroDeUsuarioEditTextHintNome">Entre com o nome</string>
 
     <!-- layout screen cadastrar configuração de serviço -->
     <string name="strLyCadastroDeConfServTitle">Cadastro de Configuração de Serviço</string>
@@ -94,7 +94,7 @@
     </string>
 
     <string name="sqlCreateTableUsuario">
-        CREATE TABLE Usuario (idUsuario INTEGER PRIMARY KEY AUTOINCREMENT, dsLogin TEXT, dsSenha TEXT, namePhoto TEXT, bytePhoto Blob,
+        CREATE TABLE Usuario (idUsuario INTEGER PRIMARY KEY AUTOINCREMENT, dsNome TEXT, dsLogin TEXT, dsSenha TEXT, namePhoto TEXT, bytePhoto Blob,
        idRedeSocial INTEGER, idServico    INTEGER,
        FOREIGN KEY (idRedeSocial) REFERENCES RedeSocial(idRedeSocial),
        FOREIGN KEY (idServico) REFERENCES Servico(idServico));
@@ -134,6 +134,7 @@
     <!-- tabelas -->
     <string name="dsNameTblUser">Usuario</string>
     <string name="sqlAlterTblUsuario">ALTER TABLE Usuarios ADD COLUMN nrObs TEXT</string>
+    <string name="dsNomeTblUser">dsNome</string>
     <string name="dsLoginTblUser">dsLogin</string>
     <string name="dsSenhaTblUser">dsSenha</string>
     <string name="idTblUser">idUsuario</string>
