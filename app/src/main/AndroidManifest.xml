@@ -25,10 +25,10 @@
 
     <!-- quando utilizar Dagger 2  android:name=".application.module.app.LoginApplication" -->
     <!-- quando utilizar GoogleAnalyticsApplication  android:name=".application.module.app.GoogleAnalyticsApplication" -->
-    <!-- quando utilizar Google API  android:name=".application.module.google.MyApplication" + scheme-->
+    <!-- quando utilizar Google API Drive  android:name=".application.module.google.MyApplication" + scheme-->
 
     <application
-        android:name=".application.module.google.MyApplication"
+        android:name=".application.module.app.GoogleAnalyticsApplication"
         android:allowBackup="true"
         android:icon="@drawable/icon_question"
         android:label="@string/app_name"
