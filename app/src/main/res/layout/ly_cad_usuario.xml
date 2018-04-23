@@ -39,6 +39,35 @@
             android:src="@mipmap/person"
             />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/dimen15dip">
+
+            <TextView
+                android:id="@+id/lyCadUserTextViewNome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen10dip"
+                android:layout_weight="0.18"
+                android:text="@string/strLyCadastroDeUsuarioTextViewNome"
+                android:layout_marginLeft="@dimen/dimen15dip"/>
+
+            <EditText
+                android:id="@+id/lyCadUserEditTextNome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen10dip"
+                android:layout_weight="0.28"
+                android:ems="10"
+                android:textSize="@dimen/dimen12dp"
+                android:hint="@string/strLyCadastroDeUsuarioEditTextHintNome"
+                android:inputType="text"
+                android:layout_marginRight="@dimen/dimen15dip"/>
+
+        </LinearLayout>
+
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -101,9 +130,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:layout_marginTop="15dp">
-
             <TextView
                 android:id="@+id/lyCadUserTextViewFoto"
                 android:layout_width="wrap_content"
@@ -114,13 +142,15 @@
                 android:layout_marginLeft="@dimen/dimen15dip"/>
 
             <ImageView
-                android:layout_marginTop="20dp"
                 android:id="@+id/imageViewPhoto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/camera"
+                android:layout_marginTop="20dp"
                 android:onClick="takePicture"
-                />
+                android:layout_marginLeft="@dimen/dimen15dip"
+                android:src="@mipmap/camera_color" />
+
+
 
         </LinearLayout>
     <LinearLayout
