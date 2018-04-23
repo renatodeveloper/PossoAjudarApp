@@ -157,7 +157,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         mTracker.setScreenName("Main Screen");
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
         /*
-            Método que executa após o serviço ter seu tempo ocioso atingido
+            Método que executa após o serviço ter seu tempo ocioso atingido -03
         */
         JSONObject object = activityUtil.recuperaPrefFlagInfoMedidas(getApplicationContext());//referente ao ServicoApontamento inicializado
         if(object != null && object.length()>0){
@@ -179,6 +179,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     private Tracker mTracker;
     Dialog customDialog = null;
+
+    @Override
+    public void onActivityReenter(int resultCode, Intent data) {
+        super.onActivityReenter(resultCode, data);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -355,11 +360,17 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         GoogleAnalyticsApplication application = (GoogleAnalyticsApplication) getApplication();
         mTracker = application.getDefaultTracker();
 
-
-        stopService(new Intent(getApplicationContext(), ServicoApontamento.class));
-        activityUtil.definePrefConfServico(getApplicationContext(), 1);//DEFINE O TEMPO EM QUE O SISTEMA DEVE SOLICITAR AS MEDIDAS
-        startService(new Intent(getApplicationContext(), ServicoApontamento.class));
-
+        //UNICA VEZ - 01
+        JSONObject padrao = activityUtil.recuperaPrefConfServico(getApplicationContext());
+        if(padrao.length()==0){
+            try{
+                    stopService(new Intent(getApplicationContext(), ServicoApontamento.class));
+                    activityUtil.definePrefConfServico(getApplicationContext(), 1);//DEFINE O TEMPO EM QUE O SISTEMA DEVE SOLICITAR AS MEDIDAS
+                    startService(new Intent(getApplicationContext(), ServicoApontamento.class));
+            }catch (Exception e){
+                e.getMessage().toString();
+            }
+        }
 
         /*
             Teste de cn line usando ApiClient Retrofit
@@ -407,6 +418,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             //startActivity(new Intent(MainActivity.this, ListApontamento.class));
             //startActivity(new Intent(MainActivity.this, ListHistorico.class));
             //startActivity(new Intent(MainActivity.this, CadConfServ.class));
+
+            stopService(new Intent(getApplicationContext(), ServicoApontamento.class));
             startActivityForResult(new Intent(MainActivity.this, CadConfServ.class), REQUEST_SERVER);
 
             return true;
@@ -416,8 +429,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
                 stopService(new Intent(getApplicationContext(), ServicoApontamento.class));
 
-
                 activityUtil.cleanAllPreferences(getApplicationContext());
+
                 startActivity(new Intent(this, ViewSplash.class));
             }catch (Exception e){
                 e.getMessage().toString();
@@ -596,7 +609,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     }
                 }
             });
-
         }catch (Exception e){
             e.getMessage().toString();
         }
@@ -688,6 +700,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             editTextAltura = (EditText) customDialog.findViewById(R.id.lyApontamentoEditTextAltura);
             editTextPeso = (EditText) customDialog.findViewById(R.id.lyApontamentoEditTextPeso);
 
+            stopService(new Intent(getApplicationContext(), ServicoApontamento.class));
 
             editTextAltura.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -749,6 +762,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                             cadApontamentoPresenter.registerApontamentoUser();
                             customDialog.dismiss();
 
+                            //recupero - limpo e redefino o time do service
+                            JSONObject recuperar = activityUtil.recuperaPrefConfServico(getApplicationContext());
+                            String idRecuperado = recuperar.getString(getResources().getString(R.string.idConfServico));
+                            activityUtil.limpaPrefConfServ(getApplicationContext());
+                            activityUtil.definePrefConfServico(getApplicationContext(), Integer.valueOf(idRecuperado));
+                            startService(new Intent(getApplicationContext(), ServicoApontamento.class));
+
                             //Toast.makeText(MainActivity.this, R.string.start, Toast.LENGTH_SHORT).show();
                         }else{
                             Toast.makeText(MainActivity.this, R.string.alertApontamento, Toast.LENGTH_SHORT).show();
@@ -789,17 +809,20 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             // Make sure the request was successful
             if (resultCode == RESULT_OK) {
 
-                String  id = data.getExtras().getString("id");
-                if(id.length()>0){
-                    JSONObject obj = activityUtil.recuperaPrefConfServico(getApplicationContext());
-                    if (obj != null) {
-                        String idServico = getString(R.string.idConfServico);
-                        String dsServico = getString(R.string.dsConfServicoDefault);
-                        new ServicoApontamento().onDestroy();
-
+                String  retorno = data.getExtras().getString("status");
+                if((retorno.length()>0) && (retorno.equals("sucess"))){
+                    try{
+                        JSONObject paramSevice = activityUtil.recuperaPrefConfServico(getApplicationContext());
+                        String param = paramSevice.getString(getApplicationContext().getResources().getString(R.string.idConfServico));
+                    }catch (Exception e){
+                        e.getMessage().toString();
+                    }
+                }else{
+                    if((retorno.length()>0) && (retorno.equals("none"))){
+                        stopService(new Intent(getApplicationContext(), ServicoApontamento.class));
+                        startService(new Intent(getApplicationContext(), ServicoApontamento.class));
                     }
                 }
-
             }else if (resultCode == Activity.RESULT_CANCELED) {
                 // some stuff that will happen if there's no result
             }
