@@ -130,4 +130,7 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.0'
     // *********************************************Google OAuth2 API Client Library for Java
     compile 'com.squareup.retrofit2:converter-moshi:2.1.0'
+
+    //designer para apresentação da foto em nav header
+    compile 'de.hdodenhof:circleimageview:1.2.1'
 }
