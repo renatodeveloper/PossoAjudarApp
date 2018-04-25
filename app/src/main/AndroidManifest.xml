@@ -81,6 +81,10 @@
         <activity android:name=".application.ui.activities.CadUsuario"/>
         <activity android:name=".application.ui.activities.CadConfServ"/>
         <activity android:name=".application.ui.activities.Dimensao"/>
+        <activity android:name=".application.ui.activities.Report"/>
+        <activity android:name=".application.ui.activities.CalendarActivity"/>
+
+
         <service android:name=".application.service.ServicoApontamento"
             android:exported="false">
             <intent-filter>
@@ -92,6 +96,7 @@
             android:name="io.fabric.ApiKey"
             android:value="fd19a3646e17896488e88ddbbd1963ffe5e2b7e0"
             />
+
     </application>
 
 </manifest>
