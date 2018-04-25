@@ -55,14 +55,14 @@ public class ActivityUtil {
             Manifest.permission.INTERNET,
             Manifest.permission.ACCESS_NETWORK_STATE,
             Manifest.permission.ACCESS_WIFI_STATE
-        };
+    };
 
-        public ActivityUtil() {
-        }
+    public ActivityUtil() {
+    }
 
-        public void startMainActivity(){
+    public void startMainActivity(){
         this.context.startActivity(new Intent(context, MainActivity.class));
-        }
+    }
 
     public String getDateTime(Context context){
         try{
@@ -254,7 +254,7 @@ public class ActivityUtil {
         }
     }
 
-    public JSONObject getValeuJson(Context context, String... params){
+    public JSONObject descontinuado_getValeuJson(Context context, String... params){//descontinuar esse método
         JSONObject result = new JSONObject();
         try{
             result.put(context.getString(R.string.dsGeneric_A), params[0]);
@@ -296,6 +296,8 @@ public class ActivityUtil {
 
     //************************************** TODA VEZ QUE O SERVIÇO SOLICITAR INFORMAÇÕES DE MEDIDAS DEVIDO AO TEMPO OCIOSO TER CHEGADO AO FIM O FLAG É UTILIZADO
 
+
+
     public static  void definePrefFlagInfoMedidas(Context context){
         try{
             SharedPreferences mPrefs = context.getSharedPreferences(context.getString(R.string.prefArqInfoMedidas), Context.MODE_PRIVATE);
@@ -333,6 +335,31 @@ public class ActivityUtil {
 
     //**************************************  PREFERENCES DA TELA DE LOGIN (FORM) SEND TELA DE CADASTRO DE USUÁIO
 
+    public void definePrefFormLogin(Context context, JSONObject jsonObject) {
+        try{
+                JSONObject json = new JSONObject();
+                json.put(context.getString(R.string.dsNomeTblUser), jsonObject.getString(context.getString(R.string.dsNomeTblUser)));
+                json.put(context.getString(R.string.dsLoginTblUser), jsonObject.getString(context.getString(R.string.dsLoginTblUser)));
+                json.put(context.getString(R.string.prefStatus_userLogado),true);
+                json.put(context.getString(R.string.prefDataTime_userLogado), getDateTime(context));
+
+
+                SharedPreferences mPrefs = context.getSharedPreferences(context.getString(R.string.prefArq_userLogado), Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = mPrefs.edit();
+
+
+                editor.putString(context.getString(R.string.prefJSON_userLogado), json.toString());
+                editor.putString(context.getString(R.string.dsNomeTblUser), json.getString(context.getString(R.string.dsNomeTblUser)));
+                editor.putString(context.getString(R.string.dsLoginTblUser), json.getString(context.getString(R.string.dsLoginTblUser)));
+
+                editor.putString(context.getString(R.string.prefStatus_userLogado),json.getString(context.getString(R.string.prefStatus_userLogado)));
+                editor.putString(context.getString(R.string.prefDataTime_userLogado), json.getString(context.getString(R.string.prefDataTime_userLogado)));
+
+                editor.commit();
+        }catch (Exception e) {
+            e.getMessage().toString();
+        }
+    }
     public void definePrefFormLogin(Context context, GpsService gps, JSONObject jsonObject) {
         try{
             if(gps.canGetLocation()){
@@ -411,8 +438,9 @@ Guarda status do usuário logado
             if(gps.canGetLocation()){
 
                 JSONObject json = new JSONObject();
-                json.put(context.getString(R.string.dsLoginTblUser), jsonObject.getString(context.getString(R.string.dsGeneric_A)));
-                json.put(context.getString(R.string.dsSenhaTblUser), jsonObject.getString(context.getString(R.string.dsGeneric_B)));
+                json.put(context.getString(R.string.dsNomeTblUser), jsonObject.getString(context.getString(R.string.dsNomeTblUser)));
+                json.put(context.getString(R.string.dsLoginTblUser), jsonObject.getString(context.getString(R.string.dsLoginTblUser)));
+
                 json.put(context.getString(R.string.prefStatus_userLogado),true);
                 json.put(context.getString(R.string.prefDataTime_userLogado), getDateTime(context));
                 json.put(context.getString(R.string.prefLatitude_userLogado), gps.getLatitude());
@@ -426,8 +454,9 @@ Guarda status do usuário logado
 
 
                 editor.putString(context.getString(R.string.prefJSON_userLogado), json.toString());
+                editor.putString(context.getString(R.string.dsNomeTblUser), json.getString(context.getString(R.string.dsNomeTblUser)));
                 editor.putString(context.getString(R.string.dsLoginTblUser), json.getString(context.getString(R.string.dsLoginTblUser)));
-                editor.putString(context.getString(R.string.dsSenhaTblUser), json.getString(context.getString(R.string.dsSenhaTblUser)));
+
                 editor.putString(context.getString(R.string.prefStatus_userLogado),json.getString(context.getString(R.string.prefStatus_userLogado)));
                 editor.putString(context.getString(R.string.prefDataTime_userLogado), json.getString(context.getString(R.string.prefDataTime_userLogado)));
                 editor.putString(context.getString(R.string.prefLatitude_userLogado),json.getString(context.getString(R.string.prefLatitude_userLogado)));
@@ -451,9 +480,8 @@ Guarda status do usuário logado
             SharedPreferences mPrefs = context.getSharedPreferences(context.getString(R.string.prefArq_userLogado), Context.MODE_PRIVATE);
             String status = mPrefs.getString(context.getString(R.string.prefStatus_userLogado), "");
             if(status.equals("true")){
+                result.put(context.getString(R.string.dsNomeTblUser), mPrefs.getString(context.getString(R.string.dsNomeTblUser), ""));
                 result.put(context.getString(R.string.dsLoginTblUser), mPrefs.getString(context.getString(R.string.dsLoginTblUser), ""));
-                result.put(context.getString(R.string.dsLoginTblUser), mPrefs.getString(context.getString(R.string.dsLoginTblUser), ""));
-                result.put(context.getString(R.string.dsSenhaTblUser), mPrefs.getString(context.getString(R.string.dsSenhaTblUser), ""));
                 return result;
             }
         }catch (Exception e){
@@ -588,26 +616,40 @@ Guarda status do apontamento do usuário
     //**************************************  CONFIGURAÇÃO DO SERVIÇO - OPÇÕES TEMPO DE APONTAMENTO
 
     // DEFINE Configuração do Serviço - Tempo em que o usuário irá informar o seu apontamento (Alldays, Allweek, Allweekend, 15days ou Allmonth)
+
+   /*
+   1 Horas = 3600000 Milissegundos
+    */
+
+
     public void definePrefConfServico(Context context,int idServico) {
         long INTERVAL = 0L;
         String DS_INTERVAL = "";
+        long umaHora = 3600000;
+        long umMinuto = 60000;
         try{
             //http://convertlive.com/pt/u/converter/dias/em/milissegundos#1
             switch (idServico) {
                 case 1 :  DS_INTERVAL = "Todo dia";
                     INTERVAL = 86400000;
+                    //INTERVAL = umaHora * 3;
+                    //INTERVAL = umMinuto;
                     break;
                 case 2:  DS_INTERVAL = "A cada 5 dias";
                     INTERVAL = 432000000;
+                    //INTERVAL = umMinuto * 5;
                     break;
                 case 3:  DS_INTERVAL = "A cada 10 dias";
                     INTERVAL = 864000000;
+                    //INTERVAL = umMinuto * 10;
                     break;
                 case 4:  DS_INTERVAL = "A cada 15 dias";
                     INTERVAL = 1296000000;
+                    //INTERVAL = umMinuto * 15;
                     break;
                 case 5:  DS_INTERVAL = "A cada 20 dias";
                     INTERVAL = 1728000000;
+                    //INTERVAL = umMinuto * 20;
                     break;
             }
 
@@ -665,7 +707,7 @@ Guarda status do apontamento do usuário
             activityUtil.limpaPrefUserLogadoApontamentoGPS(context);
             activityUtil.limpaPrefFormLogin(context);
             activityUtil.limpaPrefConfServ(context);
-            //activityUtil.limpaPrefFlagInfoMedidas(context);
+            activityUtil.limpaPrefFlagInfoMedidas(context);
         }catch (Exception e){
             e.getMessage().toString();
         }
