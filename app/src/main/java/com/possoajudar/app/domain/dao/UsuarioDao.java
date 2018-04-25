@@ -9,9 +9,11 @@ import android.database.sqlite.SQLiteException;
 import com.possoajudar.app.R;
 import com.possoajudar.app.application.service.IDaoModel;
 import com.possoajudar.app.application.service.dao.DaoModelPresenter;
+import com.possoajudar.app.application.service.gps.GpsService;
 import com.possoajudar.app.domain.DAO;
 import com.possoajudar.app.domain.model.Transacao;
 import com.possoajudar.app.domain.model.Usuario;
+import com.possoajudar.app.infrastructure.helper.ActivityUtil;
 
 import org.json.JSONObject;
 
@@ -31,11 +33,13 @@ public class UsuarioDao extends Usuario implements DAO<Usuario> {
     public static final String TABLE_NAME_USER = "USUARIO";
 
     Context context;
+    ActivityUtil util;
 
     //default construction
     public UsuarioDao(Context context){
         this.daoModelPresenter = new DaoModelPresenter(context);
         this.context = context;
+        this.util = new ActivityUtil();
     }
     public long getId() {
         SQLiteDatabase db = null;
@@ -176,9 +180,15 @@ public class UsuarioDao extends Usuario implements DAO<Usuario> {
                 int qtde = cursor.getCount();
                 if(cursor.getCount()>0){
                     cursor.moveToFirst();
+                    String dsNome = cursor.getString(cursor.getColumnIndex(context.getString(R.string.dsNomeTblUser)));
                     String dsLogin = cursor.getString(cursor.getColumnIndex(context.getString(R.string.dsLoginTblUser)));
                     String dsSenha = cursor.getString(cursor.getColumnIndex(context.getString(R.string.dsSenhaTblUser)));
-                    if(dsLogin.length()>0 && dsSenha.length()>0){
+                    if(dsNome.length()>0 && dsLogin.length()>0 && dsSenha.length()>0){
+                        JSONObject userJson = new JSONObject();
+                        userJson.put(this.context.getResources().getString(R.string.dsNomeTblUser),dsNome);
+                        userJson.put(this.context.getResources().getString(R.string.dsLoginTblUser),dsLogin);
+                        this.util.definePrefFormLogin(this.context, userJson);
+
                         return  true;
                     }
                 }else{

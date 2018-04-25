@@ -55,7 +55,7 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
         this.newVersion = newVersion;
         this.flUpgrade = true;
         try {
-            if (oldVersion < 2) {
+            if (oldVersion < 3) {
                 String[] sql = contexto.getString(R.string.sqlAlterTblUsuario).split("\n");
                 db.beginTransaction();
                 try{
@@ -80,9 +80,9 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
      */
     public void startdb(SQLiteDatabase db) throws IOException {
         String[] sql = new String[]{contexto.getString(R.string.sqlCreateTableRedeSocial),
-                                    contexto.getString(R.string.sqlCreateTableConfServ),
-                                    contexto.getString(R.string.sqlCreateTableUsuario),
-                                    contexto.getString(R.string.sqlCreateTableApontamento),
+                contexto.getString(R.string.sqlCreateTableConfServ),
+                contexto.getString(R.string.sqlCreateTableUsuario),
+                contexto.getString(R.string.sqlCreateTableApontamento),
 
                 contexto.getString(R.string.sqlCargaRedeSocialPossoAjudar),
                 contexto.getString(R.string.sqlCargaRedeSocialFacebook),
