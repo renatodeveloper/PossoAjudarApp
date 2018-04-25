@@ -36,6 +36,7 @@
             android:layout_height="wrap_content"
             android:gravity="right"
             android:text="Hora"
+            android:textSize="@dimen/dimen10dip"
             android:textColor="@color/secondary_text"/>
 
         <TextView
