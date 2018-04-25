@@ -299,7 +299,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
                                 cadUserPresenter.getByteArrayPhoto();
 
-                                textViewNavNome.setText(objectU.getString(getString(R.string.dsLoginTblUser)));
+                                textViewNavNome.setText(objectU.getString(getString(R.string.dsNomeTblUser)));
                                 textViewNavEmail.setText(objectU.getString(getString(R.string.dsLoginTblUser)));
 
                                 //2: verifica se este usuário já possui apontamento(s)
@@ -328,7 +328,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
                                     cadUserPresenter.getByteArrayPhoto();
 
-                                    textViewNavNome.setText(objectU.getString(getString(R.string.dsLoginTblUser)));
+                                    textViewNavNome.setText(objectU.getString(getString(R.string.dsNomeTblUser)));
                                     textViewNavEmail.setText(objectU.getString(getString(R.string.dsLoginTblUser)));
 
                                     //2: verifica se este usuário já possui apontamento(s)
@@ -364,9 +364,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         JSONObject padrao = activityUtil.recuperaPrefConfServico(getApplicationContext());
         if(padrao.length()==0){
             try{
-                    stopService(new Intent(getApplicationContext(), ServicoApontamento.class));
-                    activityUtil.definePrefConfServico(getApplicationContext(), 1);//DEFINE O TEMPO EM QUE O SISTEMA DEVE SOLICITAR AS MEDIDAS
-                    startService(new Intent(getApplicationContext(), ServicoApontamento.class));
+                stopService(new Intent(getApplicationContext(), ServicoApontamento.class));
+                activityUtil.definePrefConfServico(getApplicationContext(), 1);//DEFINE O TEMPO EM QUE O SISTEMA DEVE SOLICITAR AS MEDIDAS
+                startService(new Intent(getApplicationContext(), ServicoApontamento.class));
             }catch (Exception e){
                 e.getMessage().toString();
             }
@@ -926,6 +926,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     @Override
+    public String getCadNome() {
+        return null;
+    }
+
+    @Override
     public String getCadUserEmail() {
         return null;
     }
@@ -942,12 +947,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     public void setByteArrayPhoto(byte[] byteArray) {
-            try{
-                imageViewNavPhoto.setImageBitmap(BitmapFactory.decodeByteArray( byteArray,
-                        0,byteArray.length));
-            }catch (Exception e){
-                e.getMessage().toString();
-            }
+        try{
+            imageViewNavPhoto.setImageBitmap(BitmapFactory.decodeByteArray( byteArray,
+                    0,byteArray.length));
+        }catch (Exception e){
+            e.getMessage().toString();
+        }
     }
 
     @Override
@@ -957,6 +962,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }catch (Exception e){
             e.getMessage().toString();
         }
+    }
+
+    @Override
+    public void showCadUserNomeError(int resId) {
+
     }
 
     @Override
