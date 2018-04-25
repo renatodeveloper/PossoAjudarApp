@@ -52,6 +52,8 @@ import roboguice.inject.InjectView;
 
 public class CadUsuario extends RoboActivity implements ICadUserView {
 
+    @InjectView(R.id.lyCadUserEditTextNome)
+    EditText userNome;
     @InjectView(R.id.lyCadUserEditTextEmail)
     EditText userEmail;
     @InjectView(R.id.lyCadUserEditTextSenha)
@@ -119,13 +121,14 @@ public class CadUsuario extends RoboActivity implements ICadUserView {
                 //progressDialog.show();
                 //Toast.makeText(getApplicationContext(), "Olá..", Toast.LENGTH_LONG).show();
                 cadUserPresenter.registerNewUser();
-                    activityUtil.limpaPrefFormLogin(getApplicationContext());
+                activityUtil.limpaPrefFormLogin(getApplicationContext());
             }
         });
 
         cleanUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                userNome.setText("");
                 userEmail.setText("");
                 userSenha.setText("");
                 activityUtil.limpaPrefFormLogin(getApplicationContext());
@@ -157,6 +160,12 @@ public class CadUsuario extends RoboActivity implements ICadUserView {
 
 
     @Override
+    public String getCadNome() {
+        return userNome.getText().toString();
+    }
+
+
+    @Override
     public String getCadUserEmail() {
         return userEmail.getText().toString();
     }
@@ -182,6 +191,12 @@ public class CadUsuario extends RoboActivity implements ICadUserView {
     }
 
     @Override
+    public void showCadUserNomeError(int resId) {
+
+        userNome.setError(getString(resId));
+    }
+
+    @Override
     public void showCadUserEmailError(int resId) {
 
         userEmail.setError(getString(resId));
@@ -201,9 +216,18 @@ public class CadUsuario extends RoboActivity implements ICadUserView {
     public void startMainActivity() {
         gps = new GpsService(getApplicationContext());
         if (gps.canGetLocation()) {
-            activityUtil.definePrefUserLogado(getApplicationContext(), gps, activityUtil.getValeuJson(getApplicationContext(), userEmail.getText().toString(), userSenha.getText().toString()));
-            startActivity(new Intent(this, MainActivity.class));
-            //new ActivityUtil(this).startMainActivity();
+            try{
+                JSONObject userJson = new JSONObject();
+                userJson.put(getString(R.string.dsNomeTblUser), userNome.getText().toString());
+                userJson.put(getString(R.string.dsLoginTblUser), userEmail.getText().toString());
+                userJson.put(getString(R.string.dsSenhaTblUser), userSenha.getText().toString());
+
+                activityUtil.definePrefUserLogado(getApplicationContext(), gps, userJson);
+                startActivity(new Intent(this, MainActivity.class));
+                //new ActivityUtil(this).startMainActivity();
+            }catch (Exception e){
+                e.getMessage().toString();
+            }
         } else {
             gps.showSettingsAlert(this);
         }
