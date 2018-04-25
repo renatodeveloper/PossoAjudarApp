@@ -5,6 +5,7 @@ package com.possoajudar.app.application.service;
  */
 
 public interface ICadUserView {
+    String getCadNome();
     String getCadUserEmail();
     String getCadUserSenha();
 
@@ -13,6 +14,7 @@ public interface ICadUserView {
     void setByteArrayPhoto(byte[] byteArray);
     void nonePhoto();
 
+    void showCadUserNomeError(int resId);
     void showCadUserEmailError(int resId);
     void showCadUserPasswordError(int resId);
     void showCadUserError(int resId);
