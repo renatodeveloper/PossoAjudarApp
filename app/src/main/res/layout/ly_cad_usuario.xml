@@ -130,26 +130,26 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="15dp">
+            android:layout_marginTop="15dp"
+            android:orientation="vertical">
+
             <TextView
                 android:id="@+id/lyCadUserTextViewFoto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen15dip"
                 android:layout_marginTop="@dimen/dimen10dip"
                 android:layout_weight="0.18"
-                android:text="@string/strLyCadastroDeUsuarioTextViewFoto"
-                android:layout_marginLeft="@dimen/dimen15dip"/>
+                android:text="@string/strLyCadastroDeUsuarioTextViewFoto" />
 
             <ImageView
                 android:id="@+id/imageViewPhoto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen15dip"
                 android:layout_marginTop="20dp"
                 android:onClick="takePicture"
-                android:layout_marginLeft="@dimen/dimen15dip"
                 android:src="@mipmap/camera_color" />
-
 
 
         </LinearLayout>
