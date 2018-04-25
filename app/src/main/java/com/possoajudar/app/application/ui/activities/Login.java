@@ -582,9 +582,20 @@ public class Login extends Activity implements ILoginView {
     public void startMainActivity() {
         gps = new GpsService(getApplicationContext());
         if(gps.canGetLocation()){
-            activityUtil.definePrefUserLogado(getApplicationContext(), gps, activityUtil.getValeuJson(this, usernameView.getText().toString(), passwordView.getText().toString()));
-            sucessologin.setText("SUCESSO");
-            startActivity(new Intent(this, MainActivity.class));
+            JSONObject object = new JSONObject();
+            try{
+                JSONObject resultLogin = activityUtil.recuperaPrefUserLogado(Login.this);
+                String dsNome = resultLogin.getString(getApplicationContext().getResources().getString(R.string.dsNomeTblUser));
+                String dsLogin = resultLogin.getString(getApplicationContext().getResources().getString(R.string.dsLoginTblUser));
+
+                object.put(getApplicationContext().getResources().getString(R.string.dsNomeTblUser),dsNome);
+                object.put(getApplicationContext().getResources().getString(R.string.dsLoginTblUser),dsLogin);
+                activityUtil.definePrefUserLogado(getApplicationContext(), gps, object);
+                sucessologin.setText("SUCESSO");
+                startActivity(new Intent(this, MainActivity.class));
+            }catch (Exception e){
+                e.getMessage().toString();
+            };
             //new ActivityUtil(this).startMainActivity();
         }else{
             gps.showSettingsAlert(this);
