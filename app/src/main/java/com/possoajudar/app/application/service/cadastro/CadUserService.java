@@ -42,6 +42,7 @@ public class CadUserService {
             if(! usuarioDao.check(jsonValue)){
                 //String s = (this.cadUserView.getByteArrayPhoto() != null) ? this.cadUserView.getCadUserEmail()+ "-" + System.currentTimeMillis() : "nonephoto";
                 ContentValues values = new ContentValues();
+                values.put(context.getString(R.string.dsNomeTblUser), jsonValue.getString(context.getString(R.string.dsNomeTblUser)));
                 values.put(context.getString(R.string.dsLoginTblUser), jsonValue.getString(context.getString(R.string.dsLoginTblUser)));
                 values.put(context.getString(R.string.dsSenhaTblUser), jsonValue.getString(context.getString(R.string.dsSenhaTblUser)));
                 values.put(context.getString(R.string.idTblServico), jsonValue.getString(context.getString(R.string.idTblServico)));
@@ -49,7 +50,7 @@ public class CadUserService {
                 values.put(context.getString(R.string.namePhoto), (this.cadUserView.getByteArrayPhoto() != null) ? this.cadUserView.getCadUserEmail()+ "-" + System.currentTimeMillis() : "nonephoto");
                 values.put(context.getString(R.string.bytePhoto), this.cadUserView.getByteArrayPhoto());
 
-               return usuarioDao.save(values);
+                return usuarioDao.save(values);
             }
         } catch (Exception e) {
             e.getMessage().toString();
