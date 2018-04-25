@@ -42,7 +42,7 @@ public class DaoModelService {
             if(db == null){
                 return false;
             }
-            String bla = db.getPath().toString();
+            String dsPathDb = db.getPath().toString();
             if (openHelper.flCreate) {
                 openHelper.flCreate = false;//flag só entra a primeira vez, ao criar
                 openHelper.startdb(db);
@@ -70,23 +70,23 @@ public class DaoModelService {
 
     public boolean createdbExterno(){
         try{
-                openHelper = new MySQLiteOpenHelper(this.context, this.context.getResources().getString(R.string.folder));
-                if(openHelper == null){
-                    return false;
-                }
-                db = openHelper.getWritableDatabase();
-                if(db == null){
-                    return false;
-                }
-                String bla = db.getPath().toString();
-                if (openHelper.flCreate) {
-                    openHelper.flCreate = false;//flag só entra a primeira vez, ao criar
-                    openHelper.startdb(db);
-                }else if (openHelper.flUpgrade) {
-                    openHelper.flUpgrade = false;
-                    openHelper.onUpgrade(db, openHelper.oldVersion, openHelper.newVersion);
-                }
-                return true;
+            openHelper = new MySQLiteOpenHelper(this.context, this.context.getResources().getString(R.string.folder));
+            if(openHelper == null){
+                return false;
+            }
+            db = openHelper.getWritableDatabase();
+            if(db == null){
+                return false;
+            }
+            String bla = db.getPath().toString();
+            if (openHelper.flCreate) {
+                openHelper.flCreate = false;//flag só entra a primeira vez, ao criar
+                openHelper.startdb(db);
+            }else if (openHelper.flUpgrade) {
+                openHelper.flUpgrade = false;
+                openHelper.onUpgrade(db, openHelper.oldVersion, openHelper.newVersion);
+            }
+            return true;
         }catch (Exception e){
             e.getMessage().toString();
         }
@@ -131,15 +131,15 @@ public class DaoModelService {
 
     public SQLiteDatabase getdbExterno(){
         try{
-                openHelper = new MySQLiteOpenHelper(this.context, this.context.getResources().getString(R.string.folder));
-                if(openHelper == null){
-                    return null;
-                }
-                db = openHelper.getWritableDatabase();
-                if(db == null) {
-                    return null;
-                }
-                return db;
+            openHelper = new MySQLiteOpenHelper(this.context, this.context.getResources().getString(R.string.folder));
+            if(openHelper == null){
+                return null;
+            }
+            db = openHelper.getWritableDatabase();
+            if(db == null) {
+                return null;
+            }
+            return db;
         }catch (Exception e){
             e.getMessage().toString();
         }
