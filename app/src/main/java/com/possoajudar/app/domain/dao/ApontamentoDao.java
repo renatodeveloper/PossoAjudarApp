@@ -208,19 +208,19 @@ public class ApontamentoDao extends Apontamento implements DAO<Apontamento>{
             ActivityUtil util = new ActivityUtil();
             JSONObject objectU = util.recuperaPrefUserLogado(context);
             String login  = objectU.getString(context.getString(R.string.dsLoginTblUser));
-            String senha  = objectU.getString(context.getString(R.string.dsSenhaTblUser));
+            String nome  = objectU.getString(context.getString(R.string.dsNomeTblUser));
 
             DaoModelService daoModelService = null;
             db = this.daoModelPresenter.getInternalDB();
-            String[] args = { login, senha};
-            Cursor cursor = db.query(context.getString(R.string.dsNameTblUser), null, "dsLogin=? AND dsSenha=?"  , args, null,null,null);
+            String[] args = { login, nome};
+            Cursor cursor = db.query(context.getString(R.string.dsNameTblUser), null, "dsLogin=? AND dsNome=?"  , args, null,null,null);
             int qtde = cursor.getCount();
             if(cursor.getCount()>0){
                 cursor.moveToFirst();
                 String dsLogin = cursor.getString(cursor.getColumnIndex(context.getString(R.string.dsLoginTblUser)));
                 int idUsuario  = cursor.getInt(cursor.getColumnIndex(context.getString(R.string.idTblUser)));
-                String dsSenha = cursor.getString(cursor.getColumnIndex(context.getString(R.string.dsSenhaTblUser)));
-                if(dsLogin.length()>0 && dsSenha.length()>0 && idUsuario > 0){
+                String dsNome = cursor.getString(cursor.getColumnIndex(context.getString(R.string.dsNomeTblUser)));
+                if(dsLogin.length()>0 && dsNome.length()>0 && idUsuario > 0){
                     return  idUsuario;
                 }
             }
