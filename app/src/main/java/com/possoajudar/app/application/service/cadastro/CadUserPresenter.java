@@ -29,8 +29,14 @@ public class CadUserPresenter {
 
     public void registerNewUser(){
         try{
+            String cadNomeUser = view.getCadNome();
             String cadEmailUser = view.getCadUserEmail();
             String cadSenhaUser = view.getCadUserSenha();
+
+            if(cadNomeUser.isEmpty()){
+                view.showCadUserNomeError(R.string.strLyCadastroDeUsuarioEditTextHintNome);
+                return;
+            }
             if(cadEmailUser.isEmpty()){
                 view.showCadUserEmailError(R.string.strLyCadastroDeUsuarioEditTextHintEmail);
                 return;
@@ -41,6 +47,7 @@ public class CadUserPresenter {
             }
 
             JSONObject object = new JSONObject();
+            object.put(context.getString(R.string.dsNomeTblUser), cadNomeUser);
             object.put(context.getString(R.string.dsLoginTblUser), cadEmailUser);
             object.put(context.getString(R.string.dsSenhaTblUser), cadSenhaUser);
             object.put(context.getString(R.string.idTblServico), 1);
