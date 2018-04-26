@@ -38,6 +38,7 @@
                     android:layout_weight="1"
                     android:padding="5dp"
                     android:text="Selecione:"
+                    android:textStyle="bold"
                     android:textColor="@android:color/background_light" />
 
                 <ImageButton
@@ -57,20 +58,22 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:background="@color/grey_300">
+        android:background="@color/darkRed">
         <TextView
             android:id="@+id/date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="data" />
+            android:textColor="@color/blanchedAlmond"
+            android:text="" />
     </LinearLayout>
     <!--            retorno data selecionada -->
 
-    <!--            retorno result pesquisa -->
+    <!--            parametro pesquisa -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
+        android:background="@color/grey_300"
         android:layout_marginTop="@dimen/dimen15dip">
         <TableLayout
             android:layout_width="wrap_content"
@@ -86,7 +89,8 @@
                     android:layout_weight="1"
                     android:padding="5dp"
                     android:text="Param 1"
-                    android:textColor="@android:color/background_light" />
+                    android:textColor="@color/primary"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/paramB"
@@ -95,11 +99,27 @@
                     android:layout_gravity="right"
                     android:padding="5dp"
                     android:text="Param 2"
-                    android:textColor="@android:color/background_light" />
+                    android:textColor="@color/primary"
+                    android:textStyle="bold" />
 
             </TableRow>
         </TableLayout>
     </LinearLayout>
-    <!--            retorno result pesquisa -->
+    <!--            parametro pesquisa -->
 
+    <!--            retorno result pesquisa -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:background="@color/grey_300"
+        android:layout_marginTop="@dimen/dimen15dip">
+        <ListView
+            android:id="@+id/myList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="25dp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"></ListView>
+    </LinearLayout>
+    <!--            retorno result pesquisa -->
 </LinearLayout>
