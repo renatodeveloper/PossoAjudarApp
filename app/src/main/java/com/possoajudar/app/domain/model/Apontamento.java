@@ -7,14 +7,14 @@ import com.possoajudar.app.R;
  */
 
 public class Apontamento {
-    int idApontamento;
-    int dataHora;
-    String dsDataHora;
-    String vlPeso;
-    String vlAltura;
-    float imc;
-    String dsStatus;
-    int idUsuario;
+    public int idApontamento;
+    public int dataHora;
+    public String dsDataHora;
+    public String vlPeso;
+    public String vlAltura;
+    public float imc;
+    public String dsStatus;
+    public int idUsuario;
 
     public Apontamento(int idApontamento, int dataHora, String dsDataHora, String vlPeso, String vlAltura, float imc, String dsStatus, int idUsuario){
         this.idApontamento = idApontamento;
