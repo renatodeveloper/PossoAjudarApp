@@ -1,6 +1,7 @@
 package com.possoajudar.app.infrastructure.backend;
 
 import com.google.gson.Gson;
+import com.possoajudar.app.domain.model.Apontamento;
 import com.possoajudar.app.domain.model.Cep;
 import com.possoajudar.app.domain.model.ServiceResponse;
 import com.possoajudar.app.domain.model.MoviesResponse;
@@ -9,6 +10,7 @@ import com.possoajudar.app.domain.model.Post;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit.Call;
@@ -76,6 +78,10 @@ public interface ApiInterface {
 
     @GET("/user/auth/{user}/{auth}")
     Call<ServiceResponse> getAuthMockServer(@Path("user") String user, @Path("auth") String auth);
+
+    @GET("/report/appointments/{date}")
+    Call<ArrayList<Apontamento>> getAppointmentsMockServer(@Path("date") String date);
+
 
     //http://api.postmon.com.br/v1/cep/21625000
 
