@@ -488,6 +488,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         int id = item.getItemId();
 
         if (id == R.id.nav_relatorio) {
+            stopService(new Intent(getApplicationContext(), ServicoApontamento.class));
             startActivity(new Intent(this, Report.class));
         } else if (id == R.id.nav_gallery) {
 
