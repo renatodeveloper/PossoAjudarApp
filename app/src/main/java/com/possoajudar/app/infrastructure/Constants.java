@@ -14,6 +14,7 @@ public class Constants {
 
         //public static final String URL = BuildConfig.ENDPOINT;
         public static final String URL = "http://api.themoviedb.org/3/";
+        public static final String URL_MOVIEdb = "http://api.themoviedb.org/3/";
         public static final String URL_CEP = "https://viacep.com.br/ws/22441-000/json/";
 
         public static  final String END_POINT_APONTAMENTO_WEEK = "/apontamento/week";
