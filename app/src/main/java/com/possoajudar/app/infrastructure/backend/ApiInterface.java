@@ -79,12 +79,30 @@ public interface ApiInterface {
     @GET("/user/auth/{user}/{auth}")
     Call<ServiceResponse> getAuthMockServer(@Path("user") String user, @Path("auth") String auth);
 
-    @GET("/report/appointments/{date}")
-    Call<ArrayList<Apontamento>> getAppointmentsMockServer(@Path("date") String date);
+
+
 
 
     //http://api.postmon.com.br/v1/cep/21625000
 
+
+    /*
+         /report/appointments/Developer
+     */
+    @GET("/report/appointments/{date}")
+    Call<ArrayList<Apontamento>> getAppointmentsMockServerr(@Path("date") String date);
+
+    /*
+            /report/appointments?date=Developer
+     */
+    @POST("/report/appointments")
+    @FormUrlEncoded
+    Call<ArrayList<Apontamento>> getAppointmentsMockServer(@Field("headerDate") String date);
+
+
+    /*
+    EndPoints
+     */
 
     @POST("/posts")
     @FormUrlEncoded
@@ -98,8 +116,25 @@ public interface ApiInterface {
                           @Field("title") String title,
                           @Field("body") String body,
                           @Field("userId") long userId);
+
     @DELETE("/posts/{id}")
     Call<Post> deletePost(@Path("id") long id);
 
+    //This method is used for "POST"
+    @FormUrlEncoded
+    @POST("/api.php")
+    Call<Post> post(
+            @Field("method") String method,
+            @Field("username") String username,
+            @Field("password") String password
+    );
+
+    //This method is used for "GET"
+    @GET("/api.php")
+    Call<Post> get(
+            @Query("method") String method,
+            @Query("username") String username,
+            @Query("password") String password
+    );
 
 }
