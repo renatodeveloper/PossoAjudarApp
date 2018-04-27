@@ -20,8 +20,11 @@ public class DefaultResponseHandler implements MockResponseHandler {
                     responseBody = mockResponseFactory.loginFail();
                 }
             } else
-                if(request.getPath().contains("/report/appointments/")){
-                    responseBody = mockResponseFactory.appointments();
+            if (request.getPath().startsWith("/report/appointments")) {
+                responseBody = mockResponseFactory.appointments();
+
+                String value = request.getBody().readUtf8();
+                if(value.length()>0){ }
                     MockResponse mockResponse = new MockResponse().setResponseCode(responseCode).setBody(responseBody);
                     mockResponse.addHeader("token", "ASDH3-23R3ER-WEFWQEFE-EFW");
                     return mockResponse;
