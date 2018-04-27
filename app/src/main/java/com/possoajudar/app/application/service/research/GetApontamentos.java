@@ -28,7 +28,7 @@ public class GetApontamentos  implements ApplicationService<Movie, MoviesRespons
     private static final String TAG = MainActivity.class.getSimpleName();
     @Override
     public void execute(Movie movie, final ApplicationServiceCallback<MoviesResponse> callback) {
-        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+        ApiInterface apiService = ApiClient.getClientMoviedb().create(ApiInterface.class);
         Call<MoviesResponse> call = apiService.getApontamentoMonth(Constants.Headers.API_KEY);
         call.enqueue(new Callback<MoviesResponse>() {
             @Override
