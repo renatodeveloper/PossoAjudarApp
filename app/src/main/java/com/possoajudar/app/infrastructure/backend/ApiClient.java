@@ -21,6 +21,16 @@ public class ApiClient {
         return retrofit;
     }
 
+    public static Retrofit getClientMoviedb() {
+        if (retrofit==null) {
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(Constants.Headers.URL_MOVIEdb)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+        }
+        return retrofit;
+    }
+
     /*
 
 
