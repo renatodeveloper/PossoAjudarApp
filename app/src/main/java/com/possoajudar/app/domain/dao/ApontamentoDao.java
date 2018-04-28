@@ -274,6 +274,50 @@ public class ApontamentoDao extends Apontamento implements DAO<Apontamento>{
         return arrayReturn;
     }
 
+    public JSONArray getJSONArrayApontamentoUser(String date){
+        SQLiteDatabase db = null;
+        JSONArray arrayReturn = null;
+        try{
+            int idUsuarioLogado = getIdUserPreferences(context);
+            DaoModelService daoModelService = null;
+            db = this.daoModelPresenter.getInternalDB();
+            String[] args = { String.valueOf(idUsuarioLogado), date};
+            Cursor cursor = db.query(context.getString(R.string.dsNameTblUserAptmento), null, "idUsuario=? AND dsDataHora=?"  , args, null,null,"idApontamento desc");
+            int qtde = cursor.getCount();
+            if(cursor.getCount()>0){
+                cursor.moveToFirst();
+                arrayReturn = new JSONArray(){};
+                JSONObject jsonObject;
+                for(int i=0; i<cursor.getCount(); i++){
+                    jsonObject = new JSONObject();
+
+                    int idApontamento = cursor.getInt(cursor.getColumnIndex(context.getString(R.string.idTblUserAptmento)));
+                    int dataHora = cursor.getInt(cursor.getColumnIndex(context.getString(R.string.dataTimeTblUserAptmento)));
+                    String dsDataHora = cursor.getString(cursor.getColumnIndex(context.getString(R.string.dsDataTimeTblUserAptmento)));
+                    String dsAltura = cursor.getString(cursor.getColumnIndex(context.getString(R.string.dsAlturaTblUserAptmento)));
+                    String dsPeso = cursor.getString(cursor.getColumnIndex(context.getString(R.string.dsPesoTblUserAptmento)));
+                    int imc = cursor.getInt(cursor.getColumnIndex(context.getString(R.string.imcTblUserAptmento)));
+                    String dsStatus = cursor.getString(cursor.getColumnIndex(context.getString(R.string.dsStatusTblUserAptmento)));
+                    int idUsuario  = cursor.getInt(cursor.getColumnIndex(context.getString(R.string.idTblUser)));
+
+                    jsonObject.put("idApontamento",cursor.getInt(cursor.getColumnIndex(context.getString(R.string.idTblUserAptmento))));
+                    jsonObject.put("dataHora",cursor.getInt(cursor.getColumnIndex(context.getString(R.string.dataTimeTblUserAptmento))));
+                    jsonObject.put("dsDataHora",cursor.getString(cursor.getColumnIndex(context.getString(R.string.dsDataTimeTblUserAptmento))));
+                    jsonObject.put("vlAltura",cursor.getString(cursor.getColumnIndex(context.getString(R.string.dsAlturaTblUserAptmento))));
+                    jsonObject.put("vlPeso",cursor.getString(cursor.getColumnIndex(context.getString(R.string.dsPesoTblUserAptmento))));
+                    jsonObject.put("imc",cursor.getString(cursor.getColumnIndex(context.getString(R.string.imcTblUserAptmento))));
+                    jsonObject.put("dsStatus",cursor.getString(cursor.getColumnIndex(context.getString(R.string.dsStatusTblUserAptmento))));
+                    jsonObject.put("idUsuario",cursor.getInt(cursor.getColumnIndex(context.getString(R.string.idTblUser))));
+                    cursor.moveToNext();
+                    arrayReturn.put(jsonObject);
+                }
+            }
+        }catch (Exception e){
+            e.getMessage().toString();
+        }
+        return arrayReturn;
+    }
+
     public boolean ifExistApontamento (){
         SQLiteDatabase db = null;
         try{
