@@ -487,23 +487,40 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_relatorio) {
+        if (id == R.id.nav_medida) {
+            try{
+                stopService(new Intent(getApplicationContext(), ServicoApontamento.class));
+                exibeDialogApontamento();
+            }catch (Exception e){
+                e.getMessage().toString();
+            }
+        } else if (id == R.id.nav_intervalo) {
+            try{
+                stopService(new Intent(getApplicationContext(), ServicoApontamento.class));
+                startActivityForResult(new Intent(MainActivity.this, CadConfServ.class), REQUEST_SERVER);
+
+            }catch (Exception e){
+                e.getMessage().toString();
+            }
+        } else if (id == R.id.nav_relatorio) {
             try{
                 stopService(new Intent(getApplicationContext(), ServicoApontamento.class));
                 startActivity(new Intent(this, Report.class));
             }catch (Exception e){
                 e.getMessage().toString();
             }
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
         } else if (id == R.id.nav_share) {
+            Toast.makeText(this, "Em construção!", Toast.LENGTH_LONG).show();
+        } else if (id == R.id.nav_sair) {
+            try{
+                stopService(new Intent(getApplicationContext(), ServicoApontamento.class));
 
-        } else if (id == R.id.nav_send) {
+                activityUtil.cleanAllPreferences(getApplicationContext());
 
+                startActivity(new Intent(this, ViewSplash.class));
+            }catch (Exception e){
+                e.getMessage().toString();
+            }
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
