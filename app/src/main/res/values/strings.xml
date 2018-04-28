@@ -211,6 +211,8 @@
     "Ocorreu um error ao atribuir da data do apontamento!"
     <string name="strLyCadastrofailedApontamento">Falha no cadastro do apontamento!</string>
     <string name="strLyMontaListafailedApontamento">Falha na exibição da lista de apontameto!</string>
+    <string name="strLyMontaListaSemApontamento">Sem apontameto na data selecionada!</string>
+
 
 
     <!-- ciclo on  -->
