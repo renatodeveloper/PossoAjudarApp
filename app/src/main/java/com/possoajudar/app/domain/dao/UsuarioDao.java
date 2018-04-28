@@ -47,13 +47,14 @@ public class UsuarioDao extends Usuario implements DAO<Usuario> {
             db = this.daoModelPresenter.getInternalDB();
             if(db!= null){
                 String[] args = { this.dsLogin, this.dsSenha};
-                Cursor cursor = db.query(this.context.getString(R.string.dsNameTblUser), null, "dsLogin=? AND dsSenha=?", args, null,null,null);
+                Cursor cursor = db.query(this.context.getString(R.string.dsNameTblUser), null, "dsNome=? AND dsLogin=?", args, null,null,null);
                 if(cursor.getCount()>0){
                     cursor.moveToFirst();
                     _id = cursor.getInt(cursor.getColumnIndex(context.getString(R.string.idTblUser)));
+                    String dsNome = cursor.getString(cursor.getColumnIndex(context.getString(R.string.dsNomeTblUser)));
                     String dsLogin = cursor.getString(cursor.getColumnIndex(context.getString(R.string.dsLoginTblUser)));
-                    String dsSenha = cursor.getString(cursor.getColumnIndex(context.getString(R.string.dsSenhaTblUser)));
-                    if(_id > 0 && dsLogin.length()>0 && dsSenha.length()>0){
+
+                    if(_id > 0 && dsNome.length()>0 && dsLogin.length()>0){
                         return  this._id;
                     }
                 }else{
