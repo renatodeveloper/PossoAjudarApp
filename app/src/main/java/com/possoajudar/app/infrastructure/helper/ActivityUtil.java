@@ -198,10 +198,11 @@ public class ActivityUtil {
     }
 
     public void deleteDatabase(Context context) {
-        ///data/data/com.possoajudar.app.demo.debug/databases/AJUDAR.db
+        // DEMO: /data/data/com.possoajudar.app.demo.debug/databases/AJUDAR.db
+        // FULL: /data/user/0/com.possoajudar.app.full.debug/databases/AJUDAR.db
         File data = Environment.getDataDirectory();
-        String dbPath = "/data/com.possoajudar.app.demo.debug/databases/AJUDAR.db";
-        String dsPathExtra = "/user/0/com.possoajudar.app.demo.debug/databases/AJUDAR.db";//mysmartphone
+        String dbPath = "/data/com.possoajudar.app.full.debug/databases/AJUDAR.db";
+        String dsPathExtra = "/user/0/com.possoajudar.app.full.debug/databases/AJUDAR.db";//mysmartphone
         File current_db = new File(data, dbPath);
         File current_dbII = new File(data, dsPathExtra);
         try {
