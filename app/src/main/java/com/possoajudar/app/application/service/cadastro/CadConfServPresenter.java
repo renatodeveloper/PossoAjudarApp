@@ -39,10 +39,11 @@ public class CadConfServPresenter {
             }
 
             JSONObject result = util.recuperaPrefUserLogado(this.context);
+            String dsNome = result.getString(context.getString(R.string.dsNomeTblUser));
             String dsLogin = result.getString(context.getString(R.string.dsLoginTblUser));
-            String dsSenha = result.getString(context.getString(R.string.dsSenhaTblUser));
 
-            boolean registerSucceeded = service.registerConfServ(dsLogin, dsSenha, String.valueOf(valRadio));
+
+            boolean registerSucceeded = service.registerConfServ(dsNome, dsLogin, String.valueOf(valRadio));
             if(registerSucceeded){
                 //recupero - limpo e redefino o time do service
                 JSONObject recuperar = util.recuperaPrefConfServico(this.context);
