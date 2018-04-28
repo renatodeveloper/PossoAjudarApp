@@ -72,6 +72,18 @@ public class CadApontamentoService {
         return jsonArray;
     }
 
+    public JSONArray getJSONArrayApontamentoUser(String date){
+        JSONArray jsonArray = null;
+        try{
+            apontamentoDao = new ApontamentoDao(this.context);
+            return apontamentoDao.getJSONArrayApontamentoUser(date);
+        }catch (Exception e){
+            e.getMessage().toString();
+        }
+        return jsonArray;
+    }
+
+
     public boolean ifExistApontamento (){
         try{
             apontamentoDao = new ApontamentoDao(this.context);
