@@ -488,8 +488,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         int id = item.getItemId();
 
         if (id == R.id.nav_relatorio) {
-            stopService(new Intent(getApplicationContext(), ServicoApontamento.class));
-            startActivity(new Intent(this, Report.class));
+            try{
+                stopService(new Intent(getApplicationContext(), ServicoApontamento.class));
+                startActivity(new Intent(this, Report.class));
+            }catch (Exception e){
+                e.getMessage().toString();
+            }
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {
@@ -618,6 +622,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     @Override
+    public void showMontaListaApontamentoSemApontamento(int resId) {
+
+    }
+
+    @Override
     public void showCadApontamentoAlturaError(int resId) {
         editTextAltura.setError(getString(resId));
     }
@@ -642,6 +651,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         Toast.makeText(this, getString(resId), Toast.LENGTH_LONG).show();
     }
 
+    @Override
+    public void showConnectionRefusedError(String date) {
+
+    }
 
 
     //****************************************************** ApplicationServiceCallback do processo on line
