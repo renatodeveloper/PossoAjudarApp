@@ -44,8 +44,8 @@ public class CadConfServService {
             usuarioDao = new UsuarioDao(this.context);
 
 
-            usuarioDao.dsLogin =   params[0].toString();
-            usuarioDao.dsSenha =   params[1].toString();
+            usuarioDao.dsNome =   params[0].toString();
+            usuarioDao.dsLogin =   params[1].toString();
             usuarioDao.idServico = Integer.valueOf(params[2].toString());
             usuarioDao.setId(usuarioDao.getId());
 
