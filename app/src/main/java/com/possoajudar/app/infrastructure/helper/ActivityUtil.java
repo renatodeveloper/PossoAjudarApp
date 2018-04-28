@@ -271,7 +271,7 @@ public class ActivityUtil {
 
     public static String getDataHora(long currentTimeMillis){
         try{
-            SimpleDateFormat sdf = new SimpleDateFormat("MMM dd,yyyy HH:mm");
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             Date resultdate = new Date(currentTimeMillis);
             return  sdf.format(resultdate).toString();
         }catch (Exception e){
