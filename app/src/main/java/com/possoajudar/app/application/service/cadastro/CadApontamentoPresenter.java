@@ -110,6 +110,20 @@ public class CadApontamentoPresenter {
         }
     }
 
+    public void getArrayApontamentoUser(String date){
+        JSONArray jsonArray;
+        try{
+            jsonArray = service.getJSONArrayApontamentoUser(date);
+            if(jsonArray != null && jsonArray.length()>0){
+                view.montaListaApondatamento(jsonArray);
+            }else{
+                view.showMontaListaApontamentoSemApontamento(R.string.strLyMontaListaSemApontamento);
+            }
+        }catch (Exception e){
+            e.getMessage().toString();
+        }
+    }
+
     public boolean existApontamento(){
         try{
             return  service.ifExistApontamento();
