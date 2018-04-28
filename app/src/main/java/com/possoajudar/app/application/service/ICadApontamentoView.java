@@ -12,12 +12,13 @@ public interface ICadApontamentoView {
     String getCadApontamentoDsDataTime();
     long   getCadApontamentoDataTime();
     JSONArray montaListaApondatamento(JSONArray jsonArray);
-
+    void showMontaListaApontamentoSemApontamento(int resId);
 
     void showCadApontamentoAlturaError(int resId);
     void showCadApontamentoPesoError(int resId);
     void showCadApontamentoDataTimeError(int resId);
     void showCadApontamentoError(int resId);
     void showMontaListaApontamentoError(int resId);
+    void showConnectionRefusedError(String date);
     //void startMainListActivity();
 }
