@@ -29,8 +29,8 @@ public class CadConfServ extends RoboActivity implements ICadConfServView{
 
     @InjectView(R.id.lyCadConfServImageViewCadastrar)
     ImageView cadConfServ;
-    @InjectView(R.id.lyCadConfServImageViewLimpar)
-    ImageView cleanCondServ;
+    @InjectView(R.id.lyCadConfServImageViewVoltar)
+    ImageView voltarCondServ;
 
     @InjectView(R.id.radio_alldays)
     RadioButton radioAlldays;
@@ -71,10 +71,15 @@ public class CadConfServ extends RoboActivity implements ICadConfServView{
 
             }
         });
-        cleanCondServ.setOnClickListener(new View.OnClickListener() {
+        voltarCondServ.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "CLICK BY roboguice.inject.InjectView - CLEAN", Toast.LENGTH_LONG).show();
+                try{
+                    startMainActivity();
+                }catch (Exception e){
+                    e.getMessage().toString();
+                }
+                //Toast.makeText(getApplicationContext(), "CLICK BY roboguice.inject.InjectView - CLEAN", Toast.LENGTH_LONG).show();
             }
         });
 
