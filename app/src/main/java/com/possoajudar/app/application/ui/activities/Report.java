@@ -267,6 +267,7 @@ public class Report extends BaseActivity implements ICadApontamentoView {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             finish();
+            startActivity(new Intent(this, MainActivity.class));
             return true;
         }
         return super.onKeyDown(keyCode, event);
