@@ -3,6 +3,8 @@ package com.possoajudar.app.application.ui.activities;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -101,6 +103,8 @@ public class Login extends Activity implements ILoginView {
 
     private EditText usernameView;
     private EditText passwordView;
+    private TextView versao;
+
     TextView sucessologin;
     TextView newcountView;
 
@@ -224,16 +228,24 @@ public class Login extends Activity implements ILoginView {
        //((LoginApplication) getApplication()).getAppComponent().inject(this);
 
         //final String URL = BuildConfig.API_URL;
-        try{
-            activityUtil = new ActivityUtil();
-        }catch (Exception e){
-            e.getMessage().toString();
-        }
 
         usernameView = (EditText) findViewById(R.id.input_email);
         passwordView = (EditText) findViewById(R.id.input_password);
         sucessologin = (TextView) findViewById(R.id.sucessologin);
         newcountView = (TextView) findViewById(R.id.newcount);
+        versao = (TextView) findViewById(R.id.textViewSizeScreen);
+
+        try{
+            activityUtil = new ActivityUtil();
+            PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+            int versionNumber = pInfo.versionCode;
+            String versionName = pInfo.versionName;
+
+            versao.setTextColor(Color.RED);
+            versao.setText(pInfo.versionName);
+        }catch (Exception e){
+            e.getMessage().toString();
+        }
 
         loginPresenter = new LoginPresenter(this, this);
 
