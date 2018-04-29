@@ -5,6 +5,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="add_apontamento">Medidas</string>
     <string name="action_settings">Intervalo</string>
+    <string name="action_fechar_app">Fechar o app</string>
     <string name="action_cleanPreferences">Sair</string>
     <string name="app_title_login">Bem vindo ao conversa com bla!</string>
     <string name="action_fragment">Fragment</string>
@@ -18,7 +19,7 @@
     <string name="strLyLoginHintInputEmail">Email</string>
     <string name="strLyLoginHintInputPassword">Password</string>
     <string name="strLyLoginButtonLogin">Login</string>
-    <string name="strLyLoginTextViewAccount">Ainda sem conta? Crie uma AQUI!</string>
+    <string name="strLyLoginTextViewAccount">Cadastre-se aqui!</string>
 
     <string name="strLyLoginUserNameError">Entre com o nome do usuário</string>
     <string name="strLyLoginPassWordError">Entre com a senha do usuário</string>
@@ -124,11 +125,11 @@
     <string name="sqlCargaRedeSocialPinterest">INSERT INTO RedeSocial(dsRedeSocial) values ("'"Pinterest"'");</string>
 
     <!-- carga configuração de serviço-->
-    <string name="sqlCargaConfServAlldays">INSERT INTO Servico(dsServico) values ("'"Alldays"'");</string>
-    <string name="sqlCargaConfServAllweek">INSERT INTO Servico(dsServico) values ("'"Allweek"'");</string>
-    <string name="sqlCargaConfServAllweekend">INSERT INTO Servico(dsServico) values ("'"Allweekend"'");</string>
-    <string name="sqlCargaConfServ15days">INSERT INTO Servico(dsServico) values ("'"15days"'");</string>
-    <string name="sqlCargaConfServAllmonth">INSERT INTO Servico(dsServico) values ("'"Allmonth"'");</string>
+    <string name="sqlCargaConfServAlldays">INSERT INTO Servico(dsServico) values ("'"Todos os dias"'");</string>
+    <string name="sqlCargaConfServAllweek">INSERT INTO Servico(dsServico) values ("'"A cada 5 dias"'");</string>
+    <string name="sqlCargaConfServAllweekend">INSERT INTO Servico(dsServico) values ("'"A cada 10 dias"'");</string>
+    <string name="sqlCargaConfServ15days">INSERT INTO Servico(dsServico) values ("'"A cada 15 dias"'");</string>
+    <string name="sqlCargaConfServAllmonth">INSERT INTO Servico(dsServico) values ("'"A cada 20 dias"'");</string>
 
 
     <!-- tabelas -->
