@@ -66,6 +66,16 @@
     </item>
 
 
+
+
+    <item
+        android:id="@+id/action_fechar_app"
+        android:title= "@string/action_fechar_app"
+        app:showAsAction="never|withText"
+        android:orderInCategory="4"
+        android:icon="@drawable/voltar"
+        />
+
     <item
         android:id="@+id/action_cleanpreferences"
         android:title= "@string/action_cleanPreferences"

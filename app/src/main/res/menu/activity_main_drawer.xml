@@ -24,6 +24,10 @@
                 android:icon="@drawable/ic_menu_share"
                 android:title="Share" />
             <item
+                android:id="@+id/nav_fechar_app"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Fechar o app" />
+            <item
                 android:id="@+id/nav_sair"
                 android:icon="@drawable/ic_menu_send"
                 android:title="Sair" />
