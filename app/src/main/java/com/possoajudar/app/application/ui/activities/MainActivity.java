@@ -424,6 +424,17 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
             return true;
         }
+
+        if (id == R.id.action_fechar_app) {
+            try{
+                stopService(new Intent(getApplicationContext(), ServicoApontamento.class));
+                activityUtil.minimizeApp(getApplicationContext());
+            }catch (Exception e){
+                e.getMessage().toString();
+            }
+            return true;
+        }
+
         if (id == R.id.action_cleanpreferences) {
             try{
 
@@ -518,6 +529,14 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 activityUtil.cleanAllPreferences(getApplicationContext());
 
                 startActivity(new Intent(this, ViewSplash.class));
+            }catch (Exception e){
+                e.getMessage().toString();
+            }
+        }else if (id == R.id.nav_fechar_app) {
+            try{
+                stopService(new Intent(getApplicationContext(), ServicoApontamento.class));
+
+                activityUtil.minimizeApp(getApplicationContext());
             }catch (Exception e){
                 e.getMessage().toString();
             }
@@ -1038,4 +1057,5 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         alertDialog.show();
 
     }
+
 }
