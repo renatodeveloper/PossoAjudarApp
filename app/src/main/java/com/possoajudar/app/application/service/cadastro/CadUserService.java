@@ -12,9 +12,23 @@ import com.possoajudar.app.application.service.ILoginView;
 import com.possoajudar.app.application.service.dao.DaoModelService;
 import com.possoajudar.app.application.ui.activities.MainActivity;
 import com.possoajudar.app.domain.dao.UsuarioDao;
+import com.possoajudar.app.domain.model.ServiceResponse;
+import com.possoajudar.app.domain.model.Usuario;
+import com.possoajudar.app.domain.model.UsuarioList;
+import com.possoajudar.app.infrastructure.backend.ApiClient;
+import com.possoajudar.app.infrastructure.backend.ApiInterface;
 import com.possoajudar.app.infrastructure.helper.ActivityUtil;
 
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.GsonConverterFactory;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 /**
  * Created by Renato on 27/09/2017.
@@ -52,6 +66,156 @@ public class CadUserService {
 
                 return usuarioDao.save(values);
             }
+
+            /*
+            Teste de consumo de endPoint webserver  01 ao o7 - crud
+
+            Usuario userAdd = new Usuario();
+            userAdd.dsNome = "Renato Rodrigues";
+            userAdd.dsLogin = "developer.renato";
+            userAdd.dsSenha = "developer";
+
+            ApiInterface  apiInterface = ApiClient.getClientWS_RESTful().create(ApiInterface.class);
+             */
+
+            /* 01
+            Call<ServiceResponse> call = apiInterface.getStatusConection();
+           call.enqueue(new Callback<ServiceResponse>() {
+               @Override
+               public void onResponse(Response<ServiceResponse> response, Retrofit retrofit) {
+                   if(response != null){
+
+                   }
+               }
+
+               @Override
+               public void onFailure(Throwable t) {
+                   if(t != null){
+
+                   }
+               }
+           });
+            */
+
+            /* 02
+            Call<UsuarioList> call = apiInterface.getAllUsers();
+            call.enqueue(new Callback<UsuarioList>() {
+                @Override
+                public void onResponse(Response<UsuarioList> response, Retrofit retrofit) {
+                    if(response != null){
+
+                    }
+                }
+
+                @Override
+                public void onFailure(Throwable t) {
+                    if(t != null){
+
+                    }
+                }
+            });
+             */
+
+            /* 03
+            Call<Usuario> call = apiInterface.getUser(1);
+            call.enqueue(new Callback<Usuario>() {
+                @Override
+                public void onResponse(Response<Usuario> response, Retrofit retrofit) {
+                    if(response != null){
+
+                    }
+                }
+
+                @Override
+                public void onFailure(Throwable t) {
+                    if(t != null){
+
+                    }
+                }
+            });
+             */
+
+            /* 04
+            Call<List<Usuario>>  call = apiInterface.getUserName("Renato");
+            call.enqueue(new Callback<List<Usuario>>() {
+                @Override
+                public void onResponse(Response<List<Usuario>> response, Retrofit retrofit) {
+                    if(response != null){
+
+                    }
+                }
+
+                @Override
+                public void onFailure(Throwable t) {
+                    if(t != null){
+
+                    }
+                }
+            });
+
+             */
+
+            /* 05
+            Call<Usuario> call = apiInterface.add(userAdd);
+            call.enqueue(new Callback<Usuario>() {
+                @Override
+                public void onResponse(Response<Usuario> response, Retrofit retrofit) {
+                        if(response != null){
+
+                        }
+                }
+
+                @Override
+                public void onFailure(Throwable t) {
+                    if(t != null){
+
+                    }
+                }
+            });
+             */
+
+            /* 06
+            Call<Usuario> call = apiInterface.update(1, userAdd);
+            call.enqueue(new Callback<Usuario>() {
+                @Override
+                public void onResponse(Response<Usuario> response, Retrofit retrofit) {
+                    if(response != null){
+
+                    }
+                }
+
+                @Override
+                public void onFailure(Throwable t) {
+                    if(t != null){
+
+                    }
+                }
+            });
+
+             */
+
+            /* 07
+            Call<Usuario> call = apiInterface.delete(1);
+            call.enqueue(new Callback<Usuario>() {
+                @Override
+                public void onResponse(Response<Usuario> response, Retrofit retrofit) {
+                    if(response != null){
+
+                    }
+                }
+
+                @Override
+                public void onFailure(Throwable t) {
+                    if(t != null){
+
+                    }
+                }
+            });
+
+
+             */
+
+
         } catch (Exception e) {
             e.getMessage().toString();
         }
