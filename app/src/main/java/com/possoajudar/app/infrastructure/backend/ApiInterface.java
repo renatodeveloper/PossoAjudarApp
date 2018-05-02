@@ -87,11 +87,7 @@ public interface ApiInterface {
     Call<ServiceResponse> getAuthMockServer(@Path("user") String user, @Path("auth") String auth);
 
 
-
-
-
     //http://api.postmon.com.br/v1/cep/21625000
-
 
     /*
          /report/appointments/Developer
@@ -145,39 +141,35 @@ public interface ApiInterface {
     );
 
     /*
-    Build RESTful Services endPoints CRUD
+        Inicio Build RESTful Services endPoints CRUD
      */
 
-    @GET("PossoAjudarWS/usuarios/conection")
+    @GET("usuarios/conection")
     Call<ServiceResponse> getStatusConection();
 
-    @GET("PossoAjudarWS/usuarios/todos")
+    @GET("usuarios/todos")
     Call<UsuarioList> getAllUsers();
 
-    @GET("PossoAjudarWS/usuarios/{idUsuario}")
+    @GET("usuarios/{idUsuario}")
     Call<Usuario> getUser(@Path("idUsuario") int id);
 
-    @GET("PossoAjudarWS/usuarios/find/{name}")
+    @GET("usuarios/find/{name}")
     Call<List<Usuario>> getUserName(@Path("name") String nameUser);
 
-    //@FormUrlEncoded
-    @Headers({ "Content-Type: application/json;charset=UTF-8"})
-    @POST("PossoAjudarWS/usuarios/add")
+    @Headers({"Content-Type: application/json;charset=UTF-8"})
+    @POST("usuarios/add")
     Call<Usuario> add(@Body Usuario body);
 
-    //@FormUrlEncoded
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
-    @PUT("PossoAjudarWS/usuarios/{idUsuario}")
+    @PUT("usuarios/{idUsuario}")
     Call<Usuario> update(@Path("idUsuario") int id, @Body Usuario usuario);
 
-    //@FormUrlEncoded
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
-    @DELETE("PossoAjudarWS/usuarios/{idUsuario}")
+    @DELETE("usuarios/{idUsuario}")
     Call<Usuario> delete(@Path("idUsuario") int id);
 
-
     /*
-        Fim
+        Fim Build RESTful Services endPoints CRUD
      */
 
 
