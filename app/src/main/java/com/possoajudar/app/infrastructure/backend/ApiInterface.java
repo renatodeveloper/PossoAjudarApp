@@ -6,6 +6,8 @@ import com.possoajudar.app.domain.model.Cep;
 import com.possoajudar.app.domain.model.ServiceResponse;
 import com.possoajudar.app.domain.model.MoviesResponse;
 import com.possoajudar.app.domain.model.Post;
+import com.possoajudar.app.domain.model.Usuario;
+import com.possoajudar.app.domain.model.UsuarioList;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -14,12 +16,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import retrofit.Call;
+import retrofit.http.Body;
 import retrofit.http.DELETE;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
+import retrofit.http.Header;
+import retrofit.http.Headers;
+import retrofit.http.PATCH;
 import retrofit.http.POST;
 import retrofit.http.PUT;
+import retrofit.http.Part;
 import retrofit.http.Path;
 import retrofit.http.Query;
 import retrofit.http.Url;
@@ -136,5 +143,54 @@ public interface ApiInterface {
             @Query("username") String username,
             @Query("password") String password
     );
+
+    /*
+    Build RESTful Services endPoints CRUD
+     */
+
+    @GET("PossoAjudarWS/usuarios/conection")
+    Call<ServiceResponse> getStatusConection();
+
+    @GET("PossoAjudarWS/usuarios/todos")
+    Call<UsuarioList> getAllUsers();
+
+    @GET("PossoAjudarWS/usuarios/{idUsuario}")
+    Call<Usuario> getUser(@Path("idUsuario") int id);
+
+    @GET("PossoAjudarWS/usuarios/find/{name}")
+    Call<List<Usuario>> getUserName(@Path("name") String nameUser);
+
+    //@FormUrlEncoded
+    @Headers({ "Content-Type: application/json;charset=UTF-8"})
+    @POST("PossoAjudarWS/usuarios/add")
+    Call<Usuario> add(@Body Usuario body);
+
+    //@FormUrlEncoded
+    @Headers({ "Content-Type: application/json;charset=UTF-8"})
+    @PUT("PossoAjudarWS/usuarios/{idUsuario}")
+    Call<Usuario> update(@Path("idUsuario") int id, @Body Usuario usuario);
+
+    //@FormUrlEncoded
+    @Headers({ "Content-Type: application/json;charset=UTF-8"})
+    @DELETE("PossoAjudarWS/usuarios/{idUsuario}")
+    Call<Usuario> delete(@Path("idUsuario") int id);
+
+
+    /*
+        Fim
+     */
+
+
+    @FormUrlEncoded
+    @POST("/usuarios/inserir")
+    Call<Usuario> insertUsuario(@Field("dsLogin") String login, @Field("dsSenha") String senha);
+
+    @FormUrlEncoded
+    @PATCH("usuarios/{id}")
+    Call<Usuario> updateUsuario(@Path("idUsuario") int id, @Field("dsLogin") String nome, @Field("dsSenha") String cpf);
+
+    @DELETE("usuarios/{id}")
+    Call<Usuario> deleteUsuario(@Path("id") int id);
+
 
 }
