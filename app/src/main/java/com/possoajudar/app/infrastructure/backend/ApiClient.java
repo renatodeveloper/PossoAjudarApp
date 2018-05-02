@@ -11,10 +11,21 @@ import retrofit.Retrofit;
 
 public class ApiClient {
     private static Retrofit retrofit = null;
+
     public static Retrofit getClient() {
         if (retrofit==null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(Constants.Headers.URL_JSON_MOCKSERVER)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+        }
+        return retrofit;
+    }
+
+    public static Retrofit getClientWS_RESTful() {
+        if (retrofit==null) {
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(Constants.Headers.URL_RESTfull)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
