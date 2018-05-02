@@ -39,7 +39,7 @@ public class Constants {
         public static final String URL_GIT_HUB_API = "https://api.github.com/";
         public static final String URL_GIT_HUB = "https://github.com/";
 
-        public static final String URL_RESTfull= "http://192.168.0.3:8080/";
+        public static final String URL_RESTfull= "http://192.168.0.3:8080/PossoAjudarWS/";
 
 
 
