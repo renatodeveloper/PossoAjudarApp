@@ -147,6 +147,9 @@ public interface ApiInterface {
     @GET("usuarios/conection")
     Call<ServiceResponse> getStatusConection();
 
+    @POST("usuarios/verificar")
+    Call<Usuario> verificar(@Body Usuario body);
+
     @GET("usuarios/todos")
     Call<UsuarioList> getAllUsers();
 
