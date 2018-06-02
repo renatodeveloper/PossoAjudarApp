@@ -69,6 +69,19 @@
                 android:hint="@string/strLyLoginHintInputPassword"/>
         </android.support.design.widget.TextInputLayout>
 
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="70dp"
+            android:max="100"
+            android:progress="0"
+            android:background="@color/colorPrimaryDark"
+            android:visibility="invisible"
+            />
+
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/btn_login"
             android:layout_width="fill_parent"
