@@ -13,11 +13,12 @@
         android:paddingLeft="@dimen/dimen24dp"
         android:paddingRight="@dimen/dimen24dp"
         >
+
         <TextView
             android:id="@+id/textViewSizeScreen"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="layout-xlarge" />
+            android:text="layout-large-land" />
 
         <com.google.android.gms.ads.AdView
             android:id="@+id/adView"
