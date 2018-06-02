@@ -1,18 +1,25 @@
 package com.possoajudar.app.application.ui.activities;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.os.PersistableBundle;
+import android.os.SystemClock;
+import android.support.v7.widget.AppCompatButton;
 import android.text.TextUtils;
+import android.text.style.TtsSpan;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +30,8 @@ import com.google.android.gms.ads.AdView;
 
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.possoajudar.app.R;
 //import com.possoajudar.app.application.module.app.LoginApplication;
 import com.possoajudar.app.application.service.ILoginView;
@@ -32,8 +41,11 @@ import com.possoajudar.app.domain.model.AccessToken;
 import com.possoajudar.app.domain.model.Apontamento;
 import com.possoajudar.app.domain.model.GDriveFiles;
 import com.possoajudar.app.domain.model.OAuthToken;
+import com.possoajudar.app.domain.model.Transacao;
+import com.possoajudar.app.domain.model.Usuario;
 import com.possoajudar.app.infrastructure.Constants;
 import com.possoajudar.app.infrastructure.backend.ApiClient;
+import com.possoajudar.app.infrastructure.backend.ApiInterface;
 import com.possoajudar.app.infrastructure.backend.Google.ApiGoogleInterface;
 import com.possoajudar.app.infrastructure.backend.Google.GoogleClient;
 import com.possoajudar.app.infrastructure.backend.gitHub.GitHubClient;
@@ -101,24 +113,28 @@ public class Login extends Activity implements ILoginView {
                 @InjectView(R.id.btn_login)      AppCompatButton      onLoginClick;
      */
 
-    private EditText usernameView;
-    private EditText passwordView;
+    public static EditText usernameView;
+    public static EditText passwordView;
+    public static AppCompatButton onLoginClick;
+
     private TextView versao;
 
-    TextView sucessologin;
-    TextView newcountView;
+    public static TextView sucessologin;
+    public static TextView newcountView;
 
     private LoginPresenter loginPresenter;
     public ActivityUtil activityUtil;
     GpsService gps;
     private AdView mAdView;
 
+    ApiInterface apiService;
 
     private GoogleApiClient mGoogleApiClient;
     SignInButton signInButton;
 
     public static boolean flagGitHub = true;
 
+    public static ProgressBar myProgressBar;
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
@@ -234,6 +250,11 @@ public class Login extends Activity implements ILoginView {
         sucessologin = (TextView) findViewById(R.id.sucessologin);
         newcountView = (TextView) findViewById(R.id.newcount);
         versao = (TextView) findViewById(R.id.textViewSizeScreen);
+        onLoginClick = (AppCompatButton) findViewById(R.id.btn_login);
+
+
+        myProgressBar = (ProgressBar) findViewById(R.id.progressBar);
+
 
         try{
             activityUtil = new ActivityUtil();
@@ -242,7 +263,7 @@ public class Login extends Activity implements ILoginView {
             String versionName = pInfo.versionName;
 
             versao.setTextColor(Color.RED);
-            versao.setText(pInfo.versionName);
+            //versao.setText(pInfo.versionName);
         }catch (Exception e){
             e.getMessage().toString();
         }
@@ -379,6 +400,13 @@ public class Login extends Activity implements ILoginView {
             }
         }
  */
+
+        onLoginClick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loginPresenter.onLoginClicked();
+            }
+        });
 
     }
 
@@ -559,12 +587,15 @@ public class Login extends Activity implements ILoginView {
         }
      */
 
+    /*
+    Apenas no xml (android:onClick="onLoginClick")
 
     public void onLoginClick(View view) {
         //Toast.makeText(getApplicationContext(), "Dagger 2: " + apontamento.toString() , Toast.LENGTH_LONG).show();
-        loginPresenter.onLoginClicked();
+         loginPresenter.onLoginClicked();
         //throw new RuntimeException("This is a crash");
     }
+*/
 
     @Override
     public String getUsername() {return usernameView.getText().toString();}
@@ -576,6 +607,7 @@ public class Login extends Activity implements ILoginView {
 
     @Override
     public void showUsernameError(int resId) {
+
         usernameView.setError(getString(resId));
     }
 
@@ -621,5 +653,13 @@ public class Login extends Activity implements ILoginView {
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    public void enableDisableView(boolean habilitar){
+        try{
+
+        }catch (Exception e){
+            e.getMessage().toString();
+        }
     }
 }
